@@ -1,0 +1,1833 @@
+@prefix g: <http://www.semanticweb.org/pol/ontologies/omikron44/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<urn:MAPPING-ID18> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT * FROM `tags`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "slug";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/tags#slug>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "type";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/tags#type>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "order_column";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/tags#order_column>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "created_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/tags#created_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "updated_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/tags#updated_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/tags#id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "name";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/tags#name>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class g:tags;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/tags/id={id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID19> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT * FROM `merchant_feeds`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "merchant_id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#merchant_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "type";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#type>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "affiliate_feed_id";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#affiliate_feed_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "name";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#name>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "url";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#url>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "key";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#key>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "category_delimiter";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#category_delimiter>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "language";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#language>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "country";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#country>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "currency";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#currency>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "product_count";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#product_count>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "order";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#order>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "keys";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#keys>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "example";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#example>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "map";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#map>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "synced_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#synced_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "invalidated_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#invalidated_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "manual_delete";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#manual_delete>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "deleted_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#deleted_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "created_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#created_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "updated_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#updated_at>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class g:merchant_feeds;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds/id={id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID20> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT `merchant_feeds`.`id` AS `merchant_feeds_id`, `merchants`.`id` AS `merchants_id` FROM `merchant_feeds`, `merchants` WHERE `merchant_feeds`.`merchant_id` = `merchants`.`id`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/merchants/id={merchants_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#ref-merchant_id>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds/id={merchant_feeds_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID37> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT * FROM `products`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "merchant_id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#merchant_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "merchant_feed_id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#merchant_feed_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "affiliate_id";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#affiliate_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "store_id";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#store_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "slug";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#slug>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "affiliate_link";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#affiliate_link>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "title";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#title>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "description";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#description>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "link";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#link>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "image_link";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#image_link>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "additional_image_link";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#additional_image_link>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "mobile_link";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#mobile_link>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "availability";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#availability>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "availability_date";
+          rr:datatype xsd:date;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#availability_date>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "cost_of_goods_sold";
+          rr:datatype xsd:double;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#cost_of_goods_sold>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "expiration_date";
+          rr:datatype xsd:date;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#expiration_date>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "price";
+          rr:datatype xsd:double;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#price>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "sale_price";
+          rr:datatype xsd:double;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#sale_price>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "sale_price_effective_date";
+          rr:datatype xsd:date;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#sale_price_effective_date>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "unit_pricing_measure";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#unit_pricing_measure>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "unit_pricing_base_measure";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#unit_pricing_base_measure>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "installment";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#installment>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "loyalty_points";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#loyalty_points>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "google_product_category";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#google_product_category>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "product_type";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#product_type>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "brand";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#brand>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "gtin";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#gtin>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "mpn";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#mpn>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "identifier_exists";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#identifier_exists>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "condition";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#condition>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "adult";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#adult>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "multipack";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#multipack>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "is_bundle";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#is_bundle>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "energy_efficiency_class";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#energy_efficiency_class>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "min_energy_efficiency_class";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#min_energy_efficiency_class>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "max_energy_efficiency_class";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#max_energy_efficiency_class>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "age_group";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#age_group>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "color";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#color>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "gender";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#gender>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "material";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#material>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "pattern";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#pattern>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "size";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#size>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "size_type";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#size_type>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "size_system";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#size_system>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "item_group_id";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#item_group_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "ads_redirect";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#ads_redirect>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "custom_label_0";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#custom_label_0>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "custom_label_1";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#custom_label_1>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "custom_label_2";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#custom_label_2>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "custom_label_3";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#custom_label_3>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "custom_label_4";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#custom_label_4>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "promotion_id";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#promotion_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "excluded_destination";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#excluded_destination>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "included_destination";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#included_destination>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "shipping";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#shipping>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "shipping_label";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#shipping_label>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "shipping_weight";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#shipping_weight>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "shipping_length";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#shipping_length>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "shipping_width";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#shipping_width>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "shipping_height";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#shipping_height>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "max_handling_time";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#max_handling_time>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "min_handling_time";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#min_handling_time>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "tax";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#tax>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "tax_category";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#tax_category>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "in_stock";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#in_stock>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "elasticsearch_delete";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#elasticsearch_delete>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "elasticsearch_insert";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#elasticsearch_insert>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "contentapi_insert";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#contentapi_insert>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "contentapi_update";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#contentapi_update>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "contentapi_delete";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#contentapi_delete>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "contentapi_inserted_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#contentapi_inserted_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "contentapi_deleted_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#contentapi_deleted_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "excluded_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#excluded_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "deleted_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#deleted_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "created_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#created_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "updated_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#updated_at>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class g:products;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/products/id={id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID38> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT `products`.`id` AS `products_id`, `merchant_feeds`.`id` AS `merchant_feeds_id` FROM `products`, `merchant_feeds` WHERE `products`.`merchant_feed_id` = `merchant_feeds`.`id`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds/id={merchant_feeds_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#ref-merchant_feed_id>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/products/id={products_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID39> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT `products`.`id` AS `products_id`, `merchants`.`id` AS `merchants_id` FROM `products`, `merchants` WHERE `products`.`merchant_id` = `merchants`.`id`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/merchants/id={merchants_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#ref-merchant_id>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/products/id={products_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID43> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT * FROM `taggables`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "tag_id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/taggables#tag_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "taggable_type";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/taggables#taggable_type>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "taggable_id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/taggables#taggable_id>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class g:taggables;
+      rr:template "ontop-bnode-29{tag_id}/{taggable_type}/{taggable_id}";
+      rr:termType rr:BlankNode
+    ] .
+
+<urn:MAPPING-ID44> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT `taggables`.`tag_id` AS `taggables_tag_id`, `taggables`.`taggable_type` AS `taggables_taggable_type`, `taggables`.`taggable_id` AS `taggables_taggable_id`, `tags`.`id` AS `tags_id` FROM `taggables`, `tags` WHERE `taggables`.`tag_id` = `tags`.`id`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/tags/id={tags_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/taggables#ref-tag_id>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "ontop-bnode-29{taggables_tag_id}/{taggables_taggable_type}/{taggables_taggable_id}";
+      rr:termType rr:BlankNode
+    ] .
+
+<urn:MAPPING-ID68> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT * FROM `gos`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/gos#id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "request_product_id";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/gos#request_product_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "product_id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/gos#product_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "valid";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/gos#valid>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "found";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/gos#found>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "no_ads_redirect";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/gos#no_ads_redirect>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "gclid";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/gos#gclid>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "request";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/gos#request>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "deleted_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/gos#deleted_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "created_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/gos#created_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "updated_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/gos#updated_at>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class g:gos;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/gos/id={id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID69> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT `gos`.`id` AS `gos_id`, `products`.`id` AS `products_id` FROM `gos`, `products` WHERE `gos`.`product_id` = `products`.`id`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/products/id={products_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/gos#ref-product_id>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/gos/id={gos_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID77> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT * FROM `merchant_meta`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_meta#id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "merchant_id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_meta#merchant_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "affiliate_link_id";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_meta#affiliate_link_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "avatar";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_meta#avatar>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "description";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_meta#description>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "categories";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_meta#categories>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "website";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_meta#website>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "approval_rate";
+          rr:datatype xsd:double;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_meta#approval_rate>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "payment_time";
+          rr:datatype xsd:double;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_meta#payment_time>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "deleted_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_meta#deleted_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "created_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_meta#created_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "updated_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_meta#updated_at>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class g:merchant_meta;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/merchant_meta/id={id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID78> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT `merchant_meta`.`id` AS `merchant_meta_id`, `merchants`.`id` AS `merchants_id` FROM `merchant_meta`, `merchants` WHERE `merchant_meta`.`merchant_id` = `merchants`.`id`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/merchants/id={merchants_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_meta#ref-merchant_id>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/merchant_meta/id={merchant_meta_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID80> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT * FROM `account_statuses`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_statuses#id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "merchant_id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_statuses#merchant_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "active";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_statuses#active>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "disapproved";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_statuses#disapproved>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "expiring";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_statuses#expiring>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "pending";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_statuses#pending>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "account_issues";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_statuses#account_issues>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "product_issues";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_statuses#product_issues>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "synced_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_statuses#synced_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "deleted_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_statuses#deleted_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "created_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_statuses#created_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "updated_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_statuses#updated_at>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class g:account_statuses;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/account_statuses/id={id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID81> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT `account_statuses`.`id` AS `account_statuses_id`, `merchants`.`id` AS `merchants_id` FROM `account_statuses`, `merchants` WHERE `account_statuses`.`merchant_id` = `merchants`.`id`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/merchants/id={merchants_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_statuses#ref-merchant_id>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/account_statuses/id={account_statuses_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID89> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT * FROM `users`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/users#id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "name";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/users#name>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "email";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/users#email>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "email_verified_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/users#email_verified_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "password";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/users#password>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "remember_token";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/users#remember_token>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "todoist_id";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/users#todoist_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "created_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/users#created_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "updated_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/users#updated_at>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class g:users;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/users/id={id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID114> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT * FROM `account_reports`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_reports#id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "merchant_id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_reports#merchant_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "date_range";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_reports#date_range>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "clicks";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_reports#clicks>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "impressions";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_reports#impressions>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "ctr";
+          rr:datatype xsd:double;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_reports#ctr>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "deleted_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_reports#deleted_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "created_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_reports#created_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "updated_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_reports#updated_at>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class g:account_reports;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/account_reports/id={id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID115> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT `account_reports`.`id` AS `account_reports_id`, `merchants`.`id` AS `merchants_id` FROM `account_reports`, `merchants` WHERE `account_reports`.`merchant_id` = `merchants`.`id`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/merchants/id={merchants_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_reports#ref-merchant_id>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/account_reports/id={account_reports_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID129> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT * FROM `account_performances`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_performances#id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "merchant_id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_performances#merchant_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "clicks";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_performances#clicks>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "impressions";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_performances#impressions>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "conversions";
+          rr:datatype xsd:double;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_performances#conversions>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "ctr";
+          rr:datatype xsd:double;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_performances#ctr>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "roas";
+          rr:datatype xsd:double;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_performances#roas>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "deleted_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_performances#deleted_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "created_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_performances#created_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "updated_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_performances#updated_at>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class g:account_performances;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/account_performances/id={id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID130> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT `account_performances`.`id` AS `account_performances_id`, `merchants`.`id` AS `merchants_id` FROM `account_performances`, `merchants` WHERE `account_performances`.`merchant_id` = `merchants`.`id`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/merchants/id={merchants_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/account_performances#ref-merchant_id>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/account_performances/id={account_performances_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID148> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT * FROM `clicks`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "product_id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#product_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "merchant_id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#merchant_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "product_affiliate_id";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#product_affiliate_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "user_id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#user_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "ip";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#ip>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "session_id";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#session_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "type";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#type>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "price";
+          rr:datatype xsd:double;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#price>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "search_term";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#search_term>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "gclid";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#gclid>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "deleted_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#deleted_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "created_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#created_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "updated_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#updated_at>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class g:clicks;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/clicks/id={id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID149> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT `clicks`.`id` AS `clicks_id`, `merchants`.`id` AS `merchants_id` FROM `clicks`, `merchants` WHERE `clicks`.`merchant_id` = `merchants`.`id`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/merchants/id={merchants_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#ref-merchant_id>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/clicks/id={clicks_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID150> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT `clicks`.`id` AS `clicks_id`, `products`.`id` AS `products_id` FROM `clicks`, `products` WHERE `clicks`.`product_id` = `products`.`id`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/products/id={products_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#ref-product_id>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/clicks/id={clicks_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID151> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT `clicks`.`id` AS `clicks_id`, `users`.`id` AS `users_id` FROM `clicks`, `users` WHERE `clicks`.`user_id` = `users`.`id`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/users/id={users_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/clicks#ref-user_id>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/clicks/id={clicks_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:MAPPING-ID154> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "SELECT * FROM `merchants`"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "id";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "type";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#type>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "affiliate_id";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#affiliate_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "name";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#name>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "slug";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#slug>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "email";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#email>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "website";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#website>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "country";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#country>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "currency";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#currency>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "language";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#language>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "indexable";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#indexable>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "needs_sync";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#needs_sync>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "merchant_center_id";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#merchant_center_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "auto_merchant_center";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#auto_merchant_center>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "googleads_id";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#googleads_id>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "auto_googleads";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#auto_googleads>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "product_count";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#product_count>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "total_products";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#total_products>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "rank";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#rank>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "visits";
+          rr:datatype xsd:integer;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#visits>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "exclude_categories";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#exclude_categories>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "mcaccount_created_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#mcaccount_created_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "queue";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#queue>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "synced_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#synced_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "invalidated_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#invalidated_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "manual_delete";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#manual_delete>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "deleted_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#deleted_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "created_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#created_at>
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "updated_at";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchants#updated_at>
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class g:merchants;
+      rr:template "http://www.semanticweb.org/pol/ontologies/omikron44/merchants/id={id}";
+      rr:termType rr:IRI
+    ] .

@@ -1,0 +1,24 @@
+#Query that selects all nodes that have no subclass
+
+SELECT DISTINCT ?node WHERE {
+  ?node a owl:Class .
+  FILTER NOT EXISTS {
+    ?subclass rdfs:subClassOf ?node .
+    ?subclass a owl:Class .
+    FILTER (?subclass != ?node)
+  }
+}
+
+#Query that selects all starting nodes
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT DISTINCT ?node
+WHERE {
+  ?node a owl:Class .
+  FILTER NOT EXISTS {
+    ?node rdfs:subClassOf ?superclass .
+    FILTER(?node != ?superclass)
+  }
+}

@@ -1,0 +1,53 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_ROOT_PASSWORD: password
+    command: --max_allowed_packet=512M
+    volumes:
+      - ./database/backup.sql:/docker-entrypoint-initdb.d/backup.sql
+    ports:
+      - 3306:3306
+    networks:
+      custom_network:
+        ipv4_address: 192.168.1.2
+
+  jupyter:
+    image: jupyter/datascience-notebook:latest
+    ports:
+      - 8888:8888
+    volumes:
+      - ./notebook:/home/jovyan/work
+      - ./scripts:/home/jovyan/scripts
+    # command: pip install -r /home/jovyan/work/requirements.txt
+    environment:
+      JUPYTER_ENABLE_LAB: 'yes'
+      JUPYTER_TOKEN: ''
+    networks:
+      custom_network:
+        ipv4_address: 192.168.1.3
+
+  virtuoso:
+    image: openlink/virtuoso-opensource-7
+    ports:
+      - "8890:8890"
+      - "1111:1111"
+    environment:
+      SPARQL_UPDATE: "true"
+      DEFAULT_GRAPH: "http://example.com/my-graph"
+      DBA_PASSWORD: "mydbapassword"
+      DAV_PASSWORD: "mydavpassword"
+    volumes:
+      - ./virtuoso:/database
+    networks:
+      custom_network:
+        ipv4_address: 192.168.1.5
+
+networks:
+  custom_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24

@@ -1,0 +1,107 @@
+[PrefixDeclaration]
+:		http://www.semanticweb.org/pol/ontologies/omikron44#
+g:		http://www.semanticweb.org/pol/ontologies/omikron44/
+owl:		http://www.w3.org/2002/07/owl#
+rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+xml:		http://www.w3.org/XML/1998/namespace
+xsd:		http://www.w3.org/2001/XMLSchema#
+rdfs:		http://www.w3.org/2000/01/rdf-schema#
+
+[MappingDeclaration] @collection [[
+mappingId	MAPPING-ID18
+target		g:tags/id={id} a g:tags ; g:tags#id {id}^^xsd:integer ; g:tags#name {name}^^xsd:string ; g:tags#slug {slug}^^xsd:string ; g:tags#type {type}^^xsd:string ; g:tags#order_column {order_column}^^xsd:integer ; g:tags#created_at {created_at}^^xsd:dateTime ; g:tags#updated_at {updated_at}^^xsd:dateTime . 
+source		SELECT * FROM `tags`
+
+mappingId	MAPPING-ID19
+target		g:merchant_feeds/id={id} a g:merchant_feeds ; g:merchant_feeds#id {id}^^xsd:integer ; g:merchant_feeds#merchant_id {merchant_id}^^xsd:integer ; g:merchant_feeds#type {type}^^xsd:string ; g:merchant_feeds#affiliate_feed_id {affiliate_feed_id}^^xsd:string ; g:merchant_feeds#name {name}^^xsd:string ; g:merchant_feeds#url {url}^^xsd:string ; g:merchant_feeds#key {key}^^xsd:string ; g:merchant_feeds#category_delimiter {category_delimiter}^^xsd:string ; g:merchant_feeds#language {language}^^xsd:string ; g:merchant_feeds#country {country}^^xsd:string ; g:merchant_feeds#currency {currency}^^xsd:string ; g:merchant_feeds#product_count {product_count}^^xsd:integer ; g:merchant_feeds#order {order}^^xsd:integer ; g:merchant_feeds#keys {keys}^^xsd:string ; g:merchant_feeds#example {example}^^xsd:string ; g:merchant_feeds#map {map}^^xsd:string ; g:merchant_feeds#synced_at {synced_at}^^xsd:dateTime ; g:merchant_feeds#invalidated_at {invalidated_at}^^xsd:dateTime ; g:merchant_feeds#manual_delete {manual_delete}^^xsd:boolean ; g:merchant_feeds#deleted_at {deleted_at}^^xsd:dateTime ; g:merchant_feeds#created_at {created_at}^^xsd:dateTime ; g:merchant_feeds#updated_at {updated_at}^^xsd:dateTime . 
+source		SELECT * FROM `merchant_feeds`
+
+mappingId	MAPPING-ID20
+target		g:merchant_feeds/id={merchant_feeds_id} g:merchant_feeds#ref-merchant_id g:merchants/id={merchants_id} . 
+source		SELECT `merchant_feeds`.`id` AS `merchant_feeds_id`, `merchants`.`id` AS `merchants_id` FROM `merchant_feeds`, `merchants` WHERE `merchant_feeds`.`merchant_id` = `merchants`.`id`
+
+mappingId	MAPPING-ID37
+target		g:products/id={id} a g:products ; g:products#id {id}^^xsd:integer ; g:products#merchant_id {merchant_id}^^xsd:integer ; g:products#merchant_feed_id {merchant_feed_id}^^xsd:integer ; g:products#affiliate_id {affiliate_id}^^xsd:string ; g:products#store_id {store_id}^^xsd:string ; g:products#slug {slug}^^xsd:string ; g:products#affiliate_link {affiliate_link}^^xsd:string ; g:products#title {title}^^xsd:string ; g:products#description {description}^^xsd:string ; g:products#link {link}^^xsd:string ; g:products#image_link {image_link}^^xsd:string ; g:products#additional_image_link {additional_image_link}^^xsd:string ; g:products#mobile_link {mobile_link}^^xsd:string ; g:products#availability {availability}^^xsd:string ; g:products#availability_date {availability_date}^^xsd:date ; g:products#cost_of_goods_sold {cost_of_goods_sold}^^xsd:double ; g:products#expiration_date {expiration_date}^^xsd:date ; g:products#price {price}^^xsd:double ; g:products#sale_price {sale_price}^^xsd:double ; g:products#sale_price_effective_date {sale_price_effective_date}^^xsd:date ; g:products#unit_pricing_measure {unit_pricing_measure}^^xsd:string ; g:products#unit_pricing_base_measure {unit_pricing_base_measure}^^xsd:string ; g:products#installment {installment}^^xsd:string ; g:products#loyalty_points {loyalty_points}^^xsd:string ; g:products#google_product_category {google_product_category}^^xsd:string ; g:products#product_type {product_type}^^xsd:string ; g:products#brand {brand}^^xsd:string ; g:products#gtin {gtin}^^xsd:string ; g:products#mpn {mpn}^^xsd:string ; g:products#identifier_exists {identifier_exists}^^xsd:string ; g:products#condition {condition}^^xsd:string ; g:products#adult {adult}^^xsd:string ; g:products#multipack {multipack}^^xsd:string ; g:products#is_bundle {is_bundle}^^xsd:string ; g:products#energy_efficiency_class {energy_efficiency_class}^^xsd:string ; g:products#min_energy_efficiency_class {min_energy_efficiency_class}^^xsd:string ; g:products#max_energy_efficiency_class {max_energy_efficiency_class}^^xsd:string ; g:products#age_group {age_group}^^xsd:string ; g:products#color {color}^^xsd:string ; g:products#gender {gender}^^xsd:string ; g:products#material {material}^^xsd:string ; g:products#pattern {pattern}^^xsd:string ; g:products#size {size}^^xsd:string ; g:products#size_type {size_type}^^xsd:string ; g:products#size_system {size_system}^^xsd:string ; g:products#item_group_id {item_group_id}^^xsd:string ; g:products#ads_redirect {ads_redirect}^^xsd:string ; g:products#custom_label_0 {custom_label_0}^^xsd:string ; g:products#custom_label_1 {custom_label_1}^^xsd:string ; g:products#custom_label_2 {custom_label_2}^^xsd:string ; g:products#custom_label_3 {custom_label_3}^^xsd:string ; g:products#custom_label_4 {custom_label_4}^^xsd:string ; g:products#promotion_id {promotion_id}^^xsd:string ; g:products#excluded_destination {excluded_destination}^^xsd:string ; g:products#included_destination {included_destination}^^xsd:string ; g:products#shipping {shipping}^^xsd:string ; g:products#shipping_label {shipping_label}^^xsd:string ; g:products#shipping_weight {shipping_weight}^^xsd:string ; g:products#shipping_length {shipping_length}^^xsd:string ; g:products#shipping_width {shipping_width}^^xsd:string ; g:products#shipping_height {shipping_height}^^xsd:string ; g:products#max_handling_time {max_handling_time}^^xsd:string ; g:products#min_handling_time {min_handling_time}^^xsd:string ; g:products#tax {tax}^^xsd:string ; g:products#tax_category {tax_category}^^xsd:string ; g:products#in_stock {in_stock}^^xsd:string ; g:products#elasticsearch_delete {elasticsearch_delete}^^xsd:boolean ; g:products#elasticsearch_insert {elasticsearch_insert}^^xsd:boolean ; g:products#contentapi_insert {contentapi_insert}^^xsd:boolean ; g:products#contentapi_update {contentapi_update}^^xsd:boolean ; g:products#contentapi_delete {contentapi_delete}^^xsd:boolean ; g:products#contentapi_inserted_at {contentapi_inserted_at}^^xsd:dateTime ; g:products#contentapi_deleted_at {contentapi_deleted_at}^^xsd:dateTime ; g:products#excluded_at {excluded_at}^^xsd:dateTime ; g:products#deleted_at {deleted_at}^^xsd:dateTime ; g:products#created_at {created_at}^^xsd:dateTime ; g:products#updated_at {updated_at}^^xsd:dateTime . 
+source		SELECT * FROM `products`
+
+mappingId	MAPPING-ID38
+target		g:products/id={products_id} g:products#ref-merchant_feed_id g:merchant_feeds/id={merchant_feeds_id} . 
+source		SELECT `products`.`id` AS `products_id`, `merchant_feeds`.`id` AS `merchant_feeds_id` FROM `products`, `merchant_feeds` WHERE `products`.`merchant_feed_id` = `merchant_feeds`.`id`
+
+mappingId	MAPPING-ID39
+target		g:products/id={products_id} g:products#ref-merchant_id g:merchants/id={merchants_id} . 
+source		SELECT `products`.`id` AS `products_id`, `merchants`.`id` AS `merchants_id` FROM `products`, `merchants` WHERE `products`.`merchant_id` = `merchants`.`id`
+
+mappingId	MAPPING-ID43
+target		_:ontop-bnode-29{tag_id}/{taggable_type}/{taggable_id} a g:taggables ; g:taggables#tag_id {tag_id}^^xsd:integer ; g:taggables#taggable_type {taggable_type}^^xsd:string ; g:taggables#taggable_id {taggable_id}^^xsd:integer . 
+source		SELECT * FROM `taggables`
+
+mappingId	MAPPING-ID44
+target		_:ontop-bnode-29{taggables_tag_id}/{taggables_taggable_type}/{taggables_taggable_id} g:taggables#ref-tag_id g:tags/id={tags_id} . 
+source		SELECT `taggables`.`tag_id` AS `taggables_tag_id`, `taggables`.`taggable_type` AS `taggables_taggable_type`, `taggables`.`taggable_id` AS `taggables_taggable_id`, `tags`.`id` AS `tags_id` FROM `taggables`, `tags` WHERE `taggables`.`tag_id` = `tags`.`id`
+
+mappingId	MAPPING-ID68
+target		g:gos/id={id} a g:gos ; g:gos#id {id}^^xsd:integer ; g:gos#request_product_id {request_product_id}^^xsd:string ; g:gos#product_id {product_id}^^xsd:integer ; g:gos#valid {valid}^^xsd:boolean ; g:gos#found {found}^^xsd:boolean ; g:gos#no_ads_redirect {no_ads_redirect}^^xsd:boolean ; g:gos#gclid {gclid}^^xsd:string ; g:gos#request {request}^^xsd:string ; g:gos#deleted_at {deleted_at}^^xsd:dateTime ; g:gos#created_at {created_at}^^xsd:dateTime ; g:gos#updated_at {updated_at}^^xsd:dateTime . 
+source		SELECT * FROM `gos`
+
+mappingId	MAPPING-ID69
+target		g:gos/id={gos_id} g:gos#ref-product_id g:products/id={products_id} . 
+source		SELECT `gos`.`id` AS `gos_id`, `products`.`id` AS `products_id` FROM `gos`, `products` WHERE `gos`.`product_id` = `products`.`id`
+
+mappingId	MAPPING-ID77
+target		g:merchant_meta/id={id} a g:merchant_meta ; g:merchant_meta#id {id}^^xsd:integer ; g:merchant_meta#merchant_id {merchant_id}^^xsd:integer ; g:merchant_meta#affiliate_link_id {affiliate_link_id}^^xsd:string ; g:merchant_meta#avatar {avatar}^^xsd:string ; g:merchant_meta#description {description}^^xsd:string ; g:merchant_meta#categories {categories}^^xsd:string ; g:merchant_meta#website {website}^^xsd:string ; g:merchant_meta#approval_rate {approval_rate}^^xsd:double ; g:merchant_meta#payment_time {payment_time}^^xsd:double ; g:merchant_meta#deleted_at {deleted_at}^^xsd:dateTime ; g:merchant_meta#created_at {created_at}^^xsd:dateTime ; g:merchant_meta#updated_at {updated_at}^^xsd:dateTime . 
+source		SELECT * FROM `merchant_meta`
+
+mappingId	MAPPING-ID78
+target		g:merchant_meta/id={merchant_meta_id} g:merchant_meta#ref-merchant_id g:merchants/id={merchants_id} . 
+source		SELECT `merchant_meta`.`id` AS `merchant_meta_id`, `merchants`.`id` AS `merchants_id` FROM `merchant_meta`, `merchants` WHERE `merchant_meta`.`merchant_id` = `merchants`.`id`
+
+mappingId	MAPPING-ID80
+target		g:account_statuses/id={id} a g:account_statuses ; g:account_statuses#id {id}^^xsd:integer ; g:account_statuses#merchant_id {merchant_id}^^xsd:integer ; g:account_statuses#active {active}^^xsd:integer ; g:account_statuses#disapproved {disapproved}^^xsd:integer ; g:account_statuses#expiring {expiring}^^xsd:integer ; g:account_statuses#pending {pending}^^xsd:integer ; g:account_statuses#account_issues {account_issues}^^xsd:string ; g:account_statuses#product_issues {product_issues}^^xsd:string ; g:account_statuses#synced_at {synced_at}^^xsd:dateTime ; g:account_statuses#deleted_at {deleted_at}^^xsd:dateTime ; g:account_statuses#created_at {created_at}^^xsd:dateTime ; g:account_statuses#updated_at {updated_at}^^xsd:dateTime . 
+source		SELECT * FROM `account_statuses`
+
+mappingId	MAPPING-ID81
+target		g:account_statuses/id={account_statuses_id} g:account_statuses#ref-merchant_id g:merchants/id={merchants_id} . 
+source		SELECT `account_statuses`.`id` AS `account_statuses_id`, `merchants`.`id` AS `merchants_id` FROM `account_statuses`, `merchants` WHERE `account_statuses`.`merchant_id` = `merchants`.`id`
+
+mappingId	MAPPING-ID89
+target		g:users/id={id} a g:users ; g:users#id {id}^^xsd:integer ; g:users#name {name}^^xsd:string ; g:users#email {email}^^xsd:string ; g:users#email_verified_at {email_verified_at}^^xsd:dateTime ; g:users#password {password}^^xsd:string ; g:users#remember_token {remember_token}^^xsd:string ; g:users#todoist_id {todoist_id}^^xsd:string ; g:users#created_at {created_at}^^xsd:dateTime ; g:users#updated_at {updated_at}^^xsd:dateTime . 
+source		SELECT * FROM `users`
+
+mappingId	MAPPING-ID114
+target		g:account_reports/id={id} a g:account_reports ; g:account_reports#id {id}^^xsd:integer ; g:account_reports#merchant_id {merchant_id}^^xsd:integer ; g:account_reports#date_range {date_range}^^xsd:string ; g:account_reports#clicks {clicks}^^xsd:integer ; g:account_reports#impressions {impressions}^^xsd:integer ; g:account_reports#ctr {ctr}^^xsd:double ; g:account_reports#deleted_at {deleted_at}^^xsd:dateTime ; g:account_reports#created_at {created_at}^^xsd:dateTime ; g:account_reports#updated_at {updated_at}^^xsd:dateTime . 
+source		SELECT * FROM `account_reports`
+
+mappingId	MAPPING-ID115
+target		g:account_reports/id={account_reports_id} g:account_reports#ref-merchant_id g:merchants/id={merchants_id} . 
+source		SELECT `account_reports`.`id` AS `account_reports_id`, `merchants`.`id` AS `merchants_id` FROM `account_reports`, `merchants` WHERE `account_reports`.`merchant_id` = `merchants`.`id`
+
+mappingId	MAPPING-ID129
+target		g:account_performances/id={id} a g:account_performances ; g:account_performances#id {id}^^xsd:integer ; g:account_performances#merchant_id {merchant_id}^^xsd:integer ; g:account_performances#clicks {clicks}^^xsd:integer ; g:account_performances#impressions {impressions}^^xsd:integer ; g:account_performances#conversions {conversions}^^xsd:double ; g:account_performances#ctr {ctr}^^xsd:double ; g:account_performances#roas {roas}^^xsd:double ; g:account_performances#deleted_at {deleted_at}^^xsd:dateTime ; g:account_performances#created_at {created_at}^^xsd:dateTime ; g:account_performances#updated_at {updated_at}^^xsd:dateTime . 
+source		SELECT * FROM `account_performances`
+
+mappingId	MAPPING-ID130
+target		g:account_performances/id={account_performances_id} g:account_performances#ref-merchant_id g:merchants/id={merchants_id} . 
+source		SELECT `account_performances`.`id` AS `account_performances_id`, `merchants`.`id` AS `merchants_id` FROM `account_performances`, `merchants` WHERE `account_performances`.`merchant_id` = `merchants`.`id`
+
+mappingId	MAPPING-ID148
+target		g:clicks/id={id} a g:clicks ; g:clicks#id {id}^^xsd:integer ; g:clicks#product_id {product_id}^^xsd:integer ; g:clicks#merchant_id {merchant_id}^^xsd:integer ; g:clicks#product_affiliate_id {product_affiliate_id}^^xsd:string ; g:clicks#user_id {user_id}^^xsd:integer ; g:clicks#ip {ip}^^xsd:string ; g:clicks#session_id {session_id}^^xsd:string ; g:clicks#type {type}^^xsd:string ; g:clicks#price {price}^^xsd:double ; g:clicks#search_term {search_term}^^xsd:string ; g:clicks#gclid {gclid}^^xsd:string ; g:clicks#deleted_at {deleted_at}^^xsd:dateTime ; g:clicks#created_at {created_at}^^xsd:dateTime ; g:clicks#updated_at {updated_at}^^xsd:dateTime . 
+source		SELECT * FROM `clicks`
+
+mappingId	MAPPING-ID149
+target		g:clicks/id={clicks_id} g:clicks#ref-merchant_id g:merchants/id={merchants_id} . 
+source		SELECT `clicks`.`id` AS `clicks_id`, `merchants`.`id` AS `merchants_id` FROM `clicks`, `merchants` WHERE `clicks`.`merchant_id` = `merchants`.`id`
+
+mappingId	MAPPING-ID150
+target		g:clicks/id={clicks_id} g:clicks#ref-product_id g:products/id={products_id} . 
+source		SELECT `clicks`.`id` AS `clicks_id`, `products`.`id` AS `products_id` FROM `clicks`, `products` WHERE `clicks`.`product_id` = `products`.`id`
+
+mappingId	MAPPING-ID151
+target		g:clicks/id={clicks_id} g:clicks#ref-user_id g:users/id={users_id} . 
+source		SELECT `clicks`.`id` AS `clicks_id`, `users`.`id` AS `users_id` FROM `clicks`, `users` WHERE `clicks`.`user_id` = `users`.`id`
+
+mappingId	MAPPING-ID154
+target		g:merchants/id={id} a g:merchants ; g:merchants#id {id}^^xsd:integer ; g:merchants#type {type}^^xsd:string ; g:merchants#affiliate_id {affiliate_id}^^xsd:string ; g:merchants#name {name}^^xsd:string ; g:merchants#slug {slug}^^xsd:string ; g:merchants#email {email}^^xsd:string ; g:merchants#website {website}^^xsd:string ; g:merchants#country {country}^^xsd:string ; g:merchants#currency {currency}^^xsd:string ; g:merchants#language {language}^^xsd:string ; g:merchants#indexable {indexable}^^xsd:boolean ; g:merchants#needs_sync {needs_sync}^^xsd:boolean ; g:merchants#merchant_center_id {merchant_center_id}^^xsd:string ; g:merchants#auto_merchant_center {auto_merchant_center}^^xsd:boolean ; g:merchants#googleads_id {googleads_id}^^xsd:string ; g:merchants#auto_googleads {auto_googleads}^^xsd:boolean ; g:merchants#product_count {product_count}^^xsd:integer ; g:merchants#total_products {total_products}^^xsd:integer ; g:merchants#rank {rank}^^xsd:integer ; g:merchants#visits {visits}^^xsd:integer ; g:merchants#exclude_categories {exclude_categories}^^xsd:string ; g:merchants#mcaccount_created_at {mcaccount_created_at}^^xsd:dateTime ; g:merchants#queue {queue}^^xsd:string ; g:merchants#synced_at {synced_at}^^xsd:dateTime ; g:merchants#invalidated_at {invalidated_at}^^xsd:dateTime ; g:merchants#manual_delete {manual_delete}^^xsd:boolean ; g:merchants#deleted_at {deleted_at}^^xsd:dateTime ; g:merchants#created_at {created_at}^^xsd:dateTime ; g:merchants#updated_at {updated_at}^^xsd:dateTime . 
+source		SELECT * FROM `merchants`
+]]
+

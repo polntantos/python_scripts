@@ -1,0 +1,17 @@
+# Use an official Python image as the base image
+FROM python:3.9
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the current directory to the container
+COPY . .
+
+# Install necessary packages
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Set the environment variable
+ENV PYTHONUNBUFFERED 1
+
+# Run the command to start the application
+CMD ["python", "app.py"]

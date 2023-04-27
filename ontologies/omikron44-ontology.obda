@@ -1,0 +1,48 @@
+[PrefixDeclaration]
+:		http://www.semanticweb.org/pol/ontologies/2023/3/untitled-ontology-28#
+g:		http://omikron44/ontologies/
+owl:		http://www.w3.org/2002/07/owl#
+rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+xml:		http://www.w3.org/XML/1998/namespace
+xsd:		http://www.w3.org/2001/XMLSchema#
+obda:		https://w3id.org/obda/vocabulary#
+rdfs:		http://www.w3.org/2000/01/rdf-schema#
+
+[MappingDeclaration] @collection [[
+mappingId	MAPPING-ID19
+target		g:merchant_feeds/id={id} a g:merchant_feeds ; g:merchant_feeds#id {id}^^xsd:integer ; g:merchant_feeds#merchant_id {merchant_id}^^xsd:integer ; g:merchant_feeds#type {type}^^xsd:string ; g:merchant_feeds#affiliate_feed_id {affiliate_feed_id}^^xsd:string ; g:merchant_feeds#name {name}^^xsd:string ; g:merchant_feeds#url {url}^^xsd:string ; g:merchant_feeds#key {key}^^xsd:string ; g:merchant_feeds#category_delimiter {category_delimiter}^^xsd:string ; g:merchant_feeds#language {language}^^xsd:string ; g:merchant_feeds#country {country}^^xsd:string ; g:merchant_feeds#currency {currency}^^xsd:string ; g:merchant_feeds#product_count {product_count}^^xsd:integer ; g:merchant_feeds#keys {keys}^^xsd:string ; g:merchant_feeds#example {example}^^xsd:string ; g:merchant_feeds#map {map}^^xsd:string ; g:merchant_feeds#synced_at {synced_at}^^xsd:dateTime ; g:merchant_feeds#invalidated_at {invalidated_at}^^xsd:dateTime . 
+source		SELECT * FROM `merchant_feeds`
+
+mappingId	MAPPING-ID20
+target		g:merchant_feeds/id={merchant_feeds_id} g:merchant_feeds#ref-merchant_id g:merchants/id={merchants_id} . 
+source		SELECT `merchant_feeds`.`id` AS `merchant_feeds_id`, `merchants`.`id` AS `merchants_id` FROM `merchant_feeds`, `merchants` WHERE `merchant_feeds`.`merchant_id` = `merchants`.`id`
+
+mappingId	MAPPING-ID37
+target		g:products/id={id} a g:products ; g:products#id {id}^^xsd:integer ; g:products#merchant_id {merchant_id}^^xsd:integer ; g:products#merchant_feed_id {merchant_feed_id}^^xsd:integer ; g:products#affiliate_id {affiliate_id}^^xsd:string ; g:products#store_id {store_id}^^xsd:string ; g:products#slug {slug}^^xsd:string ; g:products#affiliate_link {affiliate_link}^^xsd:string ; g:products#title {title}^^xsd:string ; g:products#description {description}^^xsd:string ; g:products#link {link}^^xsd:string ; g:products#image_link {image_link}^^xsd:string ; g:products#additional_image_link {additional_image_link}^^xsd:string ; g:products#mobile_link {mobile_link}^^xsd:string ; g:products#availability {availability}^^xsd:string ; g:products#availability_date {availability_date}^^xsd:date ; g:products#cost_of_goods_sold {cost_of_goods_sold}^^xsd:double ; g:products#expiration_date {expiration_date}^^xsd:date ; g:products#price {price}^^xsd:double ; g:products#sale_price {sale_price}^^xsd:double ; g:products#google_product_category {google_product_category}^^xsd:string ; g:products#product_type {product_type}^^xsd:string ; g:products#brand {brand}^^xsd:string ; g:products#gtin {gtin}^^xsd:string ; g:products#mpn {mpn}^^xsd:string ; g:products#identifier_exists {identifier_exists}^^xsd:string ; g:products#condition {condition}^^xsd:string ; g:products#adult {adult}^^xsd:string ; g:products#multipack {multipack}^^xsd:string ; g:products#is_bundle {is_bundle}^^xsd:string ; g:products#energy_efficiency_class {energy_efficiency_class}^^xsd:string ; g:products#min_energy_efficiency_class {min_energy_efficiency_class}^^xsd:string ; g:products#max_energy_efficiency_class {max_energy_efficiency_class}^^xsd:string ; g:products#age_group {age_group}^^xsd:string ; g:products#color {color}^^xsd:string ; g:products#gender {gender}^^xsd:string ; g:products#material {material}^^xsd:string ; g:products#pattern {pattern}^^xsd:string ; g:products#size {size}^^xsd:string ; g:products#size_type {size_type}^^xsd:string ; g:products#size_system {size_system}^^xsd:string ; g:products#item_group_id {item_group_id}^^xsd:string ; g:products#ads_redirect {ads_redirect}^^xsd:string ; g:products#custom_label_0 {custom_label_0}^^xsd:string ; g:products#custom_label_1 {custom_label_1}^^xsd:string ; g:products#custom_label_2 {custom_label_2}^^xsd:string ; g:products#custom_label_3 {custom_label_3}^^xsd:string ; g:products#custom_label_4 {custom_label_4}^^xsd:string ; g:products#tax {tax}^^xsd:string ; g:products#tax_category {tax_category}^^xsd:string ; g:products#in_stock {in_stock}^^xsd:string ; g:products#excluded_at {excluded_at}^^xsd:dateTime . 
+source		SELECT * FROM `products` WHERE excluded_at IS NULL
+
+mappingId	MAPPING-ID38
+target		g:products/id={products_id} g:products#ref-merchant_feed_id g:merchant_feeds/id={merchant_feeds_id} . 
+source		SELECT `products`.`id` AS `products_id`, `merchant_feeds`.`id` AS `merchant_feeds_id` FROM `products`, `merchant_feeds` WHERE `products`.`merchant_feed_id` = `merchant_feeds`.`id`
+
+mappingId	MAPPING-ID39
+target		g:products/id={products_id} g:products#ref-merchant_id g:merchants/id={merchants_id} . 
+source		SELECT `products`.`id` AS `products_id`, `merchants`.`id` AS `merchants_id` FROM `products`, `merchants` WHERE `products`.`merchant_id` = `merchants`.`id`
+
+mappingId	MAPPING-ID57
+target		_:ontop-bnode-41{brand} a g:brands ; g:brands#brand {brand}^^xsd:string . 
+source		SELECT * FROM `brands`
+
+mappingId	MAPPING-ID78
+target		g:merchant_meta/id={id} a g:merchant_meta ; g:merchant_meta#id {id}^^xsd:integer ; g:merchant_meta#merchant_id {merchant_id}^^xsd:integer ; g:merchant_meta#affiliate_link_id {affiliate_link_id}^^xsd:string ; g:merchant_meta#avatar {avatar}^^xsd:string ; g:merchant_meta#description {description}^^xsd:string ; g:merchant_meta#categories {categories}^^xsd:string ; g:merchant_meta#website {website}^^xsd:string ; g:merchant_meta#payment_time {payment_time}^^xsd:double . 
+source		SELECT * FROM `merchant_meta`
+
+mappingId	MAPPING-ID79
+target		g:merchant_meta/id={merchant_meta_id} g:merchant_meta#ref-merchant_id g:merchants/id={merchants_id} . 
+source		SELECT `merchant_meta`.`id` AS `merchant_meta_id`, `merchants`.`id` AS `merchants_id` FROM `merchant_meta`, `merchants` WHERE `merchant_meta`.`merchant_id` = `merchants`.`id`
+
+mappingId	MAPPING-ID155
+target		g:merchants/id={id} a g:merchants ; g:merchants#id {id}^^xsd:integer ; g:merchants#type {type}^^xsd:string ; g:merchants#affiliate_id {affiliate_id}^^xsd:string ; g:merchants#name {name}^^xsd:string ; g:merchants#slug {slug}^^xsd:string ; g:merchants#email {email}^^xsd:string ; g:merchants#website {website}^^xsd:string ; g:merchants#country {country}^^xsd:string ; g:merchants#currency {currency}^^xsd:string ; g:merchants#language {language}^^xsd:string ; g:merchants#indexable {indexable}^^xsd:boolean ; g:merchants#needs_sync {needs_sync}^^xsd:boolean ; g:merchants#merchant_center_id {merchant_center_id}^^xsd:string ; g:merchants#auto_merchant_center {auto_merchant_center}^^xsd:boolean ; g:merchants#googleads_id {googleads_id}^^xsd:string ; g:merchants#auto_googleads {auto_googleads}^^xsd:boolean ; g:merchants#product_count {product_count}^^xsd:integer ; g:merchants#total_products {total_products}^^xsd:integer ; g:merchants#rank {rank}^^xsd:integer ; g:merchants#visits {visits}^^xsd:integer . 
+source		SELECT * FROM `merchants`
+]]
+

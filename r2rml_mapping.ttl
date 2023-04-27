@@ -1,0 +1,1707 @@
+
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://example.com/ns#>.
+
+<#Table_account_performances>
+	rr:logicalTable [rr:tableName "account_performances"];
+	rr:subjectMap [
+		rr:template "http://example.com/account_performances/{id}"; 
+		rr:class ex:account_performances; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:clicks; 
+		rr:objectMap [rr:column "clicks"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:conversions; 
+		rr:objectMap [rr:column "conversions"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:ctr; 
+		rr:objectMap [rr:column "ctr"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:deletedAt; 
+		rr:objectMap [rr:column "deleted_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:impressions; 
+		rr:objectMap [rr:column "impressions"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:merchantId; 
+		rr:objectMap [rr:column "merchant_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:roas; 
+		rr:objectMap [rr:column "roas"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:updatedAt; 
+		rr:objectMap [rr:column "updated_at"]; 
+	]; 
+
+.
+
+<#Table_account_reports>
+	rr:logicalTable [rr:tableName "account_reports"];
+	rr:subjectMap [
+		rr:template "http://example.com/account_reports/{id}"; 
+		rr:class ex:account_reports; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:clicks; 
+		rr:objectMap [rr:column "clicks"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:ctr; 
+		rr:objectMap [rr:column "ctr"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:dateRange; 
+		rr:objectMap [rr:column "date_range"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:deletedAt; 
+		rr:objectMap [rr:column "deleted_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:impressions; 
+		rr:objectMap [rr:column "impressions"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:merchantId; 
+		rr:objectMap [rr:column "merchant_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:updatedAt; 
+		rr:objectMap [rr:column "updated_at"]; 
+	]; 
+
+.
+
+<#Table_account_statuses>
+	rr:logicalTable [rr:tableName "account_statuses"];
+	rr:subjectMap [
+		rr:template "http://example.com/account_statuses/{id}"; 
+		rr:class ex:account_statuses; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:accountIssues; 
+		rr:objectMap [rr:column "account_issues"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:active; 
+		rr:objectMap [rr:column "active"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:deletedAt; 
+		rr:objectMap [rr:column "deleted_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:disapproved; 
+		rr:objectMap [rr:column "disapproved"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:expiring; 
+		rr:objectMap [rr:column "expiring"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:merchantId; 
+		rr:objectMap [rr:column "merchant_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:pending; 
+		rr:objectMap [rr:column "pending"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:productIssues; 
+		rr:objectMap [rr:column "product_issues"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:syncedAt; 
+		rr:objectMap [rr:column "synced_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:updatedAt; 
+		rr:objectMap [rr:column "updated_at"]; 
+	]; 
+
+.
+
+<#Table_audits>
+	rr:logicalTable [rr:tableName "audits"];
+	rr:subjectMap [
+		rr:template "http://example.com/audits/{id}"; 
+		rr:class ex:audits; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:auditableId; 
+		rr:objectMap [rr:column "auditable_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:auditableType; 
+		rr:objectMap [rr:column "auditable_type"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:event; 
+		rr:objectMap [rr:column "event"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:ipAddress; 
+		rr:objectMap [rr:column "ip_address"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:newValues; 
+		rr:objectMap [rr:column "new_values"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:oldValues; 
+		rr:objectMap [rr:column "old_values"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:tags; 
+		rr:objectMap [rr:column "tags"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:updatedAt; 
+		rr:objectMap [rr:column "updated_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:url; 
+		rr:objectMap [rr:column "url"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:userAgent; 
+		rr:objectMap [rr:column "user_agent"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:userId; 
+		rr:objectMap [rr:column "user_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:userType; 
+		rr:objectMap [rr:column "user_type"]; 
+	]; 
+
+.
+
+<#Table_clicks>
+	rr:logicalTable [rr:tableName "clicks"];
+	rr:subjectMap [
+		rr:template "http://example.com/clicks/{id}"; 
+		rr:class ex:clicks; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:deletedAt; 
+		rr:objectMap [rr:column "deleted_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:gclid; 
+		rr:objectMap [rr:column "gclid"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:ip; 
+		rr:objectMap [rr:column "ip"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:merchantId; 
+		rr:objectMap [rr:column "merchant_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:price; 
+		rr:objectMap [rr:column "price"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:productAffiliateId; 
+		rr:objectMap [rr:column "product_affiliate_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:productId; 
+		rr:objectMap [rr:column "product_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:searchTerm; 
+		rr:objectMap [rr:column "search_term"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:sessionId; 
+		rr:objectMap [rr:column "session_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:type; 
+		rr:objectMap [rr:column "type"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:updatedAt; 
+		rr:objectMap [rr:column "updated_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:userId; 
+		rr:objectMap [rr:column "user_id"]; 
+	]; 
+
+.
+
+<#Table_comments>
+	rr:logicalTable [rr:tableName "comments"];
+	rr:subjectMap [
+		rr:template "http://example.com/comments/{id}"; 
+		rr:class ex:comments; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:comment; 
+		rr:objectMap [rr:column "comment"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:commentableId; 
+		rr:objectMap [rr:column "commentable_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:commentableType; 
+		rr:objectMap [rr:column "commentable_type"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:deletedAt; 
+		rr:objectMap [rr:column "deleted_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:pinned; 
+		rr:objectMap [rr:column "pinned"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:updatedAt; 
+		rr:objectMap [rr:column "updated_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:userId; 
+		rr:objectMap [rr:column "user_id"]; 
+	]; 
+
+.
+
+<#Table_excluded_products>
+	rr:logicalTable [rr:tableName "excluded_products"];
+	rr:predicateObjectMap[ 
+		rr:predicate ex:affiliateId; 
+		rr:objectMap [rr:column "affiliate_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:excludedAt; 
+		rr:objectMap [rr:column "excluded_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:storeId; 
+		rr:objectMap [rr:column "store_id"]; 
+	]; 
+
+.
+
+<#Table_failed_jobs>
+	rr:logicalTable [rr:tableName "failed_jobs"];
+	rr:subjectMap [
+		rr:template "http://example.com/failed_jobs/{id}"; 
+		rr:class ex:failed_jobs; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:connection; 
+		rr:objectMap [rr:column "connection"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:exception; 
+		rr:objectMap [rr:column "exception"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:failedAt; 
+		rr:objectMap [rr:column "failed_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:payload; 
+		rr:objectMap [rr:column "payload"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:queue; 
+		rr:objectMap [rr:column "queue"]; 
+	]; 
+
+.
+
+<#Table_firewall_ips>
+	rr:logicalTable [rr:tableName "firewall_ips"];
+	rr:subjectMap [
+		rr:template "http://example.com/firewall_ips/{id}"; 
+		rr:class ex:firewall_ips; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:blocked; 
+		rr:objectMap [rr:column "blocked"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:deletedAt; 
+		rr:objectMap [rr:column "deleted_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:ip; 
+		rr:objectMap [rr:column "ip"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:logId; 
+		rr:objectMap [rr:column "log_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:updatedAt; 
+		rr:objectMap [rr:column "updated_at"]; 
+	]; 
+
+.
+
+<#Table_firewall_logs>
+	rr:logicalTable [rr:tableName "firewall_logs"];
+	rr:subjectMap [
+		rr:template "http://example.com/firewall_logs/{id}"; 
+		rr:class ex:firewall_logs; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:deletedAt; 
+		rr:objectMap [rr:column "deleted_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:ip; 
+		rr:objectMap [rr:column "ip"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:level; 
+		rr:objectMap [rr:column "level"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:middleware; 
+		rr:objectMap [rr:column "middleware"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:referrer; 
+		rr:objectMap [rr:column "referrer"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:request; 
+		rr:objectMap [rr:column "request"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:updatedAt; 
+		rr:objectMap [rr:column "updated_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:url; 
+		rr:objectMap [rr:column "url"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:userId; 
+		rr:objectMap [rr:column "user_id"]; 
+	]; 
+
+.
+
+<#Table_gos>
+	rr:logicalTable [rr:tableName "gos"];
+	rr:subjectMap [
+		rr:template "http://example.com/gos/{id}"; 
+		rr:class ex:gos; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:deletedAt; 
+		rr:objectMap [rr:column "deleted_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:found; 
+		rr:objectMap [rr:column "found"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:gclid; 
+		rr:objectMap [rr:column "gclid"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:noAdsRedirect; 
+		rr:objectMap [rr:column "no_ads_redirect"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:productId; 
+		rr:objectMap [rr:column "product_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:request; 
+		rr:objectMap [rr:column "request"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:requestProductId; 
+		rr:objectMap [rr:column "request_product_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:updatedAt; 
+		rr:objectMap [rr:column "updated_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:valid; 
+		rr:objectMap [rr:column "valid"]; 
+	]; 
+
+.
+
+<#Table_job_batches>
+	rr:logicalTable [rr:tableName "job_batches"];
+	rr:subjectMap [
+		rr:template "http://example.com/job_batches/{id}"; 
+		rr:class ex:job_batches; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:cancelledAt; 
+		rr:objectMap [rr:column "cancelled_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:failedJobIds; 
+		rr:objectMap [rr:column "failed_job_ids"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:failedJobs; 
+		rr:objectMap [rr:column "failed_jobs"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:finishedAt; 
+		rr:objectMap [rr:column "finished_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:name; 
+		rr:objectMap [rr:column "name"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:options; 
+		rr:objectMap [rr:column "options"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:pendingJobs; 
+		rr:objectMap [rr:column "pending_jobs"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:totalJobs; 
+		rr:objectMap [rr:column "total_jobs"]; 
+	]; 
+
+.
+
+<#Table_jobs>
+	rr:logicalTable [rr:tableName "jobs"];
+	rr:subjectMap [
+		rr:template "http://example.com/jobs/{id}"; 
+		rr:class ex:jobs; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:attempts; 
+		rr:objectMap [rr:column "attempts"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:availableAt; 
+		rr:objectMap [rr:column "available_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:payload; 
+		rr:objectMap [rr:column "payload"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:queue; 
+		rr:objectMap [rr:column "queue"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:reservedAt; 
+		rr:objectMap [rr:column "reserved_at"]; 
+	]; 
+
+.
+
+<#Table_merchant_feeds>
+	rr:logicalTable [rr:tableName "merchant_feeds"];
+	rr:subjectMap [
+		rr:template "http://example.com/merchant_feeds/{id}"; 
+		rr:class ex:merchant_feeds; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:affiliateFeedId; 
+		rr:objectMap [rr:column "affiliate_feed_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:categoryDelimiter; 
+		rr:objectMap [rr:column "category_delimiter"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:country; 
+		rr:objectMap [rr:column "country"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:currency; 
+		rr:objectMap [rr:column "currency"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:deletedAt; 
+		rr:objectMap [rr:column "deleted_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:example; 
+		rr:objectMap [rr:column "example"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:invalidatedAt; 
+		rr:objectMap [rr:column "invalidated_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:key; 
+		rr:objectMap [rr:column "key"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:keys; 
+		rr:objectMap [rr:column "keys"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:language; 
+		rr:objectMap [rr:column "language"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:manualDelete; 
+		rr:objectMap [rr:column "manual_delete"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:map; 
+		rr:objectMap [rr:column "map"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:merchantId; 
+		rr:objectMap [rr:column "merchant_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:name; 
+		rr:objectMap [rr:column "name"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:order; 
+		rr:objectMap [rr:column "order"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:productCount; 
+		rr:objectMap [rr:column "product_count"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:syncedAt; 
+		rr:objectMap [rr:column "synced_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:type; 
+		rr:objectMap [rr:column "type"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:updatedAt; 
+		rr:objectMap [rr:column "updated_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:url; 
+		rr:objectMap [rr:column "url"]; 
+	]; 
+
+.
+
+<#Table_merchant_meta>
+	rr:logicalTable [rr:tableName "merchant_meta"];
+	rr:subjectMap [
+		rr:template "http://example.com/merchant_meta/{id}"; 
+		rr:class ex:merchant_meta; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:affiliateLinkId; 
+		rr:objectMap [rr:column "affiliate_link_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:approvalRate; 
+		rr:objectMap [rr:column "approval_rate"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:avatar; 
+		rr:objectMap [rr:column "avatar"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:categories; 
+		rr:objectMap [rr:column "categories"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:deletedAt; 
+		rr:objectMap [rr:column "deleted_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:description; 
+		rr:objectMap [rr:column "description"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:merchantId; 
+		rr:objectMap [rr:column "merchant_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:paymentTime; 
+		rr:objectMap [rr:column "payment_time"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:updatedAt; 
+		rr:objectMap [rr:column "updated_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:website; 
+		rr:objectMap [rr:column "website"]; 
+	]; 
+
+.
+
+<#Table_merchants>
+	rr:logicalTable [rr:tableName "merchants"];
+	rr:subjectMap [
+		rr:template "http://example.com/merchants/{id}"; 
+		rr:class ex:merchants; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:affiliateId; 
+		rr:objectMap [rr:column "affiliate_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:autoGoogleads; 
+		rr:objectMap [rr:column "auto_googleads"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:autoMerchantCenter; 
+		rr:objectMap [rr:column "auto_merchant_center"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:country; 
+		rr:objectMap [rr:column "country"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:currency; 
+		rr:objectMap [rr:column "currency"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:deletedAt; 
+		rr:objectMap [rr:column "deleted_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:email; 
+		rr:objectMap [rr:column "email"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:excludeCategories; 
+		rr:objectMap [rr:column "exclude_categories"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:googleadsId; 
+		rr:objectMap [rr:column "googleads_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:indexable; 
+		rr:objectMap [rr:column "indexable"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:invalidatedAt; 
+		rr:objectMap [rr:column "invalidated_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:language; 
+		rr:objectMap [rr:column "language"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:manualDelete; 
+		rr:objectMap [rr:column "manual_delete"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:mcaccountCreatedAt; 
+		rr:objectMap [rr:column "mcaccount_created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:merchantCenterId; 
+		rr:objectMap [rr:column "merchant_center_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:name; 
+		rr:objectMap [rr:column "name"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:needsSync; 
+		rr:objectMap [rr:column "needs_sync"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:productCount; 
+		rr:objectMap [rr:column "product_count"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:queue; 
+		rr:objectMap [rr:column "queue"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:rank; 
+		rr:objectMap [rr:column "rank"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:slug; 
+		rr:objectMap [rr:column "slug"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:syncedAt; 
+		rr:objectMap [rr:column "synced_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:totalProducts; 
+		rr:objectMap [rr:column "total_products"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:type; 
+		rr:objectMap [rr:column "type"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:updatedAt; 
+		rr:objectMap [rr:column "updated_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:visits; 
+		rr:objectMap [rr:column "visits"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:website; 
+		rr:objectMap [rr:column "website"]; 
+	]; 
+
+.
+
+<#Table_migrations>
+	rr:logicalTable [rr:tableName "migrations"];
+	rr:subjectMap [
+		rr:template "http://example.com/migrations/{id}"; 
+		rr:class ex:migrations; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:batch; 
+		rr:objectMap [rr:column "batch"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:migration; 
+		rr:objectMap [rr:column "migration"]; 
+	]; 
+
+.
+
+<#Table_model_has_permissions>
+	rr:logicalTable [rr:tableName "model_has_permissions"];
+	rr:predicateObjectMap[ 
+		rr:predicate ex:modelId; 
+		rr:objectMap [rr:column "model_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:modelType; 
+		rr:objectMap [rr:column "model_type"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:permissionId; 
+		rr:objectMap [rr:column "permission_id"]; 
+	]; 
+
+.
+
+<#Table_model_has_roles>
+	rr:logicalTable [rr:tableName "model_has_roles"];
+	rr:predicateObjectMap[ 
+		rr:predicate ex:modelId; 
+		rr:objectMap [rr:column "model_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:modelType; 
+		rr:objectMap [rr:column "model_type"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:roleId; 
+		rr:objectMap [rr:column "role_id"]; 
+	]; 
+
+.
+
+<#Table_notifications>
+	rr:logicalTable [rr:tableName "notifications"];
+	rr:subjectMap [
+		rr:template "http://example.com/notifications/{id}"; 
+		rr:class ex:notifications; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:data; 
+		rr:objectMap [rr:column "data"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:notifiableId; 
+		rr:objectMap [rr:column "notifiable_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:notifiableType; 
+		rr:objectMap [rr:column "notifiable_type"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:readAt; 
+		rr:objectMap [rr:column "read_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:type; 
+		rr:objectMap [rr:column "type"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:updatedAt; 
+		rr:objectMap [rr:column "updated_at"]; 
+	]; 
+
+.
+
+<#Table_password_resets>
+	rr:logicalTable [rr:tableName "password_resets"];
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:email; 
+		rr:objectMap [rr:column "email"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:token; 
+		rr:objectMap [rr:column "token"]; 
+	]; 
+
+.
+
+<#Table_permissions>
+	rr:logicalTable [rr:tableName "permissions"];
+	rr:subjectMap [
+		rr:template "http://example.com/permissions/{id}"; 
+		rr:class ex:permissions; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:guardName; 
+		rr:objectMap [rr:column "guard_name"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:name; 
+		rr:objectMap [rr:column "name"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:updatedAt; 
+		rr:objectMap [rr:column "updated_at"]; 
+	]; 
+
+.
+
+<#Table_personal_access_tokens>
+	rr:logicalTable [rr:tableName "personal_access_tokens"];
+	rr:subjectMap [
+		rr:template "http://example.com/personal_access_tokens/{id}"; 
+		rr:class ex:personal_access_tokens; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:abilities; 
+		rr:objectMap [rr:column "abilities"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:lastUsedAt; 
+		rr:objectMap [rr:column "last_used_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:name; 
+		rr:objectMap [rr:column "name"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:token; 
+		rr:objectMap [rr:column "token"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:tokenableId; 
+		rr:objectMap [rr:column "tokenable_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:tokenableType; 
+		rr:objectMap [rr:column "tokenable_type"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:updatedAt; 
+		rr:objectMap [rr:column "updated_at"]; 
+	]; 
+
+.
+
+<#Table_products>
+	rr:logicalTable [rr:tableName "products"];
+	rr:subjectMap [
+		rr:template "http://example.com/products/{id}"; 
+		rr:class ex:products; 
+		rr:termType rr:IRI; 
+	];
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:additionalImageLink; 
+		rr:objectMap [rr:column "additional_image_link"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:adsRedirect; 
+		rr:objectMap [rr:column "ads_redirect"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:adult; 
+		rr:objectMap [rr:column "adult"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:affiliateId; 
+		rr:objectMap [rr:column "affiliate_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:affiliateLink; 
+		rr:objectMap [rr:column "affiliate_link"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:ageGroup; 
+		rr:objectMap [rr:column "age_group"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:availability; 
+		rr:objectMap [rr:column "availability"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:availabilityDate; 
+		rr:objectMap [rr:column "availability_date"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:brand; 
+		rr:objectMap [rr:column "brand"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:color; 
+		rr:objectMap [rr:column "color"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:condition; 
+		rr:objectMap [rr:column "condition"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:contentapiDelete; 
+		rr:objectMap [rr:column "contentapi_delete"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:contentapiDeletedAt; 
+		rr:objectMap [rr:column "contentapi_deleted_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:contentapiInsert; 
+		rr:objectMap [rr:column "contentapi_insert"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:contentapiInsertedAt; 
+		rr:objectMap [rr:column "contentapi_inserted_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:contentapiUpdate; 
+		rr:objectMap [rr:column "contentapi_update"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:costOfGoodsSold; 
+		rr:objectMap [rr:column "cost_of_goods_sold"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:createdAt; 
+		rr:objectMap [rr:column "created_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:customLabel0; 
+		rr:objectMap [rr:column "custom_label_0"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:customLabel1; 
+		rr:objectMap [rr:column "custom_label_1"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:customLabel2; 
+		rr:objectMap [rr:column "custom_label_2"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:customLabel3; 
+		rr:objectMap [rr:column "custom_label_3"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:customLabel4; 
+		rr:objectMap [rr:column "custom_label_4"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:deletedAt; 
+		rr:objectMap [rr:column "deleted_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:description; 
+		rr:objectMap [rr:column "description"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:elasticsearchDelete; 
+		rr:objectMap [rr:column "elasticsearch_delete"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:elasticsearchInsert; 
+		rr:objectMap [rr:column "elasticsearch_insert"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:energyEfficiencyClass; 
+		rr:objectMap [rr:column "energy_efficiency_class"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:excludedAt; 
+		rr:objectMap [rr:column "excluded_at"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:excludedDestination; 
+		rr:objectMap [rr:column "excluded_destination"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:expirationDate; 
+		rr:objectMap [rr:column "expiration_date"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:gender; 
+		rr:objectMap [rr:column "gender"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:googleProductCategory; 
+		rr:objectMap [rr:column "google_product_category"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:gtin; 
+		rr:objectMap [rr:column "gtin"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:id; 
+		rr:objectMap [rr:column "id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:identifierExists; 
+		rr:objectMap [rr:column "identifier_exists"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:imageLink; 
+		rr:objectMap [rr:column "image_link"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:inStock; 
+		rr:objectMap [rr:column "in_stock"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:includedDestination; 
+		rr:objectMap [rr:column "included_destination"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:installment; 
+		rr:objectMap [rr:column "installment"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:isBundle; 
+		rr:objectMap [rr:column "is_bundle"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:itemGroupId; 
+		rr:objectMap [rr:column "item_group_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:link; 
+		rr:objectMap [rr:column "link"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:loyaltyPoints; 
+		rr:objectMap [rr:column "loyalty_points"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:material; 
+		rr:objectMap [rr:column "material"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:maxEnergyEfficiencyClass; 
+		rr:objectMap [rr:column "max_energy_efficiency_class"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:maxHandlingTime; 
+		rr:objectMap [rr:column "max_handling_time"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:merchantFeedId; 
+		rr:objectMap [rr:column "merchant_feed_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:merchantId; 
+		rr:objectMap [rr:column "merchant_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:minEnergyEfficiencyClass; 
+		rr:objectMap [rr:column "min_energy_efficiency_class"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:minHandlingTime; 
+		rr:objectMap [rr:column "min_handling_time"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:mobileLink; 
+		rr:objectMap [rr:column "mobile_link"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:mpn; 
+		rr:objectMap [rr:column "mpn"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:multipack; 
+		rr:objectMap [rr:column "multipack"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:pattern; 
+		rr:objectMap [rr:column "pattern"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:price; 
+		rr:objectMap [rr:column "price"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:productType; 
+		rr:objectMap [rr:column "product_type"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:promotionId; 
+		rr:objectMap [rr:column "promotion_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:salePrice; 
+		rr:objectMap [rr:column "sale_price"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:salePriceEffectiveDate; 
+		rr:objectMap [rr:column "sale_price_effective_date"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:shipping; 
+		rr:objectMap [rr:column "shipping"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:shippingHeight; 
+		rr:objectMap [rr:column "shipping_height"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:shippingLabel; 
+		rr:objectMap [rr:column "shipping_label"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:shippingLength; 
+		rr:objectMap [rr:column "shipping_length"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:shippingWeight; 
+		rr:objectMap [rr:column "shipping_weight"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:shippingWidth; 
+		rr:objectMap [rr:column "shipping_width"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:size; 
+		rr:objectMap [rr:column "size"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:sizeSystem; 
+		rr:objectMap [rr:column "size_system"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:sizeType; 
+		rr:objectMap [rr:column "size_type"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:slug; 
+		rr:objectMap [rr:column "slug"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:storeId; 
+		rr:objectMap [rr:column "store_id"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:tax; 
+		rr:objectMap [rr:column "tax"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:taxCategory; 
+		rr:objectMap [rr:column "tax_category"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:title; 
+		rr:objectMap [rr:column "title"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:unitPricingBaseMeasure; 
+		rr:objectMap [rr:column "unit_pricing_base_measure"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:unitPricingMeasure; 
+		rr:objectMap [rr:column "unit_pricing_measure"]; 
+	]; 
+
+	rr:predicateObjectMap[ 
+		rr:predicate ex:updatedAt; 
+		rr:objectMap [rr:column "updated_at"]; 
+	]; 
+
+.
+

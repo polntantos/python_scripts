@@ -1,0 +1,7 @@
+urn:MAPPING-ID*
+/googleToGraph/neo4j-data
+/omikronToGraph/.database
+/omikronToGraph/database
+/omikronToGraph/notebook
+/omikronToGraph/virtuoso
+/rdf_output

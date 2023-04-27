@@ -1,0 +1,25 @@
+@prefix ns1: <http://example.com/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+ns1:DataProperties a owl:DatatypeProperty,
+        owl:FunctionalProperty .
+
+ns1:Feed a owl:Class ;
+    ns1:DataProperties "feedTitle, feedDescription, etc." ;
+    ns1:ObjectProperties "hasFeedProduct" .
+
+ns1:FeedProduct a owl:Class ;
+    ns1:DataProperties "price, title, salePrice, availability, category" ;
+    ns1:ObjectProperties "hasFeed, hasProduct" ;
+    ns1:SubClassOf "Feed, Product" .
+
+ns1:ObjectProperties a owl:DatatypeProperty,
+        owl:FunctionalProperty .
+
+ns1:Product a owl:Class ;
+    ns1:DataProperties "title, description, etc." ;
+    ns1:ObjectProperties "hasFeedProduct" .
+
+ns1:SubClassOf a owl:DatatypeProperty,
+        owl:FunctionalProperty .
+
