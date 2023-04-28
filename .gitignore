@@ -5,3 +5,5 @@ urn:MAPPING-ID*
 /omikronToGraph/notebook
 /omikronToGraph/virtuoso
 /rdf_output
+/datasets/*
+/classes/__pycache__

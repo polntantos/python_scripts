@@ -5,11 +5,13 @@ import re
 
 
 class LogicalTable:
-    def __init__(self, name, type, construct=None) -> None:
+    def __init__(self, name, type, construct=None, cursor=0) -> None:
         self.name = name
         self.type = type
         self.construct = f"{construct} LIMIT 10"
-        self.cursor = 0
+        self.cursor = cursor
+        print(cursor)
+        exit()
 
     def construct_table(self):
         if self.type.toPython() == "sqlQuery":

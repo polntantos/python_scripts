@@ -7,12 +7,14 @@ from classes.SubjectMap import SubjectMap
 
 
 class TripleMap:
-    def __init__(self, name, triplesMapGraph: Graph) -> None:
+    def __init__(self, name, triplesMapGraph: Graph, status=None) -> None:
         self.name = name
         self.triplesMapGraph = triplesMapGraph
         self.logicalTables = []
         self.mappings = []
         self.subjectMap = []
+        self.status = status
+        print(status)
         self.digest_triples_map()
 
     def digest_triples_map(self) -> None:
@@ -40,7 +42,13 @@ class TripleMap:
 
         results = self.triplesMapGraph.query(logical_table_query)
         for result in results:
-            logicalTable = LogicalTable(self.name, result["type"], result["query"])
+            logicalTable = LogicalTable(
+                f"{self.name}-{len(self.logicalTables)}",
+                result["type"],
+                result["query"],
+                self.status.get(f"{self.name}-{len(self.logicalTables)}"),
+            )
+
             self.logicalTables.append(logicalTable)
             # if it has query or it has table act accordingly
 
@@ -126,7 +134,8 @@ class TripleMap:
                         for objectMap in self.mappings:
                             objectMap.materialize(row, subject, g)
 
-                g.serialize(
-                    destination=f"{table.name}-{counter}-test.ttl", format="turtle"
-                )
+                # g.serialize(
+                #     destination=f"/rdf_output/{table.name}-{counter}-test.ttl",
+                #     format="turtle",
+                # )
                 virtuoso.insert(g)
