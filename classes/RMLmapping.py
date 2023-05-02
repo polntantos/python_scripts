@@ -46,9 +46,3 @@ class RMLmapping:
                 self.status,
             )
             self.mappings.append(triplemap)
-
-    def perform_conversion(self):
-        self.status.saveStatus()
-        exit
-        for mapping in self.mappings:
-            mapping.materialize_triples()
