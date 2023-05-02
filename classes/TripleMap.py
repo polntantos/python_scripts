@@ -4,6 +4,7 @@ from classes.LogicalTable import LogicalTable
 from classes.PredicateObjectMap import PredicateObjectMap
 from classes.PredicateObjectRelation import PredicateObjectRelation
 from classes.SubjectMap import SubjectMap
+from multiprocessing import Queue, Process
 
 
 class TripleMap:
@@ -14,7 +15,7 @@ class TripleMap:
         self.mappings = []
         self.subjectMap = []
         self.status = status
-        print(status)
+
         self.digest_triples_map()
 
     def digest_triples_map(self) -> None:
@@ -39,14 +40,15 @@ class TripleMap:
             }}
         }}
         """
-
         results = self.triplesMapGraph.query(logical_table_query)
+
         for result in results:
+            triplemapStatus = self.status.status.get(self.name.toPython())
             logicalTable = LogicalTable(
                 f"{self.name}-{len(self.logicalTables)}",
                 result["type"],
                 result["query"],
-                self.status.get(f"{self.name}-{len(self.logicalTables)}"),
+                triplemapStatus.get(f"{self.name}-{len(self.logicalTables)}"),
             )
 
             self.logicalTables.append(logicalTable)
@@ -111,19 +113,59 @@ class TripleMap:
             )
 
     def materialize_triples(self):
-        virtuoso = VirtuosoWrapper()
+        self.virtuoso = VirtuosoWrapper()
+        rowsQueue = Queue()
+
+        self.dbProcess = Process(
+            target=self.getDataFromLogicalTables, args=(rowsQueue,), daemon=True
+        )
+
+        self.conversionProcess = Process(
+            target=self.convertDBrowsToGraph,
+            args=(
+                rowsQueue,
+                self.status,
+            ),
+            daemon=True,
+        )
+
+        self.dbProcess.start()
+        print(f"activating dbProcess")
+        self.conversionProcess.start()
+        print(f"activating conversion")
+
+        self.dbProcess.join()
+        self.conversionProcess.join(timeout=20)
+
+        # g.serialize(
+        #     destination=f"/rdf_output/{table.name}-{counter}-test.ttl",
+        #     format="turtle",
+        # )
+
+    def getDataFromLogicalTables(self, rowsQueue):
         for table in self.logicalTables:
-            counter = 0
             table.construct_table()
 
             while True:
-                counter += 1
                 data = table.fetch_data()
                 if len(data) < 1:
+                    rowsQueue.put((None, None))
+                    break
+                rowsQueue.put((table.cursor, data))
+
+    def convertDBrowsToGraph(self, rowsQueue, status):
+        print(status.status)
+
+        while True:
+            try:
+                cursor, data = rowsQueue.get(timeout=1)
+                g = Graph()
+                print(f"cursor at {cursor}")
+                if data is None and cursor is None:
+                    print(f"exiting {self.name}")
                     break
 
-                g = Graph()
-
+                print(f"Processing Rows")
                 for index, row in data.iterrows():
                     subjects = []
                     for subjectMap in self.subjectMap:
@@ -134,8 +176,9 @@ class TripleMap:
                         for objectMap in self.mappings:
                             objectMap.materialize(row, subject, g)
 
-                # g.serialize(
-                #     destination=f"/rdf_output/{table.name}-{counter}-test.ttl",
-                #     format="turtle",
-                # )
-                virtuoso.insert(g)
+                cursorPosition = self.virtuoso.save(g, cursor)
+                print(f"Conversion ended for {cursorPosition}")
+                status.saveStatus(self.name, cursorPosition)
+
+            except:
+                continue  # Exit loop if process 1 has finished

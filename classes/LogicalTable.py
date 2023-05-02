@@ -8,10 +8,11 @@ class LogicalTable:
     def __init__(self, name, type, construct=None, cursor=0) -> None:
         self.name = name
         self.type = type
-        self.construct = f"{construct} LIMIT 10"
+        self.batchSize = 5000
+        self.construct = f"{construct} LIMIT {self.batchSize}"
         self.cursor = cursor
-        print(cursor)
-        exit()
+        # print(cursor)
+        # exit()
 
     def construct_table(self):
         if self.type.toPython() == "sqlQuery":
@@ -37,22 +38,21 @@ class LogicalTable:
         if offset > 0:
             query = f"{query} OFFSET {offset}"
 
-        print("Performing query :", query)
+        # print("Performing query :", query)
         self.datatable.execute(query)
 
     def fetch_data(self):
         if self.type.toPython() == "sqlQuery":
             result = self.read_database(self.cursor)
-            print("Fetching 10 from start ", self.cursor, " from database.")
-            self.cursor += 10
+            print(f"Fetching {self.batchSize} from start {self.cursor} from database.")
+            self.cursor += self.batchSize
             field_names = [i[0] for i in self.datatable.description]
-            # print(type(result))
-            # print(result)
+
             return pd.DataFrame(self.datatable.fetchall(), columns=field_names)
 
         elif self.type.toPython() == "table":
             start = self.cursor
-            self.cursor += 10
+            self.cursor += self.batchSize
             print(f"Fetching {start} to {self.cursor} from database.")
             return self.datatable.iloc[start : self.cursor]
         else:

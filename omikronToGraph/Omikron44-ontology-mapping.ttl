@@ -30,20 +30,6 @@
       rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/tags#order_column>
     ], [ a rr:PredicateObjectMap;
       rr:objectMap [ a rr:ObjectMap, rr:TermMap;
-          rr:column "created_at";
-          rr:datatype xsd:dateTime;
-          rr:termType rr:Literal
-        ];
-      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/tags#created_at>
-    ], [ a rr:PredicateObjectMap;
-      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
-          rr:column "updated_at";
-          rr:datatype xsd:dateTime;
-          rr:termType rr:Literal
-        ];
-      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/tags#updated_at>
-    ], [ a rr:PredicateObjectMap;
-      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
           rr:column "id";
           rr:datatype xsd:integer;
           rr:termType rr:Literal
@@ -102,21 +88,7 @@
           rr:termType rr:Literal
         ];
       rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#name>
-    ], [ a rr:PredicateObjectMap;
-      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
-          rr:column "url";
-          rr:datatype xsd:string;
-          rr:termType rr:Literal
-        ];
-      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#url>
-    ], [ a rr:PredicateObjectMap;
-      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
-          rr:column "key";
-          rr:datatype xsd:string;
-          rr:termType rr:Literal
-        ];
-      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#key>
-    ], [ a rr:PredicateObjectMap;
+    ],  [ a rr:PredicateObjectMap;
       rr:objectMap [ a rr:ObjectMap, rr:TermMap;
           rr:column "category_delimiter";
           rr:datatype xsd:string;
@@ -146,40 +118,12 @@
       rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#currency>
     ], [ a rr:PredicateObjectMap;
       rr:objectMap [ a rr:ObjectMap, rr:TermMap;
-          rr:column "product_count";
-          rr:datatype xsd:integer;
-          rr:termType rr:Literal
-        ];
-      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#product_count>
-    ], [ a rr:PredicateObjectMap;
-      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
           rr:column "order";
           rr:datatype xsd:integer;
           rr:termType rr:Literal
         ];
       rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#order>
-    ], [ a rr:PredicateObjectMap;
-      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
-          rr:column "keys";
-          rr:datatype xsd:string;
-          rr:termType rr:Literal
-        ];
-      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#keys>
-    ], [ a rr:PredicateObjectMap;
-      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
-          rr:column "example";
-          rr:datatype xsd:string;
-          rr:termType rr:Literal
-        ];
-      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#example>
-    ], [ a rr:PredicateObjectMap;
-      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
-          rr:column "map";
-          rr:datatype xsd:string;
-          rr:termType rr:Literal
-        ];
-      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#map>
-    ], [ a rr:PredicateObjectMap;
+    ],[ a rr:PredicateObjectMap;
       rr:objectMap [ a rr:ObjectMap, rr:TermMap;
           rr:column "synced_at";
           rr:datatype xsd:dateTime;
@@ -214,13 +158,6 @@
           rr:termType rr:Literal
         ];
       rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#created_at>
-    ], [ a rr:PredicateObjectMap;
-      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
-          rr:column "updated_at";
-          rr:datatype xsd:dateTime;
-          rr:termType rr:Literal
-        ];
-      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/merchant_feeds#updated_at>
     ];
   rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
       rr:class g:merchant_feeds;
@@ -292,13 +229,6 @@
       rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#slug>
     ], [ a rr:PredicateObjectMap;
       rr:objectMap [ a rr:ObjectMap, rr:TermMap;
-          rr:column "affiliate_link";
-          rr:datatype xsd:string;
-          rr:termType rr:Literal
-        ];
-      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#affiliate_link>
-    ], [ a rr:PredicateObjectMap;
-      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
           rr:column "title";
           rr:datatype xsd:string;
           rr:termType rr:Literal
@@ -332,13 +262,6 @@
           rr:termType rr:Literal
         ];
       rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#additional_image_link>
-    ], [ a rr:PredicateObjectMap;
-      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
-          rr:column "mobile_link";
-          rr:datatype xsd:string;
-          rr:termType rr:Literal
-        ];
-      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#mobile_link>
     ], [ a rr:PredicateObjectMap;
       rr:objectMap [ a rr:ObjectMap, rr:TermMap;
           rr:column "availability";
@@ -402,20 +325,6 @@
           rr:termType rr:Literal
         ];
       rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#unit_pricing_base_measure>
-    ], [ a rr:PredicateObjectMap;
-      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
-          rr:column "installment";
-          rr:datatype xsd:string;
-          rr:termType rr:Literal
-        ];
-      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#installment>
-    ], [ a rr:PredicateObjectMap;
-      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
-          rr:column "loyalty_points";
-          rr:datatype xsd:string;
-          rr:termType rr:Literal
-        ];
-      rr:predicate <http://www.semanticweb.org/pol/ontologies/omikron44/products#loyalty_points>
     ], [ a rr:PredicateObjectMap;
       rr:objectMap [ a rr:ObjectMap, rr:TermMap;
           rr:column "google_product_category";

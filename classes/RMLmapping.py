@@ -43,7 +43,7 @@ class RMLmapping:
             triplemap = TripleMap(
                 result["triplesMapName"],
                 self.graph,
-                self.status.status.get(result["triplesMapName"].toPython()),
+                self.status,
             )
             self.mappings.append(triplemap)
 
