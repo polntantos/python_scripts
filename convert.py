@@ -19,19 +19,19 @@ def getDataFromLogicalTables(mapping, rowsQueue):
         while True:
             data = table.fetch_data()
             if len(data) < 1:
-                rowsQueue.put((None, None))
+                rowsQueue.put((None, None, None))
                 break
-            rowsQueue.put((table.cursor, data))
+            rowsQueue.put((table.cursor, table.name, data))
 
 
 def convertDBrowsToGraph(mapping, rowsQueue, status, virtuoso):
     while True:
         try:
-            cursor, data = rowsQueue.get(timeout=1)
+            cursor, name, data = rowsQueue.get(timeout=1)
             g = Graph()
-            print(f"cursor at {cursor}")
-            if data is None and cursor is None:
-                print(f"exiting {mapping.name}")
+            print(f"Cursor at {cursor} for logical table {name}")
+            if data is None and name is None and cursor is None:
+                print(f"Exiting {name}")
                 break
 
             print(f"Processing Rows")
@@ -47,15 +47,13 @@ def convertDBrowsToGraph(mapping, rowsQueue, status, virtuoso):
 
             cursorPosition = virtuoso.save(g, cursor)
             print(f"Conversion ended for {cursorPosition}")
-            status.saveStatus(mapping.name, cursorPosition)
+            status.saveStatus(name, cursorPosition)
 
         except:
             continue  # Exit loop if process 1 has finished
 
 
 for mapping in rmlMapping.mappings:
-    mapping.materialize_triples()
-
     dbProcess = Process(
         target=getDataFromLogicalTables,
         args=(
@@ -82,6 +80,3 @@ for mapping in rmlMapping.mappings:
     print(f"activating conversion")
     dbProcess.join()
     conversionProcess.join(timeout=20)
-
-
-# Build a saving status Process with its own queue and redo virtuoso wrapper

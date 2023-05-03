@@ -11,15 +11,16 @@ class Status:
 
         for mapping in self.rmlMapping.mappings:
             tripleMapStats = {}
-            # print(mapping.name)
+
             for logicalTable in mapping.logicalTables:
                 tripleMapStats[logicalTable.name] = logicalTable.cursor
+
                 if (
                     logicalTableName != None
                     and position != None
                     and logicalTable.name == logicalTableName
                 ):
-                    print(f"Saving table {logicalTable.name} at cursor {position}")
+                    print(f"Saving table {logicalTableName} at cursor {position}")
                     tableStats[logicalTableName] = position
 
             tableStats[mapping.name.toPython()] = tripleMapStats
