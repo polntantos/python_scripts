@@ -37,3 +37,22 @@ SELECT (COUNT(?s) AS ?count)
 WHERE {
   ?s a <http://omikron44/ontologies/products> .
 }
+
+# show all triples related to a product
+
+SELECT ?p ?o
+WHERE {
+  { ?s ?p <http://omikron44/ontologies/products/id=2267149> . }
+  UNION
+  { <http://omikron44/ontologies/products/id=2267149> ?p ?o . }
+}
+
+# delete all brands
+
+DELETE WHERE {
+  ?s ?p ?o .
+  FILTER (
+    (isIRI(?s) && (strstarts(str(?s), "http://omikron44/ontologies/brands")))
+    || (isIRI(?o) && (strstarts(str(?o), "http://omikron44/ontologies/brands")))
+  )
+}

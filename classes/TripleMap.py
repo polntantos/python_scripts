@@ -44,6 +44,7 @@ class TripleMap:
 
         for result in results:
             triplemapStatus = self.status.status.get(self.name.toPython())
+            print(self.name.toPython())
             logicalTable = LogicalTable(
                 f"{self.name}-{len(self.logicalTables)}",
                 result["type"],

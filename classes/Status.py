@@ -21,9 +21,9 @@ class Status:
                     and logicalTable.name == logicalTableName
                 ):
                     print(f"Saving table {logicalTableName} at cursor {position}")
-                    tableStats[logicalTableName] = position
-
-            tableStats[mapping.name.toPython()] = tripleMapStats
+                    tableStats[mapping.name.toPython()][logicalTableName] = position
+                else:
+                    tableStats[mapping.name.toPython()] = tripleMapStats
 
         # print(tableStats)
         self.status = tableStats

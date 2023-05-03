@@ -780,8 +780,8 @@
     ];
   rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
       rr:class g:brands;
-      rr:template "http://omikron44/ontologies/brands/id={brand}";
-      rr:termType rr:BlankNode
+      rr:template "http://omikron44/ontologies/brands/id={id}";
+      rr:termType rr:IRI
     ] .
 
 <urn:MAPPING-ID79> a rr:TriplesMap;
