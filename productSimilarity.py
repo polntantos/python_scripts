@@ -3,23 +3,27 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import dendrogram, linkage
 from rdflib import Graph, URIRef, Literal, BNode, Namespace, RDF, RDFS
 import warnings
 from sklearn.exceptions import ConvergenceWarning
+from sklearn.cluster import AgglomerativeClustering
+import json
+
 
 # Connect to MySQL database
 def connect_to_database():
     return pymysql.connect(
-        host='localhost',
-        user='root',
-        password='password',
-        db='test'
+        host='192.168.10.30',
+        user='homestead',
+        password='secret',
+        db='homestead'
     )
 
 # Get all distinct brands from database
 def get_distinct_brands(cursor):
     print('Getting brands')
-    cursor.execute("SELECT DISTINCT brand FROM products")
+    cursor.execute("SELECT DISTINCT brand FROM products WHERE brand IN ('xiaomi','lenovo')")
     return [row[0] for row in cursor.fetchall()]
 
 # Get products from the database for a given brand
@@ -91,6 +95,8 @@ def perform_clustering(titles):
 
 # Store product clusters in RDF graph
 def store_clusters_in_graph(graph, brand, titles, clusters):
+    print('clusters')
+    print(clusters)
     # Define RDF namespaces
     ns = Namespace('http://example.org/ontology#')
     rdf = Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
@@ -104,6 +110,7 @@ def store_clusters_in_graph(graph, brand, titles, clusters):
 
     # Add product nodes to graph with corresponding clusters
     for i, title in enumerate(titles):
+        print(f"index {i} title {title}")
         product_node = URIRef('http://example.org/product/' + str(i))
         graph.add((product_node, RDF.type, ns.Product))
         graph.add((product_node, ns.hasTitle, Literal(title)))
@@ -132,15 +139,42 @@ def main():
 
         # Group products with similar titles together
         titles = [product[0] for product in products]
-        clusters,cluster_keywords = perform_clustering(titles)
-        print(cluster_keywords)
+        # clusters,cluster_keywords = perform_clustering(titles)
+        clusters = perform_agglomerative_clusterring(titles)
+        with open(f"clusters/{brand}-clusters.json","w") as f:
+            json.dump(clusters,f)
+        # exit()
+        # print(cluster_keywords)
 
         # Store clusters in RDF graph
-        graph = Graph()
-        graph.bind('ns', Namespace('http://example.org/ontology#'))
-        graph = store_clusters_in_graph(graph, brand, titles, clusters)
+        # graph = Graph()
+        # graph.bind('ns', Namespace('http://example.org/ontology#'))
+        # graph = store_clusters_in_graph(graph, brand, titles, clusters)
 
         # Serialize RDF graph to file
-        graph.serialize(destination=f"rdf_output/{brand} product_groups.rdf", format='xml')
+        # graph.serialize(destination=f"rdf_output/{brand} product_groups.rdf", format='xml')
+
+def perform_agglomerative_clusterring(titles):
+    vectorizer = TfidfVectorizer(stop_words='english')
+    X = vectorizer.fit_transform(titles)
+    # Z = linkage(X.toarray(), 'ward')
+    
+    # fig = plt.figure(figsize=(25, 10))
+    # dn = dendrogram(Z)
+    # plt.show()
+
+    clustering = AgglomerativeClustering(n_clusters=None, distance_threshold=0.2, linkage='ward')
+    cluster_labels = clustering.fit_predict(X.toarray())
+    clusters = {}
+    
+    for i, cluster_label in enumerate(cluster_labels):
+        if cluster_label not in clusters:
+            clusters[cluster_label.item()] = []
+        clusters[cluster_label.item()].append(titles[i])
+
+    print(clusters)
+    return clusters
+    
+
 
 main()
