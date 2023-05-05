@@ -1,3 +1,4 @@
+import pyspark
 from pyspark.sql import SparkSession
 
 spark = (
@@ -13,7 +14,8 @@ spark = (
 properties={
   "driver":"org.mariadb.jdbc.Driver", 
   "user":"homestead",
-  "password":"secret"
+  "password":"secret",
+  # "database":"homestead",
 }
 
 df = spark.read.jdbc(
@@ -22,7 +24,8 @@ df = spark.read.jdbc(
   properties=properties
 ) 
 
-df.take(10).show()
+print(df.collect())
+print(df.toLocalIterator())
 
     
     # .option("dbtable","products") \
