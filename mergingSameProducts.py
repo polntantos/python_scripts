@@ -1,9 +1,27 @@
 import json
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import AgglomerativeClustering
+from classes.VirtuosoWrapper import VirtuosoWrapper
 
+virtuoso = VirtuosoWrapper()
 # Step 1: Fetch the product titles and IDs from Virtuoso
-# Assuming you have two lists: titles and ids
+# get brands
+brands_query = """
+SELECT ?brand_uri ?name
+WHERE {
+  ?brand_uri a <http://omikron44/ontologies/brands> .
+  ?brand_uri <http://omikron44/ontologies/brands#brand> ?name .
+}
+"""
+brands = virtuoso.get(brands_query)
+# print(brands)
+
+for brand in brands["results"]["bindings"]:
+    print(brand)
+    # products_query = f"""
+
+    # """
+exit()
 
 # Step 2: Preprocess the data
 

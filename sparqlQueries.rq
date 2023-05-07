@@ -104,4 +104,12 @@ WHERE {
   ?s <http://omikron44/ontologies/brands#brand> ?name .
 }
 
+# get products and their brands
+SELECT ?product ?title ?brand
+WHERE {
+  ?product a <http://omikron44/ontologies/products> .
+  ?product <http://omikron44/ontologies/products#title> ?title.
+  ?product <http://omikron44/ontologies/products#brand> ?brand .
+}
+
 #note down the sparql-auth endpoint
