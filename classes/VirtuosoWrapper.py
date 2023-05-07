@@ -14,7 +14,7 @@ class VirtuosoWrapper:
         self.sparql.setMethod(POST)
         self.sparql.setReturnFormat(JSON)
 
-    def save(self, triplesGraph, cursorPosition):
+    def save(self, triplesGraph, cursorPosition=None):
         triplesString = triplesGraph.serialize(format="nt")
         chunks = triplesString.split("\n")
 
@@ -51,3 +51,8 @@ class VirtuosoWrapper:
             return False
         else:
             return True
+
+    def get(self, query):
+        self.sparql.setQuery(query)
+        results = self.sparql.query()
+        return results._convertJSON()

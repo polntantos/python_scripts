@@ -15,16 +15,9 @@ services:
         ipv4_address: 192.168.1.2
 
   jupyter:
-    image: jupyter/datascience-notebook:latest
+    image: ruslanmv/pyspark-jupyterlab:3.1.2
     ports:
       - 8888:8888
-    volumes:
-      - ./notebook:/home/jovyan/work
-      - ./scripts:/home/jovyan/scripts
-    # command: pip install -r /home/jovyan/work/requirements.txt
-    environment:
-      JUPYTER_ENABLE_LAB: 'yes'
-      JUPYTER_TOKEN: ''
     networks:
       custom_network:
         ipv4_address: 192.168.1.3

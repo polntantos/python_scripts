@@ -563,7 +563,7 @@
     ];
   rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
       rr:class g:brands;
-      rr:template "http://omikron44/ontologies/brands/id={brand}";
+      rr:template "http://omikron44/ontologies/brands/id={id}";
       rr:termType rr:BlankNode
     ] .
 

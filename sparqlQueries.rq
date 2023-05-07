@@ -56,3 +56,52 @@ DELETE WHERE {
     || (isIRI(?o) && (strstarts(str(?o), "http://omikron44/ontologies/brands")))
   )
 }
+
+# replace brand literal to brand object
+
+PREFIX products: <http://omikron44/ontologies/products#>
+PREFIX brands: <http://omikron44/ontologies/brands#>
+
+DELETE {
+  ?product <http://omikron44/ontologies/products#brand> ?oldBrand .
+}
+INSERT {
+  ?product <http://omikron44/ontologies/products#brand> ?brand .
+}
+WHERE {
+  ?product a <http://omikron44/ontologies/products>;
+           <http://omikron44/ontologies/products#brand> ?oldBrand .
+  ?brand a <http://omikron44/ontologies/brands>;
+        <http://omikron44/ontologies/brands#brand> ?oldBrand .
+}
+
+
+#selects product brands
+
+PREFIX products: <http://omikron44/ontologies/products#>
+PREFIX brands: <http://omikron44/ontologies/brands#>
+
+SELECT 
+  ?product ?brand 
+WHERE {
+  ?product a <http://omikron44/ontologies/products>;
+           <http://omikron44/ontologies/products#brand> ?brand .
+}
+
+# select product brands and their equal class id with their names
+SELECT 
+  ?product ?brand ?brandName
+WHERE {
+  ?product a <http://omikron44/ontologies/products>;
+           <http://omikron44/ontologies/products#brand> ?brand .
+  ?brand <http://omikron44/ontologies/brands#brand> ?brandName.
+}
+
+# select brands and their name
+SELECT ?s ?name
+WHERE {
+  ?s a <http://omikron44/ontologies/brands> .
+  ?s <http://omikron44/ontologies/brands#brand> ?name .
+}
+
+#note down the sparql-auth endpoint
