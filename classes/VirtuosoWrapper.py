@@ -9,6 +9,7 @@ class VirtuosoWrapper:
 
     def connect(self) -> None:
         self.sparql = SPARQLWrapper("http://localhost:8890/sparql-auth")
+        self.sparql.addDefaultGraph("http://omikron44.com/")
         self.sparql.setHTTPAuth(DIGEST)
         self.sparql.setCredentials("dba", "mydbapassword")
         self.sparql.setMethod(POST)

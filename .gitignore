@@ -7,3 +7,4 @@ urn:MAPPING-ID*
 /rdf_output
 /datasets/*
 /classes/__pycache__
+/clusters/*

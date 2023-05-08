@@ -112,4 +112,22 @@ WHERE {
   ?product <http://omikron44/ontologies/products#brand> ?brand .
 }
 
+#Get product titles and their URIs by their brand
+SELECT ?product_uri ?title
+WHERE {
+    ?product_uri a <http://omikron44/ontologies/products> .
+    ?product_uri <http://omikron44/ontologies/products#title> ?title.
+    ?product_uri <http://omikron44/ontologies/products#brand> <http://omikron44/ontologies/brands/id=1> .
+}
+
+#selects count products that have object brands not literals
+
+SELECT 
+ (COUNT(?product) AS ?count)
+WHERE {
+  ?product a <http://omikron44/ontologies/products>;
+           <http://omikron44/ontologies/products#brand> ?brand .
+  ?brand a <http://omikron44/ontologies/brands>.
+}
+
 #note down the sparql-auth endpoint
