@@ -14,6 +14,7 @@ class VirtuosoWrapper:
         self.sparql.setCredentials("dba", "mydbapassword")
         self.sparql.setMethod(POST)
         self.sparql.setReturnFormat(JSON)
+        self.sparql.setTimeout(120)
 
     def save(self, triplesGraph, cursorPosition=None):
         triplesString = triplesGraph.serialize(format="nt")

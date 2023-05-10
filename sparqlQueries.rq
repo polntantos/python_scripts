@@ -130,4 +130,14 @@ WHERE {
   ?brand a <http://omikron44/ontologies/brands>.
 }
 
+# Delete magelon-products
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ns: <http://omikron44/ontologies/magelon-products>
+
+DELETE WHERE {
+  ?s rdf:type ns: .
+  ?s ?p ?o .
+} 
+
 #note down the sparql-auth endpoint
