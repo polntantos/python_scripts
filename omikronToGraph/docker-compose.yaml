@@ -9,24 +9,25 @@ services:
     volumes:
       - ./database/backup.sql:/docker-entrypoint-initdb.d/backup.sql
     ports:
-      - 3306:3306
+      - "3306:3306"
     networks:
       custom_network:
         ipv4_address: 192.168.1.2
 
   jupyter:
-    image: ruslanmv/pyspark-jupyterlab:3.1.2
+    container_name: jupyter-notebook
+    image: jupyter/base-notebook:latest
     ports:
-      - 8888:8888
-    networks:
-      custom_network:
-        ipv4_address: 192.168.1.3
+      - "8889:8888"
+    volumes:
+      - ./notebook:/home/jovyan/work
+    command: start-notebook.sh --NotebookApp.token=''
 
   virtuoso:
     image: openlink/virtuoso-opensource-7
     ports:
-      - "8890:8890"
-      - "1111:1111"
+      - "8891:8890"
+      - "1112:1111"
     environment:
       SPARQL_UPDATE: "true"
       DEFAULT_GRAPH: "http://example.com/my-graph"
