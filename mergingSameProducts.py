@@ -147,38 +147,9 @@ for index, brand in enumerate(brands["results"]["bindings"]):
                 f"http://omikron44/ontologies/magelon-products/id={uuid.uuid4()}"
             )
 
-            graph.add(
-                (
-                    subject,
-                    RDF.type,
-                    URIRef("http://omikron44/ontologies/magelon-products"),
-                )
-            )
-
-            graph.add(
-                (
-                    subject,
-                    URIRef("http://omikron44/ontologies/magelon-products#brand"),
-                    URIRef(brand_uri),
-                )
-            )
-            graph.add(
-                (
-                    subject,
-                    URIRef("http://omikron44/ontologies/magelon-products#title"),
-                    Literal(prod["title"]["value"]),
-                )
-            )
-            graph.add(
-                (
-                    subject,
-                    URIRef(
-                        "http://omikron44/ontologies/magelon-products#merchant-product"
-                    ),
-                    URIRef(prod["product_uri"]["value"]),
-                )
-            )
-
+            add_cluster_to_graph(graph,subject,brand_uri,Literal(prod["title"]["value"]))
+            connect_product_to_cluster(graph,subject,prod["product_uri"]["value"])
+            virtuoso = VirtuosoWrapper
             virtuoso.save(graph)
 
             continue  # next brand
