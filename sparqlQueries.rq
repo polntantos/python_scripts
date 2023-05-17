@@ -140,4 +140,134 @@ DELETE WHERE {
   ?s ?p ?o .
 } 
 
+# select a product family's products
+
+SELECT ?s ?p ?o
+WHERE {
+  ?s a <http://omikron44/ontologies/magelon-product-families> .
+  ?s ?p ?o;
+       <http://omikron44/ontologies/magelon-product-families#merchant-products> ?o.
+  <http://omikron44/ontologies/magelon-product-families/id=fdc1a6cd-5b76-4e39-9a95-340b80bc0e32> ?p ?o. # remove this to see all product families and their products
+}
+
+#same with prefix
+PREFIX pf: <http://omikron44/ontologies/magelon-product-families/id=>
+
+SELECT ?s ?p ?o
+WHERE {
+  ?s a <http://omikron44/ontologies/magelon-product-families> .
+  ?s ?p ?o;
+       <http://omikron44/ontologies/magelon-product-families#merchant-products> ?o.
+  pf:9dc7c8a9-fa38-4257-bbdc-71b6dfd43b3c ?p ?o.
+} 
+
+#select all product families and theis product count
+
+SELECT ?family (COUNT(?product) AS ?productCount)
+WHERE {
+  ?family a <http://omikron44/ontologies/magelon-product-families> .
+  ?family <http://omikron44/ontologies/magelon-product-families#merchant-products> ?product .
+}
+GROUP BY ?family
 #note down the sparql-auth endpoint
+
+#we have performed the transition from mysql to rdf triplestore virtuoso
+# now we need to extract and get some insight on our data
+# Get the merchants that have products
+
+SELECT DISTINCT ?merchant
+WHERE {
+  ?merchant a <http://omikron44/ontologies/merchants> .
+  ?product <http://omikron44/ontologies/products#merchant_id> ?merchant_id.
+  ?merchant <http://omikron44/ontologies/merchants#id> ?merchant_id.
+}
+
+# Find the number of products for each merchant
+SELECT ?merchant (COUNT(?product) AS ?productCount)
+WHERE {
+    ?merchant a <http://omikron44/ontologies/merchants> .
+    ?product <http://omikron44/ontologies/products#merchant_id> ?merchant_id.
+    ?merchant <http://omikron44/ontologies/merchants#id> ?merchant_id.
+}
+GROUP BY ?merchant
+ORDER BY ?productCount
+
+#select min, max and average product counts within merchants
+
+SELECT 
+  (MIN(?productCount) AS ?minProductCount) 
+  (MAX(?productCount) AS ?maxProductCount) 
+  (AVG(?productCount) AS ?avgProductCount)
+WHERE
+{{
+  SELECT (COUNT(?product) AS ?productCount)
+  WHERE {
+    ?merchant a <http://omikron44/ontologies/merchants> .
+    ?product <http://omikron44/ontologies/products#merchant_id> ?merchant_id.
+    ?merchant <http://omikron44/ontologies/merchants#id> ?merchant_id.
+}GROUP BY ?merchant
+}}
+
+#after assigning merchants to their size groups 
+#this returns merchant & size 
+SELECT ?s ?p ?o
+WHERE {
+   ?s a <http://omikron44/ontologies/merchants>.
+   ?s <http://omikron44/ontologies/merchants#merchant-size> ?o .
+   ?s ?p ?o. 
+} 
+
+# next we get the brand name and its product count to see what we are up against
+
+SELECT ?brand_name (COUNT(?product) AS ?productCount)
+WHERE {
+  ?brand a <http://omikron44/ontologies/brands> .
+  ?product <http://omikron44/ontologies/products#brand> ?brand.
+  ?brand <http://omikron44/ontologies/brands#brand> ?brand_name.
+} 
+GROUP BY ?brand_name
+ORDER BY ?productCount 
+
+# we need to find a way to check if a brand is valid or a field mismatch
+# If a brand exists in more than one merchants then it must be valid
+
+#this selects the brand name and the merchant count of the brand with more than ine merchant
+SELECT ?brandName (COUNT(DISTINCT ?merchant) AS ?merchantCount)
+WHERE {
+  ?brand a <http://omikron44/ontologies/brands> .
+  ?product <http://omikron44/ontologies/products#brand> ?brand .
+  ?product <http://omikron44/ontologies/products#merchant> ?merchant .
+  ?brand <http://omikron44/ontologies/brands#brand> ?brandName .
+}
+GROUP BY ?brandName
+HAVING (COUNT(DISTINCT ?merchant) > 1)
+ORDER BY DESC(?merchantCount)
+
+# this query will select the brands (nodes) that we consider valid and attach a valid tag edge on them
+
+INSERT {
+    ?brand a <http://omikron44/ontologies/brands> ;
+           <http://omikron44/ontologies/tags#hasTag> "valid" .
+}
+WHERE {
+  {
+    SELECT ?brand (COUNT(DISTINCT ?merchant) AS ?merchantCount)
+    WHERE {
+      ?brand a <http://omikron44/ontologies/brands> .
+      ?product <http://omikron44/ontologies/products#brand> ?brand .
+      ?product <http://omikron44/ontologies/products#merchant_id> ?merchant .
+    }
+   GROUP BY ?brand
+   HAVING (COUNT(DISTINCT ?merchant) > 1)
+  }
+}
+
+# now updated query from before this will return also a valid value from the brand tags
+
+# if we remove optional only brands with the valid tag will be returned
+SELECT ?s ?name ?valid
+WHERE {
+  ?s a <http://omikron44/ontologies/brands> .
+  ?s <http://omikron44/ontologies/brands#brand> ?name .
+  OPTIONAL{?s <http://omikron44/ontologies/tags#hasTag> ?valid .}
+}

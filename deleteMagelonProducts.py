@@ -1,22 +1,24 @@
 from classes.VirtuosoWrapper import VirtuosoWrapper
 
-
-delete_query = """
+# object_type ="<http://omikron44/ontologies/magelon-products>"
+object_type = "<http://omikron44/ontologies/magelon-product-families>"
+# PREFIX ns: <http://omikron44/ontologies/magelon-products>
+delete_query = f"""
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ns: <http://omikron44/ontologies/magelon-products>
+PREFIX ns: {object_type}
 
-DELETE WHERE {
+DELETE WHERE {{
   ?s rdf:type ns: .
   ?s ?p ?o .
-} Limit 5000
+}} Limit 5000
 """
 
-count_query = """
+count_query = f"""
 SELECT 
- (COUNT(?product) AS ?count)
-WHERE {
-  ?product a <http://omikron44/ontologies/magelon-products>.
-}
+ (COUNT(?object) AS ?count)
+WHERE {{
+  ?object a {object_type}.
+}}
 """
 
 virtuoso = VirtuosoWrapper()
