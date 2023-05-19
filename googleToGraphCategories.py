@@ -24,6 +24,7 @@ for category in categories:
     # category_name = parts[1][len(parent_ids[0]) + 1:]
     category_name = category_struct[len(category_struct) - 1].strip()
     category_name = re.sub("[^a-zA-Z0-9_]+", "_", category_name)
+    category_full_path = parts[1]
     category_dict[category_name] = category_id
 
     parent_category_name = category_struct[len(category_struct) - 2].strip()
@@ -32,9 +33,13 @@ for category in categories:
         relationships[category_id] = {
             "name": category_name,
             "parent": parent_category_name,
+            "category_full_path": category_full_path,
         }
     else:
-        relationships[category_id] = {"name": category_name}
+        relationships[category_id] = {
+            "name": category_name,
+            "category_full_path": category_full_path,
+        }
 
 # print(relationships)
 # print(category_dict)
@@ -45,15 +50,30 @@ for category_id, category_info in relationships.items():
     # create RDF graph
     category = ns[category_id]
     # g.add((category, rdflib.RDF.type, rdflib.OWL.Class))
+    g.add(
+        (
+            category,
+            rdflib.RDF.type,
+            rdflib.URIRef("http://omikron44/ontologies/google_categories"),
+        )
+    )
     g.add((category, rdflib.RDFS.label, rdflib.Literal(category_info["name"])))
     # print(category_info)
+    g.add(
+        (
+            category,
+            rdflib.URIRef("http://omikron44/ontologies/google_categories#full_path"),
+            rdflib.Literal(category_info["category_full_path"]),
+        )
+    )
+
     if "parent" in category_info and category_dict[category_info["parent"]] != None:
         parent = category_dict[category_info["parent"]]
         g.add((category, rdflib.RDFS.subClassOf, ns[parent]))
 
 # serialize graph in RDF/XML format .decode("utf-8")
-print(g.serialize(format="pretty-xml"))
-# g.serialize(destination="categories.ttl") # stores in categories.tll turtle format
-# virtuoso = VirtuosoWrapper()
+# print(g.serialize(format="pretty-xml"))
+# g.serialize(destination="categories.ttl")  # stores in categories.tll turtle format
+virtuoso = VirtuosoWrapper()
 
-# virtuoso.save(g)
+virtuoso.save(g)

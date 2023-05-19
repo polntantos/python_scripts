@@ -271,3 +271,64 @@ WHERE {
   ?s <http://omikron44/ontologies/brands#brand> ?name .
   OPTIONAL{?s <http://omikron44/ontologies/tags#hasTag> ?valid .}
 }
+
+
+# so we created this query that returns groups of brands-product_types(categories)
+# and their product count in essense we are getting insights on the variety of category names
+# that each merchant uses for his products of each brand
+SELECT (COUNT(?product) AS ?productCount) ?brand_name ?product_type
+WHERE {
+  ?brand a <http://omikron44/ontologies/brands> .
+  ?product <http://omikron44/ontologies/products#brand> ?brand .
+  ?brand <http://omikron44/ontologies/brands#brand> ?brand_name .
+  ?product <http://omikron44/ontologies/products#product_type> ?product_type .
+}
+GROUP BY ?brand_name ?product_type
+ORDER BY DESC(?productCount)
+
+SELECT DISTINCT ?product_type
+WHERE {
+  ?p a <http://omikron44/ontologies/products>.
+  ?p <http://omikron44/ontologies/products#brand> ?brand .
+  ?brand a <http://omikron44/ontologies/brands>.
+  ?brand <http://omikron44/ontologies/tags#hasTag> "valid".
+  ?p <http://omikron44/ontologies/products#product_type> ?product_type .
+}
+# what we want to do after this is get the google merchant center categories in our graph
+# as a category tree and then we will try some clusterring techniques to see if we can assign
+# our merchants' products to their google categories using category name similarity and neighbor
+
+# after importing google categories in our graph this request returns them as id <label> label
+SELECT 
+  ?s ?p ?o
+WHERE {
+  ?s ?p ?o .
+  ?s a <http://omikron44/ontologies/google_categories>.
+  ?s <http://www.w3.org/2000/01/rdf-schema#label> ?o.
+}
+
+# while this query that selects all nodes that have no subclass returns only leaf categories
+# since our google categories are stored as a tree
+
+SELECT DISTINCT ?node WHERE {
+  ?node a owl:Class .
+  FILTER NOT EXISTS {
+    ?subclass rdfs:subClassOf ?node .
+    ?subclass a owl:Class .
+    FILTER (?subclass != ?node)
+  }
+}
+
+# and this query selects only root nodes on our category tree
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT DISTINCT ?node
+WHERE {
+  ?node a owl:Class .
+  FILTER NOT EXISTS {
+    ?node rdfs:subClassOf ?superclass .
+    FILTER(?node != ?superclass)
+  }
+}

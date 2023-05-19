@@ -6,40 +6,53 @@ from rdflib import Graph, URIRef, Literal, BNode, Namespace, RDF, RDFS
 import matplotlib.pyplot as plt
 from sklearn.cluster import AgglomerativeClustering
 from scipy.cluster.hierarchy import dendrogram, linkage
+from classes.VirtuosoWrapper import VirtuosoWrapper
 
-# Connect to MySQL database
-def connect_to_database():
-    return pymysql.connect(
-        host='192.168.10.30',
-        user='homestead',
-        password='secret',
-        db='homestead'
-    )
 
-def get_distinct_categories(cursor):
-    print('Getting categories')
-    cursor.execute("SELECT DISTINCT x.product_type FROM homestead.products x WHERE x.product_type NOT LIKE '\"\"' OR x.product_type IS NOT NULL")
-    return [row[0] for row in cursor.fetchall()]
+def get_distinct_categories():
+    print("Getting categories")
+    virtuoso = VirtuosoWrapper()
+    query = """
+    SELECT DISTINCT ?product_type
+        WHERE {
+        ?p a <http://omikron44/ontologies/products>.
+        ?p <http://omikron44/ontologies/products#brand> ?brand .
+        ?brand a <http://omikron44/ontologies/brands>.
+        ?brand <http://omikron44/ontologies/tags#hasTag> "valid".
+        ?p <http://omikron44/ontologies/products#product_type> ?product_type .
+        }
+    """
+    # We will use only categories from products that are connected to official brands
+    response = virtuoso.get(query)
 
-def perform_agglomerative_clusterring(categories):
-    print('Clustering categories')
-    vectorizer = TfidfVectorizer(stop_words='english')
+    return [
+        category["product_type"]["value"]
+        for category in response["results"]["bindings"]
+    ]
+
+
+def perform_agglomerative_clusterring(categories, display=False):
+    print(f"Clustering {len(categories)} categories")
+    # exit()
+    vectorizer = TfidfVectorizer(stop_words="english")
     X = vectorizer.fit_transform(categories)
-    # Z = linkage(X.toarray(), 'ward')
-    
-    # plt.figure(figsize=(25, 10))
-    # dendrogram(Z)
-    # plt.show()
+
+    if display:
+        Z = linkage(X.toarray(), "ward")
+
+        plt.figure(figsize=(25, 10))
+        dendrogram(Z)
+        plt.show()
 
     clustering = AgglomerativeClustering(
-        n_clusters=None, 
-        distance_threshold=2, 
-        linkage='ward',
+        n_clusters=None,
+        distance_threshold=2,
+        linkage="ward",
     )
-    
+
     cluster_labels = clustering.fit_predict(X.toarray())
     clusters = {}
-    
+
     for i, cluster_label in enumerate(cluster_labels):
         if cluster_label not in clusters:
             clusters[cluster_label.item()] = []
@@ -48,14 +61,15 @@ def perform_agglomerative_clusterring(categories):
     print(clusters)
     return clusters
 
+
 def main():
-    db = connect_to_database()
-    cursor = db.cursor()
-    categories = get_distinct_categories(cursor)
+    categories = get_distinct_categories()
     clusters = perform_agglomerative_clusterring(categories)
-    with open(f"clusters/category-clusters.json","w") as f:
+    with open(f"clusters/category-clusters.json", "w") as f:
         myKeys = list(clusters.keys())
         myKeys.sort()
         sorted_dict = {i: clusters[i] for i in myKeys}
-        json.dump(sorted_dict,f)
+        json.dump(sorted_dict, f)
+
+
 main()
