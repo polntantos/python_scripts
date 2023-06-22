@@ -1,0 +1,250 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 1900px;
+                 height: 1000px;
+                 background-color: #111111;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 1900px;
+                 height: 1000px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "font": {"color": "white"}, "id": "merchant_470", "label": "merchant_470", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Men\u0027s Jacket + Jumper for \u00a329.99", "label": "#Bundle Deal - Men\u0027s Jacket + Jumper for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Bundle", "label": "Bundle", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Christmas Jumper + Free Gift", "label": "#Bundle Deal - Christmas Jumper + Free Gift", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle - Women\u0027s Hoodie OR Joggers + 5 Knickers for \u00a324.99", "label": "#Bundle - Women\u0027s Hoodie OR Joggers + 5 Knickers for \u00a324.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal \u2013 Men\u2019s Jumper or Cardigan + FREE 2 Pack Underwear or Gift for \u00a319.99", "label": "#Bundle Deal \u2013 Men\u2019s Jumper or Cardigan + FREE 2 Pack Underwear or Gift for \u00a319.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - 2 Joggers + 5 Underwear for \u00a328", "label": "#Bundle Deal - 2 Joggers + 5 Underwear for \u00a328", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Kensington Eastside", "label": "Kensington Eastside", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle - Women\u0027s Hoodie + 3 Knickers for \u00a322", "label": "#Bundle - Women\u0027s Hoodie + 3 Knickers for \u00a322", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Women\u0027s Joggers + T-Shirt + 3 Knickers for \u00a325", "label": "#Bundle Deal - Women\u0027s Joggers + T-Shirt + 3 Knickers for \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Sonneti", "label": "Sonneti", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle - Men\u0027s Joggers + Top for \u00a322", "label": "#Bundle - Men\u0027s Joggers + Top for \u00a322", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Jacket + Jumper + Socks or Belt for \u00a329.99", "label": "#Bundle Deal - Jacket + Jumper + Socks or Belt for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Le Shark", "label": "Le Shark", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Men\u0027s Lounge Pants + 5 T-Shirts for \u00a325", "label": "#Bundle Deal - Men\u0027s Lounge Pants + 5 T-Shirts for \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Men\u0027s Joggers + Long Sleeve Top + 2 Boxers for \u00a328", "label": "#Bundle Deal - Men\u0027s Joggers + Long Sleeve Top + 2 Boxers for \u00a328", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Tokyo Laundry", "label": "Tokyo Laundry", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Men\u0027s Shorts + 2 Underwear+ T-Shirt for \u00a321.99", "label": "#Bundle Deal - Men\u0027s Shorts + 2 Underwear+ T-Shirt for \u00a321.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "D-Code", "label": "D-Code", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Men\u0027s Hoodie + 5 T-Shirts for \u00a329.99", "label": "#Bundle Deal - Men\u0027s Hoodie + 5 T-Shirts for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - 10 Men\u0027s Boxers (5 Pack) for \u00a328", "label": "#Bundle Deal - 10 Men\u0027s Boxers (5 Pack) for \u00a328", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Merry Christmas", "label": "Merry Christmas", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - 3 Men\u0027s Jogger Shorts for \u00a329.99", "label": "#Bundle Deal - 3 Men\u0027s Jogger Shorts for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle - Borg Lined Hoodie + 3 T-Shirts + 1 Hat for \u00a329.99", "label": "#Bundle - Borg Lined Hoodie + 3 T-Shirts + 1 Hat for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - 3 for \u00a329.99 Mix \u0026 Match", "label": "#Bundle Deal - 3 for \u00a329.99 Mix \u0026 Match", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Joggers + 3 Knickers for \u00a317.99", "label": "#Bundle Deal - Joggers + 3 Knickers for \u00a317.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Men\u2019s Lounge Set + (FREE) 2 Pack Boxers for \u00a319.99", "label": "#Bundle Deal - Men\u2019s Lounge Set + (FREE) 2 Pack Boxers for \u00a319.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Hoodie OR Joggers + 3 T-Shirts + 2 Underwear for \u00a329.99", "label": "#Bundle Deal - Hoodie OR Joggers + 3 T-Shirts + 2 Underwear for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#BUNDLE DEAL - 2 For \u00a320 Men\u0027s Loungewear", "label": "#BUNDLE DEAL - 2 For \u00a320 Men\u0027s Loungewear", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Men\u0027s Borg Fleece + 3 T-Shirts for \u00a329.99", "label": "#Bundle Deal - Men\u0027s Borg Fleece + 3 T-Shirts for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle - Borg Lined Hoodie + 3 T-Shirts + 1 Hat for \u00a328", "label": "#Bundle - Borg Lined Hoodie + 3 T-Shirts + 1 Hat for \u00a328", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Hoodie or Jogger + 3 Pack T-Shirts for \u00a325", "label": "#Bundle Deal - Hoodie or Jogger + 3 Pack T-Shirts for \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle - Borg Lined Hoodie + FREE (2 Pack) Underwear for \u00a319.99", "label": "#Bundle - Borg Lined Hoodie + FREE (2 Pack) Underwear for \u00a319.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Merry Xmas", "label": "Merry Xmas", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "South Shore", "label": "South Shore", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle - Free Shirt with Cardigan", "label": "#Bundle - Free Shirt with Cardigan", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Men\u0027s Jogger Shorts + 5 T-Shirts for \u00a325", "label": "#Bundle Deal - Men\u0027s Jogger Shorts + 5 T-Shirts for \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Other", "label": "Other", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle - Men\u0027s Hoodie OR Joggers + 5 Pack Underwear for \u00a329.99", "label": "#Bundle - Men\u0027s Hoodie OR Joggers + 5 Pack Underwear for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Weekend Vibes", "label": "Weekend Vibes", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "# Bundle Deal - Gilet + Shirt + Hat for \u00a325", "label": "# Bundle Deal - Gilet + Shirt + Hat for \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle - Men\u0027s Jacket + FREE Gift for \u00a329.99", "label": "#Bundle - Men\u0027s Jacket + FREE Gift for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Dressing Gown + Lounge Pants + Slippers for \u00a328", "label": "#Bundle Deal - Dressing Gown + Lounge Pants + Slippers for \u00a328", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Gilet + Shirt or Pullover for \u00a325", "label": "#Bundle Deal - Gilet + Shirt or Pullover for \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Lounge Bundle Deal - Top + Lounge Pants + Slippers for \u00a325!", "label": "#Lounge Bundle Deal - Top + Lounge Pants + Slippers for \u00a325!", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Men\u0027s Shorts (With Belt) + T-Shirt + 2 Boxers for \u00a328", "label": "#Bundle Deal - Men\u0027s Shorts (With Belt) + T-Shirt + 2 Boxers for \u00a328", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "# Bundle Deal - Hoodie + FREE T-Shirt + 2 Underwear for \u00a324.99", "label": "# Bundle Deal - Hoodie + FREE T-Shirt + 2 Underwear for \u00a324.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Christmas", "label": "Christmas", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Season\u0027s Greetings", "label": "Season\u0027s Greetings", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Saint \u0026 Sinner", "label": "Saint \u0026 Sinner", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Bundle Deal - Quilted Jacket + Backpack + Hat for \u00a325", "label": "Bundle Deal - Quilted Jacket + Backpack + Hat for \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Licensed Merch", "label": "Licensed Merch", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - 3 for \u00a328 Mix \u0026 Match", "label": "#Bundle Deal - 3 for \u00a328 Mix \u0026 Match", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#BUNDLE DEAL - Dressing Gown + 2pc Lounge Set for \u00a328", "label": "#BUNDLE DEAL - Dressing Gown + 2pc Lounge Set for \u00a328", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Dissident", "label": "Dissident", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - 10 T-Shirts for \u00a329.99", "label": "#Bundle Deal - 10 T-Shirts for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Men\u0027s Jogger Shorts + 3 T-Shirts + 2 Underwear for \u00a326", "label": "#Bundle Deal - Men\u0027s Jogger Shorts + 3 T-Shirts + 2 Underwear for \u00a326", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Joggers + 3 T-Shirts for \u00a325", "label": "#Bundle Deal - Joggers + 3 T-Shirts for \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Bundle Deal - Men\u0027s Dressing Gown + Lounge Set for \u00a329.99", "label": "Bundle Deal - Men\u0027s Dressing Gown + Lounge Set for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Amara Reya", "label": "Amara Reya", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Top + Lounge Pants + Slippers + Wash Bag for \u00a325!", "label": "#Bundle Deal - Top + Lounge Pants + Slippers + Wash Bag for \u00a325!", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Hoodie + 2 Underwear + 3 T-Shirts for \u00a328", "label": "#Bundle Deal - Hoodie + 2 Underwear + 3 T-Shirts for \u00a328", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Threadbare", "label": "Threadbare", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle - Women\u0027s Tracksuit / Loungewear Set + FREE (3 Pack) Knickers for \u00a329.99", "label": "#Bundle - Women\u0027s Tracksuit / Loungewear Set + FREE (3 Pack) Knickers for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Women\u0027s Hoodie + Free T-Shirt for \u00a319.99", "label": "#Bundle Deal - Women\u0027s Hoodie + Free T-Shirt for \u00a319.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Men\u0027s Joggers + T-Shirt for \u00a321.99", "label": "#Bundle Deal - Men\u0027s Joggers + T-Shirt for \u00a321.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - 2 Joggers + 3 T-Shirts for \u00a329.99", "label": "#Bundle Deal - 2 Joggers + 3 T-Shirts for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Urban Sports Trend", "label": "Urban Sports Trend", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Brave Soul", "label": "Brave Soul", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Fenchurch", "label": "Fenchurch", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Dressing Gown + Free Slippers or (2 Pack) Underwear + Washbag", "label": "#Bundle Deal - Dressing Gown + Free Slippers or (2 Pack) Underwear + Washbag", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Bundle Deal# - Joggers + 2 Pack Underwear + T-Shirt for \u00a325", "label": "Bundle Deal# - Joggers + 2 Pack Underwear + T-Shirt for \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "# Lounge Bundle - Dressing Gown + 3 Pack T-Shirt + Pyjama Shorts for \u00a329.99", "label": "# Lounge Bundle - Dressing Gown + 3 Pack T-Shirt + Pyjama Shorts for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Men\u0027s Lounge Set + FREE Slippers for \u00a318", "label": "#Bundle Deal - Men\u0027s Lounge Set + FREE Slippers for \u00a318", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "# Bundle Deal - 2 Men\u0027s Sweatshirts + 2 Jogger Shorts for \u00a329.99", "label": "# Bundle Deal - 2 Men\u0027s Sweatshirts + 2 Jogger Shorts for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#BUNDLE DEAL - 2 For \u00a312 Men\u0027s Prited T-Shirts", "label": "#BUNDLE DEAL - 2 For \u00a312 Men\u0027s Prited T-Shirts", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Men\u0027s Hoodie + Free T-Shirt for \u00a319.99", "label": "#Bundle Deal - Men\u0027s Hoodie + Free T-Shirt for \u00a319.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Women\u0027s Hoodie + Joggers for \u00a325", "label": "#Bundle Deal - Women\u0027s Hoodie + Joggers for \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Dressing Gown + Lounge Pants + Top + Wash Bag for \u00a329.99", "label": "Dressing Gown + Lounge Pants + Top + Wash Bag for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - 4 Men\u0027s Boxers for \u00a313", "label": "#Bundle Deal - 4 Men\u0027s Boxers for \u00a313", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Custom Bundle", "label": "Custom Bundle", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Borg Fleece + Jumper or Top for \u00a329.99", "label": "#Bundle Deal - Borg Fleece + Jumper or Top for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Bundle Deal# - Joggers + 2 Pack Underwear for \u00a319.99", "label": "Bundle Deal# - Joggers + 2 Pack Underwear for \u00a319.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Men\u0027s Dressing Gown + Lounge Set for \u00a323", "label": "#Bundle Deal - Men\u0027s Dressing Gown + Lounge Set for \u00a323", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - 2 For \u00a320 Sale", "label": "#Bundle Deal - 2 For \u00a320 Sale", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - 3 Men\u0027s T-Shirts For \u00a325", "label": "#Bundle Deal - 3 Men\u0027s T-Shirts For \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Soul Star", "label": "Soul Star", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#BUNDLE DEAL - Joggers + Top + 2pc Underwear + 5Pc Socks", "label": "#BUNDLE DEAL - Joggers + Top + 2pc Underwear + 5Pc Socks", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - 8 Men\u0027s Boxers for \u00a325", "label": "#Bundle Deal - 8 Men\u0027s Boxers for \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#BUNDLE - Lounge Pants + 3 T-Shirts for \u00a319.99", "label": "#BUNDLE - Lounge Pants + 3 T-Shirts for \u00a319.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - 8 Men\u0027s Boxers for \u00a328", "label": "#Bundle Deal - 8 Men\u0027s Boxers for \u00a328", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Christmas Wishes", "label": "Christmas Wishes", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Hoodie or Joggers + 3 T-Shirts for \u00a325", "label": "#Bundle Deal - Hoodie or Joggers + 3 T-Shirts for \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Seasons Greetings", "label": "Seasons Greetings", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Thomas Calvi", "label": "Thomas Calvi", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Dressing Gown + Lounge Pants + Slippers for \u00a325", "label": "#Bundle Deal - Dressing Gown + Lounge Pants + Slippers for \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Outdoor Bundle Deal - Jacket + Bag for \u00a325", "label": "#Outdoor Bundle Deal - Jacket + Bag for \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Shorts + 5 T-Shirts for \u00a325", "label": "#Bundle Deal - Shorts + 5 T-Shirts for \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Men\u0027s Hoodie + Joggers for \u00a328", "label": "#Bundle Deal - Men\u0027s Hoodie + Joggers for \u00a328", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle - Women\u0027s Hoodie + FREE Bra for \u00a319.99", "label": "#Bundle - Women\u0027s Hoodie + FREE Bra for \u00a319.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Men\u0027s Winter Hoodie + FREE Gift for \u00a324.99", "label": "#Bundle Deal - Men\u0027s Winter Hoodie + FREE Gift for \u00a324.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#BUNDLE DEAL - 3 For \u00a310 Men\u0027s T-Shirts", "label": "#BUNDLE DEAL - 3 For \u00a310 Men\u0027s T-Shirts", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle - Men\u0027s Hoodie + Joggers + T-Shirt for \u00a329.99", "label": "#Bundle - Men\u0027s Hoodie + Joggers + T-Shirt for \u00a329.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Kensington", "label": "Kensington", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle - Jogger Shorts + T-Shirt + 2 Boxer Shorts for \u00a325", "label": "#Bundle - Jogger Shorts + T-Shirt + 2 Boxer Shorts for \u00a325", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Lounge Set + FREE Slippers for \u00a319.99", "label": "#Bundle Deal - Lounge Set + FREE Slippers for \u00a319.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "#Bundle Deal - Borg Lined Hoodie + FREE T-Shirt + 2 Underwear for \u00a324.99", "label": "#Bundle Deal - Borg Lined Hoodie + FREE T-Shirt + 2 Underwear for \u00a324.99", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Plum Tree", "label": "Plum Tree", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "merchant_470", "to": "#Bundle Deal - Men\u0027s Jacket + Jumper for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "Bundle", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Christmas Jumper + Free Gift", "width": 0}, {"from": "merchant_470", "to": "#Bundle - Women\u0027s Hoodie OR Joggers + 5 Knickers for \u00a324.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal \u2013 Men\u2019s Jumper or Cardigan + FREE 2 Pack Underwear or Gift for \u00a319.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - 2 Joggers + 5 Underwear for \u00a328", "width": 0}, {"from": "merchant_470", "to": "Kensington Eastside", "width": 2}, {"from": "merchant_470", "to": "#Bundle - Women\u0027s Hoodie + 3 Knickers for \u00a322", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Women\u0027s Joggers + T-Shirt + 3 Knickers for \u00a325", "width": 0}, {"from": "merchant_470", "to": "Sonneti", "width": 0}, {"from": "merchant_470", "to": "#Bundle - Men\u0027s Joggers + Top for \u00a322", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Jacket + Jumper + Socks or Belt for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "Le Shark", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Men\u0027s Lounge Pants + 5 T-Shirts for \u00a325", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Men\u0027s Joggers + Long Sleeve Top + 2 Boxers for \u00a328", "width": 0}, {"from": "merchant_470", "to": "Tokyo Laundry", "width": 10}, {"from": "merchant_470", "to": "#Bundle Deal - Men\u0027s Shorts + 2 Underwear+ T-Shirt for \u00a321.99", "width": 0}, {"from": "merchant_470", "to": "D-Code", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Men\u0027s Hoodie + 5 T-Shirts for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - 10 Men\u0027s Boxers (5 Pack) for \u00a328", "width": 0}, {"from": "merchant_470", "to": "Merry Christmas", "width": 1}, {"from": "merchant_470", "to": "#Bundle Deal - 3 Men\u0027s Jogger Shorts for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle - Borg Lined Hoodie + 3 T-Shirts + 1 Hat for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - 3 for \u00a329.99 Mix \u0026 Match", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Joggers + 3 Knickers for \u00a317.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Men\u2019s Lounge Set + (FREE) 2 Pack Boxers for \u00a319.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Hoodie OR Joggers + 3 T-Shirts + 2 Underwear for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "#BUNDLE DEAL - 2 For \u00a320 Men\u0027s Loungewear", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Men\u0027s Borg Fleece + 3 T-Shirts for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle - Borg Lined Hoodie + 3 T-Shirts + 1 Hat for \u00a328", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Hoodie or Jogger + 3 Pack T-Shirts for \u00a325", "width": 0}, {"from": "merchant_470", "to": "#Bundle - Borg Lined Hoodie + FREE (2 Pack) Underwear for \u00a319.99", "width": 0}, {"from": "merchant_470", "to": "Merry Xmas", "width": 0}, {"from": "merchant_470", "to": "South Shore", "width": 1}, {"from": "merchant_470", "to": "#Bundle - Free Shirt with Cardigan", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Men\u0027s Jogger Shorts + 5 T-Shirts for \u00a325", "width": 0}, {"from": "merchant_470", "to": "Other", "width": 0}, {"from": "merchant_470", "to": "#Bundle - Men\u0027s Hoodie OR Joggers + 5 Pack Underwear for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "Weekend Vibes", "width": 0}, {"from": "merchant_470", "to": "# Bundle Deal - Gilet + Shirt + Hat for \u00a325", "width": 0}, {"from": "merchant_470", "to": "#Bundle - Men\u0027s Jacket + FREE Gift for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Dressing Gown + Lounge Pants + Slippers for \u00a328", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Gilet + Shirt or Pullover for \u00a325", "width": 0}, {"from": "merchant_470", "to": "#Lounge Bundle Deal - Top + Lounge Pants + Slippers for \u00a325!", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Men\u0027s Shorts (With Belt) + T-Shirt + 2 Boxers for \u00a328", "width": 0}, {"from": "merchant_470", "to": "# Bundle Deal - Hoodie + FREE T-Shirt + 2 Underwear for \u00a324.99", "width": 0}, {"from": "merchant_470", "to": "Christmas", "width": 0}, {"from": "merchant_470", "to": "Season\u0027s Greetings", "width": 0}, {"from": "merchant_470", "to": "Saint \u0026 Sinner", "width": 0}, {"from": "merchant_470", "to": "Bundle Deal - Quilted Jacket + Backpack + Hat for \u00a325", "width": 0}, {"from": "merchant_470", "to": "Licensed Merch", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - 3 for \u00a328 Mix \u0026 Match", "width": 0}, {"from": "merchant_470", "to": "#BUNDLE DEAL - Dressing Gown + 2pc Lounge Set for \u00a328", "width": 0}, {"from": "merchant_470", "to": "Dissident", "width": 1}, {"from": "merchant_470", "to": "#Bundle Deal - 10 T-Shirts for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Men\u0027s Jogger Shorts + 3 T-Shirts + 2 Underwear for \u00a326", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Joggers + 3 T-Shirts for \u00a325", "width": 0}, {"from": "merchant_470", "to": "Bundle Deal - Men\u0027s Dressing Gown + Lounge Set for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "Amara Reya", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Top + Lounge Pants + Slippers + Wash Bag for \u00a325!", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Hoodie + 2 Underwear + 3 T-Shirts for \u00a328", "width": 0}, {"from": "merchant_470", "to": "Threadbare", "width": 0}, {"from": "merchant_470", "to": "#Bundle - Women\u0027s Tracksuit / Loungewear Set + FREE (3 Pack) Knickers for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Women\u0027s Hoodie + Free T-Shirt for \u00a319.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Men\u0027s Joggers + T-Shirt for \u00a321.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - 2 Joggers + 3 T-Shirts for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "Urban Sports Trend", "width": 0}, {"from": "merchant_470", "to": "Brave Soul", "width": 0}, {"from": "merchant_470", "to": "Fenchurch", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Dressing Gown + Free Slippers or (2 Pack) Underwear + Washbag", "width": 0}, {"from": "merchant_470", "to": "Bundle Deal# - Joggers + 2 Pack Underwear + T-Shirt for \u00a325", "width": 0}, {"from": "merchant_470", "to": "# Lounge Bundle - Dressing Gown + 3 Pack T-Shirt + Pyjama Shorts for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Men\u0027s Lounge Set + FREE Slippers for \u00a318", "width": 0}, {"from": "merchant_470", "to": "# Bundle Deal - 2 Men\u0027s Sweatshirts + 2 Jogger Shorts for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "#BUNDLE DEAL - 2 For \u00a312 Men\u0027s Prited T-Shirts", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Men\u0027s Hoodie + Free T-Shirt for \u00a319.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Women\u0027s Hoodie + Joggers for \u00a325", "width": 0}, {"from": "merchant_470", "to": "Dressing Gown + Lounge Pants + Top + Wash Bag for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - 4 Men\u0027s Boxers for \u00a313", "width": 0}, {"from": "merchant_470", "to": "Custom Bundle", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Borg Fleece + Jumper or Top for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "Bundle Deal# - Joggers + 2 Pack Underwear for \u00a319.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Men\u0027s Dressing Gown + Lounge Set for \u00a323", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - 2 For \u00a320 Sale", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - 3 Men\u0027s T-Shirts For \u00a325", "width": 0}, {"from": "merchant_470", "to": "Soul Star", "width": 0}, {"from": "merchant_470", "to": "#BUNDLE DEAL - Joggers + Top + 2pc Underwear + 5Pc Socks", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - 8 Men\u0027s Boxers for \u00a325", "width": 0}, {"from": "merchant_470", "to": "#BUNDLE - Lounge Pants + 3 T-Shirts for \u00a319.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - 8 Men\u0027s Boxers for \u00a328", "width": 0}, {"from": "merchant_470", "to": "Christmas Wishes", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Hoodie or Joggers + 3 T-Shirts for \u00a325", "width": 0}, {"from": "merchant_470", "to": "Seasons Greetings", "width": 0}, {"from": "merchant_470", "to": "Thomas Calvi", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Dressing Gown + Lounge Pants + Slippers for \u00a325", "width": 0}, {"from": "merchant_470", "to": "#Outdoor Bundle Deal - Jacket + Bag for \u00a325", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Shorts + 5 T-Shirts for \u00a325", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Men\u0027s Hoodie + Joggers for \u00a328", "width": 0}, {"from": "merchant_470", "to": "#Bundle - Women\u0027s Hoodie + FREE Bra for \u00a319.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Men\u0027s Winter Hoodie + FREE Gift for \u00a324.99", "width": 0}, {"from": "merchant_470", "to": "#BUNDLE DEAL - 3 For \u00a310 Men\u0027s T-Shirts", "width": 0}, {"from": "merchant_470", "to": "#Bundle - Men\u0027s Hoodie + Joggers + T-Shirt for \u00a329.99", "width": 0}, {"from": "merchant_470", "to": "Kensington", "width": 0}, {"from": "merchant_470", "to": "#Bundle - Jogger Shorts + T-Shirt + 2 Boxer Shorts for \u00a325", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Lounge Set + FREE Slippers for \u00a319.99", "width": 0}, {"from": "merchant_470", "to": "#Bundle Deal - Borg Lined Hoodie + FREE T-Shirt + 2 Underwear for \u00a324.99", "width": 0}, {"from": "merchant_470", "to": "Plum Tree", "width": 0}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

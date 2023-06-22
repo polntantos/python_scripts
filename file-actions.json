@@ -1,0 +1,23 @@
+{
+    "skip": [],
+    "merge": [
+        {
+            "0": {
+                "brands_to_validate": [
+                    [
+                        "Emporio Armani EA7",
+                        "http://omikron44/ontologies/brands/id=3852"
+                    ]
+                ],
+                "merging_array": [
+                    {
+                        "http://omikron44/ontologies/brands/id=3852": "http://omikron44/ontologies/brands/id=3851"
+                    }
+                ],
+                "parent_of_brands": []
+            }
+        }
+    ],
+    "create": [],
+    "delete": []
+}

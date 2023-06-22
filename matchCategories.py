@@ -3,10 +3,9 @@ import spacy
 from classes.VirtuosoWrapper import VirtuosoWrapper
 from sklearn.metrics import jaccard_score
 
-# Read the Google categories file
+virtuoso = VirtuosoWrapper()
 print("Getting google categories")
-# with open("googleToGraph/categories.txt", "r") as file:
-google_categories = {}
+
 query = """
 SELECT 
     ?uri ?name ?full_path
@@ -17,20 +16,15 @@ WHERE {
 }
 """
 
-print("Getting merchant categories")
-virtuoso = VirtuosoWrapper()
 response = virtuoso.get(query=query)
+google_categories = {}
 for google_category in response["results"]["bindings"]:
     google_categories[google_category["uri"]["value"]] = {
         "term": google_category["name"]["value"],
         "full_path": google_category["full_path"]["value"],
     }
 
-# Read the category clusters file
-# with open("clusters/category-clusters.json", "r") as file:
-#     print("Opening merchant categories")
-#     category_clusters = json.load(file)
-
+print("Getting merchant categories")
 query = """
     SELECT DISTINCT ?product_type
         WHERE {
@@ -39,8 +33,9 @@ query = """
         ?brand a <http://omikron44/ontologies/brands>.
         ?brand <http://omikron44/ontologies/tags#hasTag> "valid".
         ?p <http://omikron44/ontologies/products#product_type> ?product_type .
-        }
+        } 
     """
+
 # We will use only categories from products that are connected to official brands
 response = virtuoso.get(query)
 merchant_categories = [
@@ -55,13 +50,10 @@ print("Assigning categories")
 
 assigned_categories = []
 for category in merchant_categories:
-    # print(category)
     best_match = None
     best_score = 0
     magelon_category = nlp.vocab[category]
     for category_id, google_category in google_categories.items():
-        # print(category_id, google_category["term"])
-        # exit()
         google_category_name = nlp.vocab[google_category["term"]]
         google_category_path = nlp.vocab[google_category["full_path"]]
         term_score = magelon_category.similarity(google_category_name)
@@ -82,6 +74,28 @@ for category in merchant_categories:
                 "Similarity Score": best_score,
             }
         )
+
+# Verify the categories
+user_input = input("Verify the assigned_categories categories? (Y/n): ")
+if user_input.lower() in ["", "y"]:
+    verified_categories = []
+    for linked_category in assigned_categories:
+        print(linked_category["Merchant Category"])
+        print(linked_category["Google Category Path"])
+        print(linked_category["Similarity Score"])
+        print()
+        user_input = input("Keep this object? (Y/n): ")
+        # Append or skip based on user's input
+        if user_input.lower() in ["", "y"]:
+            linked_category["verified"] = 1
+            verified_categories.append(linked_category)
+            print("Category verified.")
+        else:
+            linked_category["verified"] = 0
+            verified_categories.append(linked_category)
+            print("Category unverified.")
+        print()
+    assigned_categories = verified_categories
 
 
 output_file = "clusters/assigned_categories.json"
