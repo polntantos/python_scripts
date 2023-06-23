@@ -31,7 +31,7 @@ print('Assigning categories')
 for cluster_id, cluster_categories in category_clusters.items():
     assigned_clusters[cluster_id] = []
     for category in cluster_categories:
-        print(category)
+        # print(category)
         best_match = None
         best_score = 0
         for category_id, category_path in google_categories.items():
