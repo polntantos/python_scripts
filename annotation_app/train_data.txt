@@ -1,0 +1,54 @@
+("Xiaomi Redmi Note 10 5G - Graphite Grey", [(0, 6, "BRAND"),(7, 11, "SUB-BRAND"),...])
+
+can you write me a page that takes a json like this
+
+json_data = [
+    {
+        "title": "Xiaomi Redmi Note 10 5G - Graphite Grey",
+        "annotations": [
+            {
+                "word": "Xiaomi",
+                "tag": "brand"
+            },
+            {
+                "word": "Redmi",
+                "tag": "sub_brand"
+            },
+            {
+                "word": "Note 10",
+                "tag": "model"
+            },
+            {
+                "word": "5G",
+                "tag": "band"
+            },
+            {
+                "word": "Graphite Grey",
+                "tag": "color"
+            }
+        ]
+    },
+    {
+        "title": "Redmi Note 11 128GB Twilight Blue",
+        "annotations": [
+            {
+                "word": "Redmi",
+                "tag": "sub_brand"
+            },
+            {
+                "word": "Note 11",
+                "tag": "model"
+            },
+            {
+                "word": "128GB",
+                "tag": "storage"
+            },
+            {
+                "word": "Twilight Blue",
+                "tag": "color"
+            }
+        ]
+    },
+]
+from a file annotations.json and turns it into this
+[('Xiaomi Redmi Note 10 5G - Graphite Grey', [(0, 5, 'brand'), (7, 11, 'sub_brand'), (13, 20, 'model'), (23, 24, 'band'), (27, 40, 'color')]), ('Redmi Note 11 128GB Twilight Blue', [(0, 4, 'sub_brand'), (6, 13, 'model'), (15, 19, 'storage'), (21, 34, 'color')]), ...]

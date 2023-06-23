@@ -88,6 +88,13 @@ WHERE {
            <http://omikron44/ontologies/products#brand> ?brand .
 }
 
+#deletes "" brand (empty string value)
+DELETE
+WHERE {
+  ?brand a <http://omikron44/ontologies/brands> ;
+         <http://omikron44/ontologies/brands#brand> "" .
+}
+
 # select product brands and their equal class id with their names
 SELECT 
   ?product ?brand ?brandName
@@ -140,4 +147,269 @@ DELETE WHERE {
   ?s ?p ?o .
 } 
 
+# select a product family's products
+
+SELECT ?s ?p ?o
+WHERE {
+  ?s a <http://omikron44/ontologies/magelon-product-families> .
+  ?s ?p ?o;
+       <http://omikron44/ontologies/magelon-product-families#merchant-products> ?o.
+  <http://omikron44/ontologies/magelon-product-families/id=fdc1a6cd-5b76-4e39-9a95-340b80bc0e32> ?p ?o. # remove this to see all product families and their products
+}
+
+#same with prefix
+PREFIX pf: <http://omikron44/ontologies/magelon-product-families/id=>
+
+SELECT ?s ?p ?o
+WHERE {
+  ?s a <http://omikron44/ontologies/magelon-product-families> .
+  ?s ?p ?o;
+       <http://omikron44/ontologies/magelon-product-families#merchant-products> ?o.
+  pf:9dc7c8a9-fa38-4257-bbdc-71b6dfd43b3c ?p ?o.
+} 
+
+#select all product families and theis product count
+
+SELECT ?family (COUNT(?product) AS ?productCount)
+WHERE {
+  ?family a <http://omikron44/ontologies/magelon-product-families> .
+  ?family <http://omikron44/ontologies/magelon-product-families#merchant-products> ?product .
+}
+GROUP BY ?family
 #note down the sparql-auth endpoint
+
+#we have performed the transition from mysql to rdf triplestore virtuoso
+# now we need to extract and get some insight on our data
+# Get the merchants that have products
+
+SELECT DISTINCT ?merchant
+WHERE {
+  ?merchant a <http://omikron44/ontologies/merchants> .
+  ?product <http://omikron44/ontologies/products#merchant_id> ?merchant_id.
+  ?merchant <http://omikron44/ontologies/merchants#id> ?merchant_id.
+}
+
+# Find the number of products for each merchant
+SELECT ?merchant (COUNT(?product) AS ?productCount)
+WHERE {
+    ?merchant a <http://omikron44/ontologies/merchants> .
+    ?product <http://omikron44/ontologies/products#merchant_id> ?merchant_id.
+    ?merchant <http://omikron44/ontologies/merchants#id> ?merchant_id.
+}
+GROUP BY ?merchant
+ORDER BY ?productCount
+
+#select min, max and average product counts within merchants
+
+SELECT 
+  (MIN(?productCount) AS ?minProductCount) 
+  (MAX(?productCount) AS ?maxProductCount) 
+  (AVG(?productCount) AS ?avgProductCount)
+WHERE
+{{
+  SELECT (COUNT(?product) AS ?productCount)
+  WHERE {
+    ?merchant a <http://omikron44/ontologies/merchants> .
+    ?product <http://omikron44/ontologies/products#merchant_id> ?merchant_id.
+    ?merchant <http://omikron44/ontologies/merchants#id> ?merchant_id.
+}GROUP BY ?merchant
+}}
+
+#after assigning merchants to their size groups 
+#this returns merchant & size 
+SELECT ?s ?p ?o
+WHERE {
+   ?s a <http://omikron44/ontologies/merchants>.
+   ?s <http://omikron44/ontologies/merchants#merchant-size> ?o .
+   ?s ?p ?o. 
+} 
+
+# next we get the brand name and its product count to see what we are up against
+
+SELECT ?brand_name (COUNT(?product) AS ?productCount)
+WHERE {
+  ?brand a <http://omikron44/ontologies/brands> .
+  ?product <http://omikron44/ontologies/products#brand> ?brand.
+  ?brand <http://omikron44/ontologies/brands#brand> ?brand_name.
+} 
+GROUP BY ?brand_name
+ORDER BY ?productCount 
+
+# we need to find a way to check if a brand is valid or a field mismatch
+# If a brand exists in more than one merchants then it must be valid
+
+#this selects the brand name and the merchant count of the brand with more than ine merchant
+SELECT ?brandName (COUNT(DISTINCT ?merchant) AS ?merchantCount)
+WHERE {
+  ?brand a <http://omikron44/ontologies/brands> .
+  ?product <http://omikron44/ontologies/products#brand> ?brand .
+  ?product <http://omikron44/ontologies/products#merchant> ?merchant .
+  ?brand <http://omikron44/ontologies/brands#brand> ?brandName .
+}
+GROUP BY ?brandName
+HAVING (COUNT(DISTINCT ?merchant) > 1)
+ORDER BY DESC(?merchantCount)
+
+# this query will select the brands (nodes) that we consider valid and attach a valid tag edge on them
+
+INSERT {
+    ?brand a <http://omikron44/ontologies/brands> ;
+           <http://omikron44/ontologies/tags#hasTag> "valid" .
+}
+WHERE {
+  {
+    SELECT ?brand (COUNT(DISTINCT ?merchant) AS ?merchantCount)
+    WHERE {
+      ?brand a <http://omikron44/ontologies/brands> .
+      ?product <http://omikron44/ontologies/products#brand> ?brand .
+      ?product <http://omikron44/ontologies/products#merchant_id> ?merchant .
+    }
+   GROUP BY ?brand
+   HAVING (COUNT(DISTINCT ?merchant) > 1)
+  }
+}
+
+# now updated query from before this will return also a valid value from the brand tags
+
+# if we remove optional only brands with the valid tag will be returned
+SELECT ?s ?name ?valid
+WHERE {
+  ?s a <http://omikron44/ontologies/brands> .
+  ?s <http://omikron44/ontologies/brands#brand> ?name .
+  OPTIONAL{?s <http://omikron44/ontologies/tags#hasTag> ?valid .}
+}
+
+
+# so we created this query that returns groups of brands-product_types(categories)
+# and their product count in essense we are getting insights on the variety of category names
+# that each merchant uses for his products of each brand
+SELECT (COUNT(?product) AS ?productCount) ?brand_name ?product_type
+WHERE {
+  ?brand a <http://omikron44/ontologies/brands> .
+  ?product <http://omikron44/ontologies/products#brand> ?brand .
+  ?brand <http://omikron44/ontologies/brands#brand> ?brand_name .
+  ?product <http://omikron44/ontologies/products#product_type> ?product_type .
+}
+GROUP BY ?brand_name ?product_type
+ORDER BY DESC(?productCount)
+
+SELECT DISTINCT ?product_type
+WHERE {
+  ?p a <http://omikron44/ontologies/products>.
+  ?p <http://omikron44/ontologies/products#brand> ?brand .
+  ?brand a <http://omikron44/ontologies/brands>.
+  ?brand <http://omikron44/ontologies/tags#hasTag> "valid".
+  ?p <http://omikron44/ontologies/products#product_type> ?product_type .
+}
+# what we want to do after this is get the google merchant center categories in our graph
+# as a category tree and then we will try some clusterring techniques to see if we can assign
+# our merchants' products to their google categories using category name similarity and neighbor
+
+# after importing google categories in our graph this request returns them as id <label> label
+SELECT 
+  ?s ?p ?o
+WHERE {
+  ?s ?p ?o .
+  ?s a <http://omikron44/ontologies/google_categories>.
+  ?s <http://www.w3.org/2000/01/rdf-schema#label> ?o.
+}
+
+# while this query that selects all nodes that have no subclass returns only leaf categories
+# since our google categories are stored as a tree
+
+SELECT DISTINCT ?node WHERE {
+  ?node a owl:Class .
+  FILTER NOT EXISTS {
+    ?subclass rdfs:subClassOf ?node .
+    ?subclass a owl:Class .
+    FILTER (?subclass != ?node)
+  }
+}
+
+# and this query selects only root nodes on our category tree
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT DISTINCT ?node
+WHERE {
+  ?node a owl:Class .
+  FILTER NOT EXISTS {
+    ?node rdfs:subClassOf ?superclass .
+    FILTER(?node != ?superclass)
+  }
+}
+
+# this query attaches google product types on products where their categories match the where filter 
+INSERT {{
+  ?product <http://omikron44/ontologies/products#google_product_type> <{google_category_id}> .
+  }}
+  WHERE {{
+  ?product a <http://omikron44/ontologies/products> ;
+    <http://omikron44/ontologies/products#product_type> '{merchant_category}' .
+}}
+
+# Select a random product that has a google product type assigned to it
+SELECT ?product
+WHERE {
+  ?product a <http://omikron44/ontologies/products> ;
+           <http://omikron44/ontologies/products#google_product_type> ?googleProductType .
+}
+ORDER BY RAND()
+LIMIT 1
+
+#select products that have a google product type and counts them
+SELECT (COUNT(?product) AS ?productCount)
+WHERE {
+  ?product a <http://omikron44/ontologies/products> ;
+           <http://omikron44/ontologies/products#google_product_type> ?googleProductType .
+}
+
+
+#select the titles of the products that have a category
+SELECT ?title
+WHERE {
+  ?product a <http://omikron44/ontologies/products> ;
+           <http://omikron44/ontologies/products#google_product_type> ?googleProductType ;
+           <http://omikron44/ontologies/products#title> ?title .
+}
+
+# select brand its product count its merchant count and its product type count
+
+SELECT ?brand ?brandTitle (COUNT(DISTINCT ?product) AS ?productCount) (COUNT(DISTINCT ?productType) AS ?productTypeCount) (COUNT(DISTINCT ?merchant) AS ?merchantCount) (GROUP_CONCAT(DISTINCT ?merchant; separator=", ") AS ?merchantIds)
+WHERE {
+  ?brand a <http://omikron44/ontologies/brands> ;
+         <http://omikron44/ontologies/brands#brand> ?brandTitle .
+  ?product <http://omikron44/ontologies/products#brand> ?brand .
+  ?product <http://omikron44/ontologies/products#merchant_id> ?merchant;
+                   <http://omikron44/ontologies/products#title> ?title;
+                   <http://omikron44/ontologies/products#product_type> ?productType.
+    FILTER (?brand != <http://omikron44/ontologies/brands/id=>)
+}GROUP BY ?brand ?brandTitle
+
+# select brand-merchant with the product count that connects them 
+
+SELECT ?brand_name (COUNT(?product) AS ?productCount) ?merchant_id
+WHERE {
+  ?brand a <http://omikron44/ontologies/brands> .
+  ?product <http://omikron44/ontologies/products#brand> ?brand.
+  ?product <http://omikron44/ontologies/products#merchant_id> ?merchant_id.
+  ?brand <http://omikron44/ontologies/brands#brand> ?brand_name.
+} 
+GROUP BY ?brand_name ?merchant_id
+
+
+#we identified a few faulty brands 
+#this query will return all brands bound to only one merchant and only one productType
+
+SELECT ?brand ?brandTitle (COUNT(DISTINCT ?product) AS ?productCount) (COUNT(DISTINCT ?productType) AS ?productTypeCount) (COUNT(DISTINCT ?merchant) AS ?merchantCount) (GROUP_CONCAT(DISTINCT ?merchant; separator=", ") AS ?merchantIds)
+WHERE {
+  ?brand a <http://omikron44/ontologies/brands> ;
+         <http://omikron44/ontologies/brands#brand> ?brandTitle .
+  ?product <http://omikron44/ontologies/products#brand> ?brand .
+  ?product <http://omikron44/ontologies/products#merchant_id> ?merchant;
+                   <http://omikron44/ontologies/products#title> ?title;
+                   <http://omikron44/ontologies/products#product_type> ?productType.
+    FILTER (?brand != <http://omikron44/ontologies/brands/id=>)
+}GROUP BY ?brand ?brandTitle
+HAVING (COUNT(DISTINCT ?merchant) < 2) (COUNT(DISTINCT ?productType) < 2)

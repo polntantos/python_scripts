@@ -1,0 +1,525 @@
+[
+  {
+    "title": "12T Pro Black",
+    "annotations": [
+      {
+        "word": "12T Pro",
+        "tag": "model"
+      },
+      {
+        "word": "Black",
+        "tag": "color"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi Redmi Note 10 5G - Graphite Grey",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "Note 10",
+        "tag": "model"
+      },
+      {
+        "word": "5G",
+        "tag": "band"
+      },
+      {
+        "word": "Graphite Grey",
+        "tag": "color"
+      }
+    ]
+  },
+  {
+    "title": "Redmi Note 11 128GB Twilight Blue",
+    "annotations": [
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "Note 11",
+        "tag": "model"
+      },
+      {
+        "word": "128GB",
+        "tag": "storage"
+      },
+      {
+        "word": "Twilight Blue",
+        "tag": "color"
+      }
+    ]
+  },
+  {
+    "title": "Redmi Note 11 128GB Graphite Grey",
+    "annotations": [
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "Note 11",
+        "tag": "model"
+      },
+      {
+        "word": "128GB",
+        "tag": "storage"
+      },
+      {
+        "word": "Graphite Grey",
+        "tag": "color"
+      }
+    ]
+  },
+  {
+    "title": "Redmi A1 Black",
+    "annotations": [
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "A1",
+        "tag": "model"
+      },
+      {
+        "word": "Black",
+        "tag": "color"
+      }
+    ]
+  },
+  {
+    "title": "Redmi 10C 64GB Graphite Grey",
+    "annotations": [
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "10C",
+        "tag": "model"
+      },
+      {
+        "word": "64GB",
+        "tag": "storage"
+      },
+      {
+        "word": "Graphite Grey",
+        "tag": "color"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi Redmi Note 11 Pro 5G 128GB Atlantic Blue on Vodafone - \u00a340.00pm & No Upfront Cost - 24 Month Contract",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "Note 11 Pro",
+        "tag": "model"
+      },
+      {
+        "word": "5G",
+        "tag": "band"
+      },
+      {
+        "word": "128GB",
+        "tag": "storage"
+      },
+      {
+        "word": "Atlantic Blue",
+        "tag": "color"
+      },
+      {
+        "word": "on Vodafone - \u00a340.00pm & No Upfront Cost - 24 Month Contract",
+        "tag": "contract_details"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi Redmi Note 11 128GB Graphite Grey on Vodafone - \u00a332.00pm & No Upfront Cost - 24 Month Contract",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "Note 11",
+        "tag": "model"
+      },
+      {
+        "word": "128GB",
+        "tag": "storage"
+      },
+      {
+        "word": "Graphite Grey",
+        "tag": "color"
+      },
+      {
+        "word": "on Vodafone - \u00a332.00pm & No Upfront Cost - 24 Month Contract",
+        "tag": "contract_details"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi Redmi 9AT 32GB Grey on Vodafone - \u00a314.00pm & No Upfront Cost - 24 Month Contract",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "9AT",
+        "tag": "model"
+      },
+      {
+        "word": "32GB",
+        "tag": "storage"
+      },
+      {
+        "word": "Grey",
+        "tag": "color"
+      },
+      {
+        "word": "on Vodafone - \u00a314.00pm & No Upfront Cost - 24 Month Contract",
+        "tag": "contract_details"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi 12 Lite on Vodafone - \u00a340.00pm & No Upfront Cost - 24 Month Contract",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "12 Lite",
+        "tag": "model"
+      },
+      {
+        "word": "on Vodafone - \u00a340.00pm & No Upfront Cost - 24 Month Contract",
+        "tag": "contract_details"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi 12 Lite on Vodafone - \u00a322.00pm & \u00a345.00 Upfront - 24 Month Contract",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "12 Lite",
+        "tag": "model"
+      },
+      {
+        "word": "on Vodafone - \u00a322.00pm & \u00a345.00 Upfront - 24 Month Contract",
+        "tag": "contract_details"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi Redmi Note 11 128GB Graphite Grey - SIM Free & \u00a3199.00 Upfront - No contract",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "Note 11",
+        "tag": "model"
+      },
+      {
+        "word": "128GB",
+        "tag": "storage"
+      },
+      {
+        "word": "Graphite Grey",
+        "tag": "color"
+      },
+      {
+        "word": "- SIM Free & \u00a3199.00 Upfront - No contract",
+        "tag": "no_contract_details"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi 12 Lite on Vodafone - \u00a319.00pm & \u00a385.00 Upfront - 24 Month Contract",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "12 Lite",
+        "tag": "model"
+      },
+      {
+        "word": "on Vodafone - \u00a319.00pm & \u00a385.00 Upfront - 24 Month Contract",
+        "tag": "contract_details"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi 12 Lite on Vodafone - \u00a314.00pm & \u00a3199.00 Upfront - 24 Month Contract",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "12 Lite",
+        "tag": "model"
+      },
+      {
+        "word": "on Vodafone - \u00a314.00pm & \u00a3199.00 Upfront - 24 Month Contract",
+        "tag": "contract_details"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi 12 Lite on Vodafone - \u00a317.00pm & \u00a3130.00 Upfront - 24 Month Contract",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "12 Lite",
+        "tag": "model"
+      },
+      {
+        "word": "on Vodafone - \u00a317.00pm & \u00a3130.00 Upfront - 24 Month Contract",
+        "tag": "contract_details"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi Redmi Note 10 5G 128GB Grey on Vodafone - \u00a313.00pm & \u00a345.00 Upfront - 24 Month Contract",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "Note 10",
+        "tag": "model"
+      },
+      {
+        "word": "5G",
+        "tag": "band"
+      },
+      {
+        "word": "128GB",
+        "tag": "storage"
+      },
+      {
+        "word": "Grey",
+        "tag": "color"
+      },
+      {
+        "word": "on Vodafone - \u00a313.00pm & \u00a345.00 Upfront - 24 Month Contract",
+        "tag": "contract_details"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi Redmi Note 11 128GB Graphite Grey on Idmobile - \u00a315.99pm & No Upfront Cost - 24 Month Contract",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "Note 11",
+        "tag": "model"
+      },
+      {
+        "word": "128GB",
+        "tag": "storage"
+      },
+      {
+        "word": "Graphite Grey",
+        "tag": "color"
+      },
+      {
+        "word": "on Idmobile - \u00a315.99pm & No Upfront Cost - 24 Month Contract",
+        "tag": "contract_details"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi Zink Portable Pocket Printer",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "Zink",
+        "tag": "model"
+      },
+      {
+        "word": "Portable Pocket Printer",
+        "tag": "product_type"
+      }
+    ]
+  },
+  {
+    "title": "12T Pro Black",
+    "annotations": [
+      {
+        "word": "12T Pro",
+        "tag": "model"
+      },
+      {
+        "word": "Black",
+        "tag": "color"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi Redmi Note 11 128GB Graphite Grey on Vodafone - \u00a312.00pm & No Upfront Cost - 24 Month Contract - Save \u00a3240 Cashback by redemption",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "Note 11",
+        "tag": "model"
+      },
+      {
+        "word": "128GB",
+        "tag": "storage"
+      },
+      {
+        "word": "Graphite Grey",
+        "tag": "color"
+      },
+      {
+        "word": "on Vodafone - \u00a312.00pm & No Upfront Cost - 24 Month Contract - Save \u00a3240 Cashback by redemption",
+        "tag": "contract_details"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi 12T Pro Black on Vodafone - \u00a336.00pm & \u00a39.99 Upfront - 24 Month Contract",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "12T Pro",
+        "tag": "model"
+      },
+      {
+        "word": "Black",
+        "tag": "color"
+      },
+      {
+        "word": "on Vodafone - \u00a336.00pm & \u00a39.99 Upfront - 24 Month Contract",
+        "tag": "contract_details"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi Redmi Note 11 Pro 5G 128GB Atlantic Blue - SIM Free & \u00a3319.00 Upfront - No contract",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "Note 11 Pro",
+        "tag": "model"
+      },
+      {
+        "word": "5G",
+        "tag": "band"
+      },
+      {
+        "word": "128GB",
+        "tag": "storage"
+      },
+      {
+        "word": "Atlantic Blue",
+        "tag": "color"
+      },
+      {
+        "word": "SIM Free & \u00a3319.00 Upfront - No contract",
+        "tag": "contract_details"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi Redmi Note 11 4G - Twilight Blue",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "Note 11",
+        "tag": "model"
+      },
+      {
+        "word": "4G",
+        "tag": "band"
+      },
+      {
+        "word": "Twilight Blue",
+        "tag": "color"
+      }
+    ]
+  }
+]

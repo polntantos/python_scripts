@@ -1,70 +1,106 @@
 import json
-import re
-
+import spacy
+from classes.VirtuosoWrapper import VirtuosoWrapper
 from sklearn.metrics import jaccard_score
 
-# Read the Google categories file
-print('Opening google categories')
-with open('googleToGraph/categories.txt', 'r') as file:
-    google_categories = {}
-    for line in file:
-        line = line.strip().split(' - ')
-        category_id = line[0]
-        category_path = line[1]
-        google_categories[category_id] = category_path
+virtuoso = VirtuosoWrapper()
+print("Getting google categories")
 
-# Read the category clusters file
-with open('clusters/category-clusters.json', 'r') as file:
-    print('Opening merchant categories')
-    category_clusters = json.load(file)
+query = """
+SELECT 
+    ?uri ?name ?full_path
+WHERE {
+    ?uri a <http://omikron44/ontologies/google_categories>.
+    ?uri <http://www.w3.org/2000/01/rdf-schema#label> ?name.
+    ?uri <http://omikron44/ontologies/google_categories#full_path> ?full_path.
+}
+"""
 
-# # Tokenize the Google category keywords
-# tokenized_google_categories = {}
-# print('Tokenizing google categories')
-# for category_id, category_path in google_categories.items():
-#     tokens = re.findall(r'\b\w+\b', category_path.lower())
-#     tokenized_google_categories[category_id] = tokens
+response = virtuoso.get(query=query)
+google_categories = {}
+for google_category in response["results"]["bindings"]:
+    google_categories[google_category["uri"]["value"]] = {
+        "term": google_category["name"]["value"],
+        "full_path": google_category["full_path"]["value"],
+    }
 
-# Assign merchant category clusters to Google categories by keyword matching
+print("Getting merchant categories")
+query = """
+    SELECT DISTINCT ?product_type
+        WHERE {
+        ?p a <http://omikron44/ontologies/products>.
+        ?p <http://omikron44/ontologies/products#brand> ?brand .
+        ?brand a <http://omikron44/ontologies/brands>.
+        ?brand <http://omikron44/ontologies/tags#hasTag> "valid".
+        ?p <http://omikron44/ontologies/products#product_type> ?product_type .
+        } 
+    """
+
+# We will use only categories from products that are connected to official brands
+response = virtuoso.get(query)
+merchant_categories = [
+    category["product_type"]["value"] for category in response["results"]["bindings"]
+]
+
+nlp = spacy.load("en_core_web_lg")
+
 assigned_clusters = {}
-print('Assigning categories')
-for cluster_id, cluster_categories in category_clusters.items():
-    assigned_clusters[cluster_id] = []
-    for category in cluster_categories:
-        # print(category)
-        best_match = None
-        best_score = 0
-        for category_id, category_path in google_categories.items():
-            # print(category_id, category_path)
-            # score = jaccard_score(
-            #   set(category.lower().split(' > ')),
-            #   set(category_path.lower().split(' > ')),
-            #   # average='weighted'
-            #   )
-            
-            set1=set(category.lower().split(' > '))
-            set2=set(category_path.lower().split(' > '))
-            intersection = set1.intersection(set2)
-            union = set1.union(set2)
-            score = len(intersection) / len(union)
-            if score > best_score:
-                best_match = category_id
-                best_score = score
-        if best_match:
-            # print('Appending category')
-            assigned_clusters[cluster_id].append(
-              {
+
+print("Assigning categories")
+
+assigned_categories = []
+for category in merchant_categories:
+    best_match = None
+    best_score = 0
+    magelon_category = nlp.vocab[category]
+    for category_id, google_category in google_categories.items():
+        google_category_name = nlp.vocab[google_category["term"]]
+        google_category_path = nlp.vocab[google_category["full_path"]]
+        term_score = magelon_category.similarity(google_category_name)
+        full_path_score = magelon_category.similarity(google_category_path)
+        if term_score > best_score or full_path_score > best_score:
+            # print(category_id)
+            best_match = category_id
+            best_score = max(term_score, full_path_score)
+    if best_match and best_score > 0.45:
+        print(f"Appending category {category}")
+        print(f"Appending category {google_categories[best_match]}")
+        print(f"Appending category {best_score}")
+        assigned_categories.append(
+            {
                 "Merchant Category": category,
                 "Google Category Path": google_categories[best_match],
                 "Google Category ID": best_match,
-                "Similarity Score": best_score
-              }
-            )
+                "Similarity Score": best_score,
+            }
+        )
 
-        
-output_file = 'clusters/assigned_clusters.json'
-print('Saving categories')
-with open(output_file, 'w') as file:
-    json.dump(assigned_clusters, file, indent=4)
+# Verify the categories
+user_input = input("Verify the assigned_categories categories? (Y/n): ")
+if user_input.lower() in ["", "y"]:
+    verified_categories = []
+    for linked_category in assigned_categories:
+        print(linked_category["Merchant Category"])
+        print(linked_category["Google Category Path"])
+        print(linked_category["Similarity Score"])
+        print()
+        user_input = input("Keep this object? (Y/n): ")
+        # Append or skip based on user's input
+        if user_input.lower() in ["", "y"]:
+            linked_category["verified"] = 1
+            verified_categories.append(linked_category)
+            print("Category verified.")
+        else:
+            linked_category["verified"] = 0
+            verified_categories.append(linked_category)
+            print("Category unverified.")
+        print()
+    assigned_categories = verified_categories
+
+
+output_file = "clusters/assigned_categories.json"
+print("Saving categories")
+with open(output_file, "w") as file:
+    json.dump(assigned_categories, file, indent=4)
 
 print(f"Results saved to {output_file}")
