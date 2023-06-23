@@ -67,10 +67,7 @@ def annotate_text(title, annotations):
             print(previous_annotation)
             if previous_annotation:
                 tag = previous_annotation["tag"]
-                # Retrieve the position from the previous annotation
-                # position = previous_annotation["position"]
                 tag = st.text_input(f"Tag for '{annotation_word}':", value=tag)
-                # Store the position in the current annotation
                 annotated_word["tag"] = tag
             else:
                 tag = st.text_input(f"Tag for '{annotation_word}':")
@@ -82,7 +79,7 @@ def annotate_text(title, annotations):
         annotations.append(title_annotations)
 
     if st.button("Save"):
-        with open("annotations.json", "w") as f:
+        with open("app_annotations.json", "w") as f:
             json.dump(annotations, f)
         st.success("Annotations saved to annotations.json.")
 
@@ -94,20 +91,39 @@ def main():
     with open("prepared-clusters.json") as f:
         json_data = json.load(f)
 
-    with open("annotations.json") as ann:
+    with open("app_annotations.json") as ann:
         try:
             annotations = json.load(ann)
         except:
             annotations = []
 
+    if 'index' not in st.session_state:
+        st.session_state.index = 0
+        
+        
     cluster_keyes = [cluster_key for cluster_key in json_data.keys()]
-    selected_cluster = st.selectbox("Select cluster", options=cluster_keyes)
+    selected_cluster = st.selectbox("Select cluster", options=cluster_keyes,index=st.session_state.index)
 
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        if st.button("Previous") and st.session_state.index > 0:
+            st.session_state.index -= 1
+
+    with col2:
+        st.write("")  # Empty column to provide spacing
+
+    with col3:
+        if st.button("Next") and st.session_state.index < len(cluster_keyes) - 1:
+            st.session_state.index += 1
     if selected_cluster:
         titles = [product["title"] for product in json_data[selected_cluster]]
         selected_title = st.selectbox("Select a title:", titles)
 
         if selected_title:
+            for item in annotations:
+                if item['title'] == selected_title:
+                    st.write('Annotated!')
+                    break
             annotate_text(selected_title, annotations)
 
 

@@ -521,5 +521,105 @@
         "tag": "color"
       }
     ]
+  },
+  {
+    "title": "Redmi 10C 64GB Graphite Grey",
+    "annotations": [
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "10C",
+        "tag": "model"
+      },
+      {
+        "word": "64GB",
+        "tag": "storage"
+      },
+      {
+        "word": "Graphite Grey",
+        "tag": "color"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi Redmi Note 11 128GB Graphite Grey - SIM Free & \u00a3199.00 Upfront - No contract",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "Note 11",
+        "tag": "model"
+      },
+      {
+        "word": "128GB",
+        "tag": "storage"
+      },
+      {
+        "word": "Graphite Grey",
+        "tag": "color"
+      },
+      {
+        "word": "SIM Free & \u00a3199.00 Upfront - No contract",
+        "tag": "no_contract_details"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi Redmi Note 11 128GB Twilight Blue on Vodafone - \u00a314.00pm & \u00a320.00 Upfront - 24 Month Contract",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "Note 11",
+        "tag": "model"
+      },
+      {
+        "word": "128GB",
+        "tag": "storage"
+      },
+      {
+        "word": "Twilight Blue",
+        "tag": "color"
+      }
+    ]
+  },
+  {
+    "title": "Xiaomi Redmi Note 11 128GB Twilight Blue on Vodafone - \u00a314.00pm & \u00a320.00 Upfront - 24 Month Contract",
+    "annotations": [
+      {
+        "word": "Xiaomi",
+        "tag": "brand"
+      },
+      {
+        "word": "Redmi",
+        "tag": "sub_brand"
+      },
+      {
+        "word": "Note 11",
+        "tag": "model"
+      },
+      {
+        "word": "128GB",
+        "tag": "storage"
+      },
+      {
+        "word": "Twilight Blue",
+        "tag": "color"
+      }
+    ]
   }
 ]
