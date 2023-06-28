@@ -31,9 +31,11 @@ class VirtuosoWrapper:
         return True
 
     def insertChunk(self, triples):
-        sparql_query_template = """INSERT IN GRAPH <http://omikron44.com/> {
+        sparql_query_template = """INSERT DATA {
                     <query_string>
                 }"""
+                
+        triples = [triple for triple in triples if not re.search(r"(?i)(NaN|NaT)", triple)] #filter nan and nat values
         triplesString = " ".join(triples)
         sparql_query = sparql_query_template.replace("<query_string>", triplesString)
         self.sparql.setQuery(sparql_query)

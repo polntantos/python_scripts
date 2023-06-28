@@ -13,6 +13,9 @@ class PredicateObjectMap:
         predicate = URIRef(self.predicate.toPython())
 
         columnName = self.column.toPython()
-        if row[columnName] != None:
+        if row[columnName] != None and row[columnName] != "" and row[columnName] != "NaN" and row[columnName] != "NaT" and row[columnName] != "NULL":
             objectValue = Literal(row[columnName])
             graph.add((subject, predicate, objectValue))
+            # print(objectValue)
+            # print(type(objectValue))
+            # exit()

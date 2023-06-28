@@ -12,22 +12,13 @@ services:
       - "3306:3306"
     networks:
       custom_network:
-        ipv4_address: 192.168.1.2
-
-  jupyter:
-    container_name: jupyter-notebook
-    image: jupyter/base-notebook:latest
-    ports:
-      - "8889:8888"
-    volumes:
-      - ./notebook:/home/jovyan/work
-    command: start-notebook.sh --NotebookApp.token=''
+        ipv4_address: 192.168.1.20
 
   virtuoso:
-    image: openlink/virtuoso-opensource-7
+    image: openlink/virtuoso-opensource-7:7.2
     ports:
-      - "8891:8890"
-      - "1112:1111"
+      - "8890:8890"
+      - "1111:1111"
     environment:
       SPARQL_UPDATE: "true"
       DEFAULT_GRAPH: "http://example.com/my-graph"
@@ -37,7 +28,7 @@ services:
       - ./virtuoso:/database
     networks:
       custom_network:
-        ipv4_address: 192.168.1.5
+        ipv4_address: 192.168.1.50
 
 networks:
   custom_network:

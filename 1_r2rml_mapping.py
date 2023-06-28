@@ -37,10 +37,10 @@ def start_conversion(mode, mappingfile, checkpoint, savetodb):
     mappingfile = (
         mappingfile
         if mappingfile is not None
-        else "mappings/omikron44-ontology-mapping.ttl"
+        else "mappings/omikron44-supernova-mapping.ttl"
     )
     click.echo(f"{mode}, {mappingfile}, {checkpoint},{savetodb}")
-
+    # exit()
     rmlMapping = RMLmapping(mappingfile, checkpoint=checkpoint)
 
     if mode == "manual":
