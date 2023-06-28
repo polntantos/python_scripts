@@ -413,3 +413,22 @@ WHERE {
     FILTER (?brand != <http://omikron44/ontologies/brands/id=>)
 }GROUP BY ?brand ?brandTitle
 HAVING (COUNT(DISTINCT ?merchant) < 2) (COUNT(DISTINCT ?productType) < 2)
+
+
+
+select * 
+where {
+{
+select distinct ?class ?p count(?o) as ?objectCount
+  where {
+    ?s a ?class.
+    ?s ?p ?o.
+  } group by ?class ?p
+  order by ?class
+} UNION { 
+  select ?class COUNT(?s) as ?subject_count 
+  where{
+    ?s a ?class.
+  } group by ?class
+}
+}
