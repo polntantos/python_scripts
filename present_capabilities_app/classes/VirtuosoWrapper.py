@@ -58,3 +58,13 @@ class VirtuosoWrapper:
         self.sparql.setQuery(query)
         results = self.sparql.query()
         return results._convertJSON()
+    
+    
+    def send(self, query):
+        self.sparql.setQuery(query)
+        results = self.sparql.query()
+        
+        if 200 == results.response.getcode():
+            return {'status':'success','result':results._convertJSON()['results']['bindings'][0]['callret-0']['value']}
+        
+        return {'status':'error','result':results}

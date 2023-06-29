@@ -104,6 +104,17 @@ WHERE {
   ?brand <http://omikron44/ontologies/brands#brand> ?brandName.
 }
 
+#Your average Update query
+delete{
+    <http://omikron44/ontologies/brands/id=4403> <http://omikron44/ontologies/brands#brand> ?d.
+}
+insert{
+    <http://omikron44/ontologies/brands/id=4403> <http://omikron44/ontologies/brands#brand> 'Sister Jane'.
+}
+where{
+    <http://omikron44/ontologies/brands/id=4403> <http://omikron44/ontologies/brands#brand> ?d.
+}
+
 # select brands and their name
 SELECT ?s ?name
 WHERE {
