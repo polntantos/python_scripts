@@ -58,5 +58,20 @@ class VirtuosoWrapper:
 
     def get(self, query):
         self.sparql.setQuery(query)
-        results = self.sparql.query()
-        return results._convertJSON()
+        results = self.sparql.query()._convertJSON()
+        answer = []
+        
+        for row in results['results']['bindings']:
+            row_object = {}
+            for field in results['head']['vars']:
+                if field in row:
+                    row_object[field]=row[field]['value']
+            answer.append(row_object)
+            
+        return answer
+
+    def getGraph(self, query):
+        self.sparql.setQuery(query)
+        results = self.sparql.query()._convertJSONLD()
+        
+        return results

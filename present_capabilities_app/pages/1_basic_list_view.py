@@ -117,7 +117,7 @@ def store_triple():
             }}
         """
         print(updateQuery)
-        
+        # exit()
         virtuoso =VirtuosoWrapper()
         response = virtuoso.send(updateQuery)
         print(response)

@@ -443,3 +443,30 @@ select distinct ?class ?p count(?o) as ?objectCount
   } group by ?class
 }
 }
+
+#delete merchant_feeds that have no products
+
+DELETE WHERE {
+  ?merchantFeed a <http://omikron44/ontologies/merchant_feeds> .
+  FILTER NOT EXISTS {
+    SELECT ?merchantFeed
+    WHERE {
+      ?product a <http://omikron44/ontologies/products>.
+      ?merchantFeed a <http://omikron44/ontologies/merchant_feeds> .
+      ?product <http://www.w3.org/ns/r2rml#IRI> ?merchantFeed .
+    }
+  }
+}
+
+#merchants with no feeds from previous query
+DELETE WHERE {
+  ?merchant a <http://omikron44/ontologies/merchants> .
+  FILTER NOT EXISTS {
+    SELECT ?merchant
+    WHERE {
+      ?merchant a <http://omikron44/ontologies/merchants>.
+      ?merchantFeed a <http://omikron44/ontologies/merchant_feeds> .
+      ?merchantFeed <http://www.w3.org/ns/r2rml#IRI> ?merchant .
+    }
+  }
+}
