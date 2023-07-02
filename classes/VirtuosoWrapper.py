@@ -34,8 +34,10 @@ class VirtuosoWrapper:
         sparql_query_template = """INSERT DATA {
                     <query_string>
                 }"""
-                
-        triples = [triple for triple in triples if not re.search(r"(?i)(NaN|NaT)", triple)] #filter nan and nat values
+
+        triples = [
+            triple for triple in triples if not re.search(r"(?i)(NaN|NaT)", triple)
+        ]  # filter nan and nat values
         triplesString = " ".join(triples)
         sparql_query = sparql_query_template.replace("<query_string>", triplesString)
         self.sparql.setQuery(sparql_query)
@@ -60,18 +62,35 @@ class VirtuosoWrapper:
         self.sparql.setQuery(query)
         results = self.sparql.query()._convertJSON()
         answer = []
-        
-        for row in results['results']['bindings']:
+
+        for row in results["results"]["bindings"]:
             row_object = {}
-            for field in results['head']['vars']:
+            for field in results["head"]["vars"]:
                 if field in row:
-                    row_object[field]=row[field]['value']
+                    row_object[field] = row[field]["value"]
             answer.append(row_object)
-            
+
         return answer
 
     def getGraph(self, query):
         self.sparql.setQuery(query)
         results = self.sparql.query()._convertJSONLD()
-        
+
+        return results
+
+    def getAll(self, query):
+        results = []
+        offset = 0
+        while True:
+            formated_query = f"""
+            {query}
+            OFFSET {offset}
+            LIMIT 10000
+            """
+            query_results = self.get(formated_query)
+            results.extend(query_results)
+            if len(query_results) < 10000:
+                break
+
+            offset += len(results)
         return results
