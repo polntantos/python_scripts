@@ -1,7 +1,17 @@
 from classes.VirtuosoWrapper import VirtuosoWrapper
 import re
-import click
 import json
+import nltk
+from nltk.corpus import stopwords
+import copy
+
+nltk.download("stopwords")
+
+
+def is_stopword(word):
+    stopword_set = set(stopwords.words("english"))  # Get the set of English stopwords
+    return word.lower() in stopword_set
+
 
 virtuoso = VirtuosoWrapper()
 
@@ -58,6 +68,9 @@ with open("duplicate_invalidates.json", "w") as dr:
 with open("duplicate_invalidates.json", "r") as dr:
     duplicate_invalidates = json.load(dr)
 
+
+# Remove first two categories of invalid brands
+
 for duplicate_invalidate in duplicate_invalidates:
     if duplicate_invalidate in brands:
         brands.remove(duplicate_invalidate)
@@ -69,11 +82,64 @@ result_dict = {}
 # check if valid brands are contained in other brands
 for i, value in enumerate(transformed_array):
     contained_values = []
-    for j, other_value in enumerate(transformed_array):
+    for j, other_value in enumerate(transformed_array, i):
         if i != j and value in other_value and value != "":
             contained_values.append(other_value)
     if contained_values:
         result_dict[value] = contained_values
+
+
+# bit_dict = {}
+
+# for i, value in enumerate(brands):
+#     if i not in bit_dict:
+#         bit_dict[i] = []
+#     bit_dict[i].extend(value["name"].lower().split())
+
+# bit_result = {}
+# for key, bit in bit_dict.items():
+#     print(f"current key {key}")
+#     contained_values = []
+#     for other_key, other_bit in bit_dict.items():
+#         if key != other_key and bit != "":
+#             for i in bit:
+#                 if i in other_bit:
+#                     contained_values.append(brands[other_key]["name"])
+#     if contained_values:
+#         bit_result[brands[key]["name"]] = contained_values
+
+# with open("bit_result.json", "w") as dr:
+#     json.dump(bit_result, dr)
+
+# with open("bit_result.json", "r") as dr:
+#     bit_result = json.load(dr)
+
+result_dict = {}
+# check if valid brands are contained in other brands
+for i, value in enumerate(brands):
+    print(f"current key {i}")
+    contained_values = []
+    for j, other_value in enumerate(brands):
+        # print(check_brand)
+        if (
+            i != j
+            and value["name"].lower() in other_value["name"].lower()
+            and value["name"] != ""
+            and not is_stopword(word)
+        ):
+            contained_values.append(other_value)
+            # if other_value["name"] not in result_dict.keys():
+            #     break
+    print(contained_values)
+    if len(contained_values) > 0:
+        result_dict[value["name"]] = contained_values
+
+
+with open("result_dict2.json", "w") as dr:
+    json.dump(result_dict, dr)
+
+with open("result_dict.json", "r") as dr:
+    result_dict = json.load(dr)
 
 len(result_dict.values())
 for result_key, result_list in result_dict.items():
