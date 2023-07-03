@@ -4,6 +4,11 @@ import json
 import nltk
 from nltk.corpus import stopwords
 import copy
+import networkx as nx
+import pandas as pd
+from classes.VirtuosoWrapper import VirtuosoWrapper
+import matplotlib.pyplot as plt
+from pyvis.network import Network
 
 nltk.download("stopwords")
 
@@ -134,17 +139,23 @@ for i, value in enumerate(brands):
     if len(contained_values) > 0:
         result_dict[value["name"]] = contained_values
 
-
 with open("result_dict2.json", "w") as dr:
     json.dump(result_dict, dr)
 
 with open("result_dict.json", "r") as dr:
     result_dict = json.load(dr)
 
+G = nx.DiGraph()
+
+
 len(result_dict.values())
 for result_key, result_list in result_dict.items():
-    print(result_key)
-    print(result_list)
+    G.add_node(result_key)  # add brand name as a node
+    # print(result_key)
+    # print(result_list)
+    for dep_brand in result_list:
+        G.add_node(dep_brand["name"])
+        G.add_edge(result_key, dep_brand["name"])
 
 flattened_list = set([item for sublist in result_dict.values() for item in sublist])
 print(duplicates)
