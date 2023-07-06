@@ -1,6 +1,5 @@
 from classes.VirtuosoWrapper import VirtuosoWrapper
 import re
-import click
 import json
 
 virtuoso = VirtuosoWrapper()
