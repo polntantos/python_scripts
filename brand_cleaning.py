@@ -1,6 +1,23 @@
 from classes.VirtuosoWrapper import VirtuosoWrapper
 import re
 import json
+import nltk
+from nltk.corpus import stopwords
+import copy
+import networkx as nx
+import pandas as pd
+from classes.VirtuosoWrapper import VirtuosoWrapper
+import matplotlib.pyplot as plt
+from pyvis.network import Network
+from rdflib import Graph, URIRef, RDF, Literal
+
+nltk.download("stopwords")
+
+
+def is_stopword(word):
+    stopword_set = set(stopwords.words("english"))  # Get the set of English stopwords
+    return word.lower() in stopword_set
+
 
 virtuoso = VirtuosoWrapper()
 
@@ -28,7 +45,7 @@ for value in brands:
         duplicates[term].append(value)
 
 duplicate_remains = []
-
+# Βάζουμε τον χρήστη να διαλέξει ποιό απ τα διπλότυπα θα κρατήσουμε
 for dupli_name, duplicate_array in duplicates.items():
     for index, duplicate_brand in enumerate(duplicate_array):
         print(f"{index} : {duplicate_brand['name']}")
@@ -57,27 +74,137 @@ with open("duplicate_invalidates.json", "w") as dr:
 with open("duplicate_invalidates.json", "r") as dr:
     duplicate_invalidates = json.load(dr)
 
+
+# Remove first two categories of invalid brands
+
+brands_to_remove = []
+# Remove duplicates
 for duplicate_invalidate in duplicate_invalidates:
     if duplicate_invalidate in brands:
-        brands.remove(duplicate_invalidate)
+        brands_to_remove.append(brands.pop(brands.index(duplicate_invalidate)))
 
-brands = [brand for brand in brands if not re.search(r"[>/#?$%^&*()]+", brand["name"])]
+for brand in brands:
+    if re.search(r"[>/#?$%^*()]+", brand["name"]):
+        brands_to_remove.append(brand)
+    elif len(brand["name"]) > 70:
+        brands_to_remove.append(brand)
+
+# Remove values with symbols
+brands = [brand for brand in brands if not re.search(r"[>/#?$%^*()]+", brand["name"])]
+brands = [brand for brand in brands if not len(brand["name"]) > 70]
+
+# remove values longer than 70 chars (Google suggests)
+
+# result_dict = {}
+# # check if valid brands are contained in other brands
+# for i, value in enumerate(transformed_array):
+#     contained_values = []
+#     for j, other_value in enumerate(transformed_array, i):
+#         if i != j and value in other_value and value != "":
+#             contained_values.append(other_value)
+#     if contained_values:
+#         result_dict[value] = contained_values ##OLD
 
 result_dict = {}
-
 # check if valid brands are contained in other brands
-for i, value in enumerate(transformed_array):
+for i, value in enumerate(brands):
+    print(f"current key {i}")
     contained_values = []
-    for j, other_value in enumerate(transformed_array):
-        if i != j and value in other_value and value != "":
+    for j, other_value in enumerate(brands):
+        if (
+            i != j
+            and value["name"].lower() in other_value["name"].lower()
+            and value["name"] != ""
+            and not is_stopword(value["name"])
+        ):
             contained_values.append(other_value)
-    if contained_values:
-        result_dict[value] = contained_values
+            # if other_value["name"] not in result_dict.keys():
+            #     break
+    print(contained_values)
+    if len(contained_values) > 0:
+        result_dict[value["name"]] = {}
+        result_dict[value["name"]]["main"] = value
+        result_dict[value["name"]]["contained"] = contained_values
+
+with open("result_dict.json", "w") as dr:
+    json.dump(result_dict, dr)
+
+with open("result_dict.json", "r") as dr:
+    result_dict = json.load(dr)
+
+# Ακόμα δεν έχουμε δεδομένα παρουσίας τίτλων brand μεσα στη βάση από ανάλυση τίτλων επομένως θα θεωρήσουμε τον απλό κανόνα όποιο brand περιέχεται μέσα σε άλλο brand θα πρέπει να θεωρηθεί ως βασικό στο οποίο γίνεται αναφορά ή υπάρχει λανθασμένη τιμή από τον ιδιοκτήτη των δεδομένων (Βλέπε bosch, boss) Υπάρχουν και τα παραδείγματα της λέξης EA που σαν γράμματα βρίσκεται σε αρκετούς τίτλους brand αλλά είναι και brand από μόνη της. Αυτό περιμένουμε να το ξεχωρίσουμε αργότερα όταν το μοντέλο μας θα βλέπει τα άλλα brand μέσα σε τίτλους αλλά θα βλέπει και το EA σαν brand
+
+G = nx.DiGraph()
 
 len(result_dict.values())
 for result_key, result_list in result_dict.items():
-    print(result_key)
-    print(result_list)
+    G.add_node(result_list["main"]["brand_uri"], label=result_list["main"]["name"])
+    for dep_brand in result_list["contained"]:
+        G.add_node(dep_brand["brand_uri"], label=dep_brand["name"])
+        G.add_edge(dep_brand["brand_uri"], result_list["main"]["brand_uri"])
+
+for brand_degree in G.degree():
+    print(brand_degree)
+
+no_in_brands = [
+    G.nodes[brand]["label"] for brand, degree in G.in_degree() if degree == 0
+]
+# no incoming connections / end brands
+in_brands = [G.nodes[brand]["label"] for brand, degree in G.in_degree() if degree > 0]
+# incoming connection /brands that are referenced
+
+no_out_brands = [
+    G.nodes[brand]["label"] for brand, degree in G.out_degree() if degree == 0
+]
+# no outgoing connections / master brands /only referenced not refering others
+out_brands = [G.nodes[brand]["label"] for brand, degree in G.out_degree() if degree > 0]
+# outgoing connections / brands that reference other brands
+
+# μπορούμε να βγάλουμε συμπεράσματα από τους παραπάνω πίνακες
+
+# Μετατροπή του γράφου σε rdf
+# Create an RDF graph
+rdf_graph = Graph()
+
+# Iterate over the nodes and edges of the NetworkX graph
+for node in brands:
+    # rdf_graph.add(
+    #     (URIRef(node), RDF.type, URIRef("http://omikron44/ontologies/brands"))
+    # )
+    rdf_graph.add(
+        (
+            URIRef(node["brand_uri"]),
+            URIRef("http://omikron44/ontologies/tags#hasTag"),
+            Literal("valid"),
+        )
+    )
+
+for remove_brand in brands_to_remove:
+    rdf_graph.add(
+        (
+            URIRef(remove_brand["brand_uri"]),
+            URIRef("http://omikron44/ontologies/tags#hasTag"),
+            Literal("invalid"),
+        )
+    )
+
+for edge in G.edges:
+    node1, node2 = edge
+    rdf_graph.add(
+        (
+            URIRef(node1),
+            URIRef("http://omikron44/ontologies/brand#refers"),
+            URIRef(node2),
+        )
+    )
+
+rdf_graph.serialize(format="ttl", destination="valid_brands.ttl")
+
+virtuoso.save(rdf_graph)
+
+net = Network("1000px", "1900px", directed=False, font_color="white", bgcolor="#111111")
+net.from_nx(G)
+net.show("merchant_brand.html", notebook=False)
 
 flattened_list = set([item for sublist in result_dict.values() for item in sublist])
 print(duplicates)
