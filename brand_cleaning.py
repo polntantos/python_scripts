@@ -44,14 +44,32 @@ for value in brands:
             duplicates[term] = []
         duplicates[term].append(value)
 
+def evaluate_strings(string):
+    score = 0
+    if "'" in string:
+        score += 1
+    symbol_count = sum(1 for char in string if char.isalpha() or char.isspace())
+    dot_count = string.count('.')
+    score -= symbol_count - dot_count
+    if dot_count > 0:
+        words = string.split(' ')
+        for word in words:
+            if '.' in word and len(word.split('.')) > 2:
+                score -= 1
+    if ':' in string and len(string.split(':')) > 2:
+        score += 1
+    return score
+
 duplicate_remains = []
-# Βάζουμε τον χρήστη να διαλέξει ποιό απ τα διπλότυπα θα κρατήσουμε
+# Βάζουμε τον χρήστη να διαλέξει ποιό απ τα διπλότυπα θα κρατήσουμε/turn to rule based aproach
 for dupli_name, duplicate_array in duplicates.items():
+    brand_scores = {}
     for index, duplicate_brand in enumerate(duplicate_array):
         print(f"{index} : {duplicate_brand['name']}")
-        # print(type(duplicate_brand))
-    userInput = input(f"Select a brand to validate 0-{len(duplicate_array)-1}:")
-    duplicate_remains.append(duplicate_array[int(userInput)])
+        brand_scores[index] = evaluate_strings(duplicate_brand['name'])
+    max_key = max(brand_scores, key=lambda k: brand_scores[k])
+    # userInput = input(f"Select a brand to validate 0-{len(duplicate_array)-1}:")
+    duplicate_remains.append(duplicate_array[int(max_key)])
 
 print(duplicate_remains)
 with open("duplicate_remains.json", "w") as dr:
@@ -117,9 +135,11 @@ for i, value in enumerate(brands):
             and value["name"] != ""
             and not is_stopword(value["name"])
         ):
-            contained_values.append(other_value)
-            # if other_value["name"] not in result_dict.keys():
-            #     break
+            if(len(other_value["name"].split())>1 and len(value['name'].split())==1):
+                if value['name'].lower() in other_value["name"].lower().split():
+                    contained_values.append(other_value)
+            else:
+                    contained_values.append(other_value)
     print(contained_values)
     if len(contained_values) > 0:
         result_dict[value["name"]] = {}
