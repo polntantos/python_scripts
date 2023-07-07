@@ -19,6 +19,24 @@ def is_stopword(word):
     return word.lower() in stopword_set
 
 
+def evaluate_string(string):
+    score = 0
+    if "'" in string:
+        score += 2
+    symbol_count = sum(1 for char in string if char.isalpha())
+    symbol_count += sum(2 for char in string if char.isspace())
+    score += symbol_count
+    if "-" in string:
+        score += 2
+    words = string.split(" ")
+    for word in words:
+        if "." in word and len(word.split(".")) > 2:
+            score += 2
+    if ":" in string and len(string.split(":")) > 2:
+        score += 2
+    return score
+
+
 virtuoso = VirtuosoWrapper()
 
 brands_query = """
@@ -29,6 +47,21 @@ brands_query = """
     }"""
 
 brands = virtuoso.getAll(brands_query)
+
+brands_to_remove = []
+
+for brand in brands:
+    if re.search(r"[>/#?$%^*®™()]+", brand["name"]):
+        brands_to_remove.append(brand)
+    elif len(brand["name"]) > 70:
+        brands_to_remove.append(brand)
+
+# Remove values with symbols
+brands = [
+    brand for brand in brands if not re.search(r"[>/#?$%!^*®™()]+", brand["name"])
+]
+brands = [brand for brand in brands if not len(brand["name"]) > 70]
+
 
 transformed_array = [
     re.sub(r"[^a-z0-9]+", "", brand["name"].lower())
@@ -44,31 +77,17 @@ for value in brands:
             duplicates[term] = []
         duplicates[term].append(value)
 
-def evaluate_strings(string):
-    score = 0
-    if "'" in string:
-        score += 1
-    symbol_count = sum(1 for char in string if char.isalpha() or char.isspace())
-    dot_count = string.count('.')
-    score -= symbol_count - dot_count
-    if dot_count > 0:
-        words = string.split(' ')
-        for word in words:
-            if '.' in word and len(word.split('.')) > 2:
-                score -= 1
-    if ':' in string and len(string.split(':')) > 2:
-        score += 1
-    return score
 
 duplicate_remains = []
-# Βάζουμε τον χρήστη να διαλέξει ποιό απ τα διπλότυπα θα κρατήσουμε/turn to rule based aproach
+# turn to rule based selection of duplicates
 for dupli_name, duplicate_array in duplicates.items():
     brand_scores = {}
     for index, duplicate_brand in enumerate(duplicate_array):
-        print(f"{index} : {duplicate_brand['name']}")
-        brand_scores[index] = evaluate_strings(duplicate_brand['name'])
+        term_score = evaluate_string(duplicate_brand["name"])
+        print(f"{index} : {term_score} : {duplicate_brand['name']}")
+        brand_scores[index] = term_score
     max_key = max(brand_scores, key=lambda k: brand_scores[k])
-    # userInput = input(f"Select a brand to validate 0-{len(duplicate_array)-1}:")
+    print(f"selected key {max_key}")
     duplicate_remains.append(duplicate_array[int(max_key)])
 
 print(duplicate_remains)
@@ -92,36 +111,11 @@ with open("duplicate_invalidates.json", "w") as dr:
 with open("duplicate_invalidates.json", "r") as dr:
     duplicate_invalidates = json.load(dr)
 
-
-# Remove first two categories of invalid brands
-
-brands_to_remove = []
 # Remove duplicates
 for duplicate_invalidate in duplicate_invalidates:
     if duplicate_invalidate in brands:
         brands_to_remove.append(brands.pop(brands.index(duplicate_invalidate)))
 
-for brand in brands:
-    if re.search(r"[>/#?$%^*()]+", brand["name"]):
-        brands_to_remove.append(brand)
-    elif len(brand["name"]) > 70:
-        brands_to_remove.append(brand)
-
-# Remove values with symbols
-brands = [brand for brand in brands if not re.search(r"[>/#?$%^*()]+", brand["name"])]
-brands = [brand for brand in brands if not len(brand["name"]) > 70]
-
-# remove values longer than 70 chars (Google suggests)
-
-# result_dict = {}
-# # check if valid brands are contained in other brands
-# for i, value in enumerate(transformed_array):
-#     contained_values = []
-#     for j, other_value in enumerate(transformed_array, i):
-#         if i != j and value in other_value and value != "":
-#             contained_values.append(other_value)
-#     if contained_values:
-#         result_dict[value] = contained_values ##OLD
 
 result_dict = {}
 # check if valid brands are contained in other brands
@@ -135,11 +129,11 @@ for i, value in enumerate(brands):
             and value["name"] != ""
             and not is_stopword(value["name"])
         ):
-            if(len(other_value["name"].split())>1 and len(value['name'].split())==1):
-                if value['name'].lower() in other_value["name"].lower().split():
+            if len(other_value["name"].split()) > 1 and len(value["name"].split()) == 1:
+                if value["name"].lower() in other_value["name"].lower().split():
                     contained_values.append(other_value)
             else:
-                    contained_values.append(other_value)
+                contained_values.append(other_value)
     print(contained_values)
     if len(contained_values) > 0:
         result_dict[value["name"]] = {}
@@ -188,9 +182,6 @@ rdf_graph = Graph()
 
 # Iterate over the nodes and edges of the NetworkX graph
 for node in brands:
-    # rdf_graph.add(
-    #     (URIRef(node), RDF.type, URIRef("http://omikron44/ontologies/brands"))
-    # )
     rdf_graph.add(
         (
             URIRef(node["brand_uri"]),
