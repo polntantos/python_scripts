@@ -48,12 +48,14 @@ def get_triples(page=0):
     offset = page * 20
     select_part = ""
     where_part = ""
-    st.session_state['predicate_dict'] = {}
+    st.session_state["predicate_dict"] = {}
     for predicate in predicates:
         predicate_name = predicate.split("#", 1)[1].replace("-", "")
-        select_part += f" ?{predicate_name}"
+        select_part += (
+            f""" GROUP_CONCAT(?{predicate_name}; separator=", ") AS ?{predicate_name}"""
+        )
         where_part += f"OPTIONAL{{?s <{predicate}> ?{predicate_name}.}}"
-        st.session_state['predicate_dict'][predicate_name] = predicate
+        st.session_state["predicate_dict"][predicate_name] = predicate
 
     query = f"""
         SELECT ?s {select_part}
@@ -87,24 +89,26 @@ def get_triples(page=0):
         st.session_state["previous_page"] = None
     return triples
 
-def store_triple():
-    updateItems=[]
-    for item in st.session_state:
-        if 'FormSubmitter' in item:
-            id = item.strip('FormSubmitter:form:').strip('-Save')
-        if '-label' in item:
-            updateItems.append({
-                'predicate_key':item.split('-label:')[1],
-                'predicate_value':st.session_state[item]
-                })
-    if id is not None:
 
+def store_triple():
+    updateItems = []
+    for item in st.session_state:
+        if "FormSubmitter" in item:
+            id = item.strip("FormSubmitter:form:").strip("-Save")
+        if "-label" in item:
+            updateItems.append(
+                {
+                    "predicate_key": item.split("-label:")[1],
+                    "predicate_value": st.session_state[item],
+                }
+            )
+    if id is not None:
         delete_value = ""
         insert_value = ""
         for item in updateItems:
             delete_value += f"<{id}> <{st.session_state['predicate_dict'].get(item['predicate_key'])}> ?{item['predicate_key']}."
             insert_value += f"<{id}> <{st.session_state['predicate_dict'].get(item['predicate_key'])}> '{item['predicate_value']}'."
-        
+
         updateQuery = f"""
             DELETE{{
                 {delete_value}
@@ -118,13 +122,15 @@ def store_triple():
         """
         print(updateQuery)
         # exit()
-        virtuoso =VirtuosoWrapper()
+        virtuoso = VirtuosoWrapper()
         response = virtuoso.send(updateQuery)
         print(response)
-        if response['status'] == 'success':
-            st.success(response['result'], icon="✅")
+        if response["status"] == "success":
+            st.success(response["result"], icon="✅")
         else:
-            st.error(response['result'], icon="🚨")
+            st.error(response["result"], icon="🚨")
+
+
 # extenders with query desc
 with ex1:
     with st.expander("Concept query"):
@@ -187,19 +193,25 @@ with box.container():
                     colnum = list(triple).index(name)
                     with cols[colnum]:
                         st.write(item)
-                        
-                with cols[len(cols)-1]:
+
+                with cols[len(cols) - 1]:
                     disabled = False
-                    if len(triple.items())<2:
+                    if len(triple.items()) < 2:
                         disabled = True
-                    editButton = st.button(label="Edit",key=triple['s'],type='primary',disabled=disabled)
+                    editButton = st.button(
+                        label="Edit", key=triple["s"], type="primary", disabled=disabled
+                    )
                     if editButton:
                         with st.form(key=f"form:{triple['s']}"):
                             for name, item in triple.items():
-                                if name != 's':
-                                    st.text_input(label=name,value=item,key=f"form:id:{triple['s']}-label:{name}")
-                            st.form_submit_button('Save',on_click=store_triple)
-                            
+                                if name != "s":
+                                    st.text_input(
+                                        label=name,
+                                        value=item,
+                                        key=f"form:id:{triple['s']}-label:{name}",
+                                    )
+                            st.form_submit_button("Save", on_click=store_triple)
+
 prev_col, next_col = st.columns(2)
 
 with prev_col:
