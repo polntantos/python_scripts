@@ -37,6 +37,15 @@ def evaluate_string(string):
     return score
 
 
+def find_sentences_with_phrase(phrase, sentences):
+    matched_sentences = []
+    for sentence in sentences:
+        if phrase in sentence:
+            matched_sentences.append(sentence)
+        if len(matched_sentences) == 2:
+            break
+    return matched_sentences
+
 virtuoso = VirtuosoWrapper()
 
 brands_query = """
@@ -132,6 +141,9 @@ for i, value in enumerate(brands):
             if len(other_value["name"].split()) > 1 and len(value["name"].split()) == 1:
                 if value["name"].lower() in other_value["name"].lower().split():
                     contained_values.append(other_value)
+            elif len(other_value["name"].split()) == 1 and len(value["name"].split()) == 1:
+                if value["name"].lower() == other_value["name"].lower():
+                    contained_values.append(other_value)
             else:
                 contained_values.append(other_value)
     print(contained_values)
@@ -209,13 +221,14 @@ for edge in G.edges:
         )
     )
 
-rdf_graph.serialize(format="ttl", destination="valid_brands.ttl")
+rdf_graph.serialize(format="ttl", destination="office_valid_brands.ttl")
+# rdf_graph.serialize(format="ttl", destination="valid_brands.ttl")
 
 virtuoso.save(rdf_graph)
 
 net = Network("1000px", "1900px", directed=False, font_color="white", bgcolor="#111111")
 net.from_nx(G)
-net.show("merchant_brand.html", notebook=False)
+net.show("office_merchant_brand.html", notebook=False)
 
 flattened_list = set([item for sublist in result_dict.values() for item in sublist])
 print(duplicates)
