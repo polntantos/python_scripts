@@ -1,5 +1,6 @@
 from classes.VirtuosoWrapper import VirtuosoWrapper
 import re
+
 # from rdflib.extras.external_graph_libs import rdflib_to_networkx_multidigraph
 import networkx as nx
 from classes.VirtuosoWrapper import VirtuosoWrapper
@@ -7,11 +8,14 @@ from pyvis.network import Network
 from rdflib import Graph, URIRef, RDFS, Literal
 from slugify import slugify
 
+
 def evaluate_string(string):
     score = 0
     symbol_count = sum(1 for char in string if char.isalpha())
-    capital_count = sum(1 for word in string.split() if word[0].isupper() and word[1:].islower())
-    score += symbol_count+capital_count
+    capital_count = sum(
+        1 for word in string.split() if word[0].isupper() and word[1:].islower()
+    )
+    score += symbol_count + capital_count
     if "-" in string:
         score -= 2
     if "/" in string:
@@ -22,12 +26,14 @@ def evaluate_string(string):
             score += 1
     return score
 
+
 def contains_duplicate_word(string):
     words = string.split()
     unique_words = set(words)
     if len(words) != len(unique_words):
-      print(words,unique_words,len(words),len(unique_words), string)
+        print(words, unique_words, len(words), len(unique_words), string)
     return len(words) != len(unique_words)
+
 
 virtuoso = VirtuosoWrapper()
 
@@ -50,22 +56,25 @@ colors_query = """
 
 colors = virtuoso.getAll(colors_query)
 
+single_colors = [color["color"].lower() for color in colors if color["color"].isalpha()]
+single_colors = set(single_colors)  # keep unique values
+
 colors_to_remove = []
 
 for color in colors:
-  if re.search(r"[>#+'?$%^*®™()]+", color["color"]):
-    colors_to_remove.append(color)
-  elif re.search(r"[0-9]+", color["color"]):
-    colors_to_remove.append(color)  
-  elif len(color["color"].split())>1 :
-    for value in color["color"].split():
-      if len(value)>40:
+    if re.search(r"[>#+'?$%^*®™()]+", color["color"]):
         colors_to_remove.append(color)
-        break
-  elif len(color['color'])>100:
-    colors_to_remove.append(color)
-  elif contains_duplicate_word(color['color']):
-    colors_to_remove.append(color)
+    elif re.search(r"[0-9]+", color["color"]):
+        colors_to_remove.append(color)
+    elif len(color["color"].split()) > 1:
+        for value in color["color"].split():
+            if len(value) > 40:
+                colors_to_remove.append(color)
+                break
+    elif len(color["color"]) > 100:
+        colors_to_remove.append(color)
+    elif contains_duplicate_word(color["color"]):
+        colors_to_remove.append(color)
 
 colors = [color for color in colors if color not in colors_to_remove]
 
@@ -123,11 +132,17 @@ for i, value in enumerate(colors):
             and value["color"].lower() in other_value["color"].lower()
             and value["color"] != ""
         ):
-            if len(other_value["color"].split()) > 1 and len(value["color"].split()) == 1:
+            if (
+                len(other_value["color"].split()) > 1
+                and len(value["color"].split()) == 1
+            ):
                 if value["color"].lower() in other_value["color"].lower().split():
                   if(value["color"] not in result_dict):
                     contained_values.append(other_value)
-            elif len(other_value["color"].split()) == 1 and len(value["color"].split()) == 1:
+            elif (
+                len(other_value["color"].split()) == 1
+                and len(value["color"].split()) == 1
+            ):
                 if value["color"].lower() == other_value["color"].lower():
                   if(value["color"] not in result_dict):
                     contained_values.append(other_value)
@@ -170,6 +185,37 @@ out_colors = [color for color, degree in G.out_degree() if degree > 0]
 # print(no_in_colors)
 # print(no_out_colors)
 
+colors_relations = {}
+
+for single_color in single_colors:
+    for color in colors:
+        if (
+            single_color in color["color"].lower()
+            and single_color != color["color"].lower()
+        ):
+            if single_color not in colors_relations:
+                colors_relations[single_color] = []
+            colors_relations[single_color].append(color["color"].lower())
+
+G2 = nx.DiGraph()
+
+for basic_color, color_relations in colors_relations.items():
+    for color_relation in color_relations:
+        G2.add_edge(basic_color, color_relation)
+
+
+net = Network("1000px", "1900px", directed=False, font_color="white", bgcolor="#111111")
+ego_graph = nx.ego_graph(G2, "black", radius=1, undirected=True)
+net.from_nx(ego_graph)
+net.show(
+    "related_colors.html",
+    notebook=False,
+)
+# Turn this into graph
+# Take colors with ONLY incoming connections as parents
+# Take colors with ONLY one outgoing connection as color variation
+# Take colors with two or more outgoing connections as color mix
+# By binding colors to brands with products find colors only available through some brands as brand related colors and through product title analysis find if they are related to a parent color that may be present
 
 # Create an RDF graph
 rdf_graph = Graph()
@@ -178,7 +224,9 @@ rdf_graph = Graph()
 for node in colors:
     rdf_graph.add(
         (
-            URIRef(base="http://omikron44/ontologies/colors/",value=slugify(node["color"])),
+            URIRef(
+                base="http://omikron44/ontologies/colors/", value=slugify(node["color"])
+            ),
             RDFS.label,
             Literal(node["color"]),
         )
@@ -187,13 +235,18 @@ for node in colors:
 for remove_brand in colors_to_remove:
     rdf_graph.add(
         (
-            URIRef(base="http://omikron44/ontologies/colors/",value=slugify(node["color"])),
+            URIRef(
+                base="http://omikron44/ontologies/colors/", value=slugify(node["color"])
+            ),
             RDFS.label,
             Literal(node["color"]),
         )
     )
-    rdf_graph.add((
-            URIRef(base="http://omikron44/ontologies/colors/",value=slugify(node["color"])),
+    rdf_graph.add(
+        (
+            URIRef(
+                base="http://omikron44/ontologies/colors/", value=slugify(node["color"])
+            ),
             URIRef("http://omikron44/ontologies/tags#hasTag"),
             Literal("invalid"),
         )
@@ -203,16 +256,20 @@ for edge in G.edges:
     node1, node2 = edge
     rdf_graph.add(
         (
-            URIRef(base="http://omikron44/ontologies/colors/",value=slugify(node1)),
+            URIRef(base="http://omikron44/ontologies/colors/", value=slugify(node1)),
             URIRef("http://omikron44/ontologies/color#refers"),
-            URIRef(base="http://omikron44/ontologies/colors/",value=slugify(node2))
+            URIRef(base="http://omikron44/ontologies/colors/", value=slugify(node2)),
         )
     )
 
 rdf_graph.serialize(format="ttl", destination="office_colors.ttl")
 
 # virtuoso.save(rdf_graph)
+ego_graph = nx.ego_graph(G, "black", radius=1, undirected=True)
 
 net = Network("1000px", "1900px", directed=False, font_color="white", bgcolor="#111111")
-net.from_nx(G)
-net.show("office_colors.html", notebook=False)
+net.from_nx(ego_graph)
+net.show(
+    "black_1_colors.html",
+    notebook=False,
+)
