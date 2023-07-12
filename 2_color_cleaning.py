@@ -115,7 +115,7 @@ print(f"Total colors_to_remove:{len(colors_to_remove)}")
 result_dict = {}
 # check if valid colors are contained in other colors
 for i, value in enumerate(colors):
-    print(f"current key {i}")
+    # print(f"current key {i}")
     contained_values = []
     for j, other_value in enumerate(colors):
         if (
@@ -125,13 +125,16 @@ for i, value in enumerate(colors):
         ):
             if len(other_value["color"].split()) > 1 and len(value["color"].split()) == 1:
                 if value["color"].lower() in other_value["color"].lower().split():
+                  if(value["color"] not in result_dict):
                     contained_values.append(other_value)
             elif len(other_value["color"].split()) == 1 and len(value["color"].split()) == 1:
                 if value["color"].lower() == other_value["color"].lower():
+                  if(value["color"] not in result_dict):
                     contained_values.append(other_value)
             else:
-                contained_values.append(other_value)
-    print(contained_values)
+                if(value["color"] not in result_dict):
+                  contained_values.append(other_value)
+    # print(contained_values)
     if len(contained_values) > 0:
         result_dict[value["color"]] = {}
         result_dict[value["color"]]["main"] = value
@@ -207,7 +210,6 @@ for edge in G.edges:
     )
 
 rdf_graph.serialize(format="ttl", destination="office_colors.ttl")
-# rdf_graph.serialize(format="ttl", destination="valid_brands.ttl")
 
 # virtuoso.save(rdf_graph)
 
