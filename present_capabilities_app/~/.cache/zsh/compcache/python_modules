@@ -1,0 +1,4 @@
+_python_modules=( ${(Q)"${(z)$(<<\EO:_python_modules
+
+EO:_python_modules
+)}"} )
