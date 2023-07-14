@@ -340,7 +340,6 @@ for edge in G.edges:
     )
 
 rdf_graph.serialize(format="ttl", destination="office_colors.ttl")
-# rdf_graph.serialize(format="ttl", destination="valid_brands.ttl")
 
 # virtuoso.save(rdf_graph)
 ego_graph = nx.ego_graph(G, "black", radius=1, undirected=True)
