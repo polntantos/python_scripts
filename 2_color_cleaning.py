@@ -5,7 +5,7 @@ import re
 import networkx as nx
 from classes.VirtuosoWrapper import VirtuosoWrapper
 from pyvis.network import Network
-from rdflib import Graph, URIRef, RDFS, Literal
+from rdflib import Graph, URIRef, RDFS, RDF, Literal
 from slugify import slugify
 
 
@@ -35,6 +35,44 @@ def contains_duplicate_word(string):
     return len(words) != len(unique_words)
 
 
+def clean_words(string):
+    words = []
+    word = ""
+    for letter in string:
+        if letter.isalpha():
+            word += letter
+        else:
+            words.append(word)
+            word = ""
+    if word != "":
+        words.append(word)
+    return words
+
+
+def create_graph_vis(graph, name="graph_vis"):
+    net = Network(
+        "1000px", "1900px", directed=False, font_color="white", bgcolor="#111111"
+    )
+    net.from_nx(graph)
+    net.show(
+        f"{name}.html",
+        notebook=False,
+    )
+
+
+def get_degree_arrays(graph):
+    no_incoming = [(color, degree) for color, degree in G.in_degree() if degree == 0]
+    # no incoming connections / end colors
+    incoming = [(color, degree) for color, degree in G.in_degree() if degree > 0]
+    # incoming connection /colors that are referenced
+    no_outgoing = [(color, degree) for color, degree in G.out_degree() if degree == 0]
+    # no outgoing connections / master colors /only referenced not refering others
+    outgoing = [(color, degree) for color, degree in G.out_degree() if degree > 0]
+    # variation_colors = [color for color, degree in G.in_degree() if degree == 1]
+    # mix_colors = [color for color, degree in G.in_degree() if degree > 1]
+    return no_incoming, incoming, no_outgoing, outgoing
+
+
 virtuoso = VirtuosoWrapper()
 
 colors_query = """
@@ -56,8 +94,53 @@ colors_query = """
 
 colors = virtuoso.getAll(colors_query)
 
+print(f"Total color values: {len(colors)}")
+
 single_colors = [color["color"].lower() for color in colors if color["color"].isalpha()]
+
+print(f"Basic colors extracted:{len(single_colors)}")
 single_colors = set(single_colors)  # keep unique values
+single_colors = [
+    color for color in single_colors if len(color) > 2
+]  # keep unique values
+
+peer_validated_colors = []
+for db_color in colors:
+    check_color = db_color["color"].lower()
+    for color in single_colors:
+        if color != check_color and color in check_color:
+            peer_validated_colors.append(color)
+
+peer_validated_colors = set(peer_validated_colors)
+rdf_graph = Graph()
+
+# Iterate over the nodes and edges of the NetworkX graph
+for color in peer_validated_colors:
+    rdf_graph.add(
+        (
+            URIRef(base="http://omikron44/ontologies/colors/", value=color),
+            RDFS.label,
+            Literal(color.capitalize()),
+        )
+    )
+    rdf_graph.add(
+        (
+            URIRef(base="http://omikron44/ontologies/colors/", value=color),
+            RDF.type,
+            URIRef("http://omikron44/ontologies/colors"),
+        )
+    )
+    rdf_graph.add(
+        (
+            URIRef(base="http://omikron44/ontologies/colors/", value=color),
+            RDF.type,
+            URIRef("http://omikron44/ontologies/basic_colors"),
+        )
+    )
+
+colors = [
+    color for color in colors if color["color"].lower() not in peer_validated_colors
+]
 
 colors_to_remove = []
 
@@ -73,10 +156,13 @@ for color in colors:
                 break
     elif len(color["color"]) > 100:
         colors_to_remove.append(color)
-    elif contains_duplicate_word(color["color"]):
-        colors_to_remove.append(color)
 
 colors = [color for color in colors if color not in colors_to_remove]
+
+
+# elif contains_duplicate_word(color["color"]):
+#     colors_to_remove.append(color)
+
 
 # print(f"Total colors:{len(colors)}")
 # print(f"Total colors_to_remove:{len(colors_to_remove)}")
@@ -117,43 +203,51 @@ for dupli_name, duplicate_array in duplicates.items():
 for duplicate_invalidate in duplicate_invalidates:
     if duplicate_invalidate in colors:
         colors_to_remove.append(colors.pop(colors.index(duplicate_invalidate)))
+
 print(f"Duplicate remains {len(duplicate_remains)}")
 print(f"Total colors:{len(colors)}")
 print(f"Total colors_to_remove:{len(colors_to_remove)}")
 
-result_dict = {}
-# check if valid colors are contained in other colors
-for i, value in enumerate(colors):
-    # print(f"current key {i}")
-    contained_values = []
-    for j, other_value in enumerate(colors):
-        if (
-            i != j
-            and value["color"].lower() in other_value["color"].lower()
-            and value["color"] != ""
-        ):
-            if (
-                len(other_value["color"].split()) > 1
-                and len(value["color"].split()) == 1
-            ):
-                if value["color"].lower() in other_value["color"].lower().split():
-                  if(value["color"] not in result_dict):
-                    contained_values.append(other_value)
-            elif (
-                len(other_value["color"].split()) == 1
-                and len(value["color"].split()) == 1
-            ):
-                if value["color"].lower() == other_value["color"].lower():
-                  if(value["color"] not in result_dict):
-                    contained_values.append(other_value)
-            else:
-                if(value["color"] not in result_dict):
-                  contained_values.append(other_value)
-    # print(contained_values)
-    if len(contained_values) > 0:
-        result_dict[value["color"]] = {}
-        result_dict[value["color"]]["main"] = value
-        result_dict[value["color"]]["contained"] = contained_values
+# Check for variations split by "/"
+variations = {}
+
+for color in colors:
+    c_color = color["color"].lower()
+    if "/" in c_color:
+        color_parts = c_color.split("/")
+        for part in color_parts:
+            words = clean_words(part)
+            for word in words:
+                if word in peer_validated_colors and part not in peer_validated_colors:
+                    if word not in variations.keys():
+                        variations[word] = []
+                    if part not in variations[word]:
+                        variations[word].append(part)
+
+# build the graph with the variations to check if they are mixed colors
+variations_graph = nx.DiGraph()
+
+for valid, variation_arr in variations.items():
+    for variation in variation_arr:
+        variations_graph.add_edge(variation, valid)
+
+create_graph_vis(variations_graph, "color_variations_graph")
+
+degree_arrays = get_degree_arrays(variation_arr)
+
+# result_dict = {}
+# # check if valid colors are contained in other colors
+# for i, value in enumerate(colors):
+#     print(f"current key {i}")
+#     contained_values = []
+#     for valid_color in peer_validated_colors:
+#         if valid_color in value["color"].lower() and value["color"] != "":
+#             contained_values.append(valid_color)
+#     print(contained_values)
+#     if len(contained_values) > 0:
+#         result_dict[value["color"]] = {}
+#         result_dict[value["color"]]["main"] = value
+#         result_dict[value["color"]]["contained"] = contained_values
 
 # print(result_dict)
 
@@ -163,8 +257,8 @@ G = nx.DiGraph()
 for result_key, result_list in result_dict.items():
     G.add_node(result_list["main"]["color"])
     for dep_color in result_list["contained"]:
-        G.add_node(dep_color["color"])
-        G.add_edge(dep_color["color"], result_list["main"]["color"])
+        G.add_node(dep_color)
+        G.add_edge(dep_color, result_list["main"]["color"])
 
 for color_degree in G.degree():
     print(color_degree)
@@ -173,6 +267,8 @@ no_in_colors = [color for color, degree in G.in_degree() if degree == 0]
 # no incoming connections / end colors
 in_colors = [color for color, degree in G.in_degree() if degree > 0]
 # incoming connection /colors that are referenced
+variation_colors = [color for color, degree in G.in_degree() if degree == 1]
+mix_colors = [color for color, degree in G.in_degree() if degree > 1]
 
 no_out_colors = [color for color, degree in G.out_degree() if degree == 0]
 # no outgoing connections / master colors /only referenced not refering others
@@ -185,27 +281,8 @@ out_colors = [color for color, degree in G.out_degree() if degree > 0]
 # print(no_in_colors)
 # print(no_out_colors)
 
-colors_relations = {}
-
-for single_color in single_colors:
-    for color in colors:
-        if (
-            single_color in color["color"].lower()
-            and single_color != color["color"].lower()
-        ):
-            if single_color not in colors_relations:
-                colors_relations[single_color] = []
-            colors_relations[single_color].append(color["color"].lower())
-
-G2 = nx.DiGraph()
-
-for basic_color, color_relations in colors_relations.items():
-    for color_relation in color_relations:
-        G2.add_edge(basic_color, color_relation)
-
-
 net = Network("1000px", "1900px", directed=False, font_color="white", bgcolor="#111111")
-ego_graph = nx.ego_graph(G2, "black", radius=1, undirected=True)
+ego_graph = nx.ego_graph(G, "pink", radius=1, undirected=True)
 net.from_nx(ego_graph)
 net.show(
     "related_colors.html",
