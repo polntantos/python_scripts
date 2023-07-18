@@ -51,8 +51,8 @@ virtuoso = VirtuosoWrapper()
 brands_query = """
     SELECT ?brand_uri ?name
     WHERE {
-        ?brand_uri a <http://omikron44/ontologies/brands> .
-        ?brand_uri <http://omikron44/ontologies/brands#brand> ?name .
+        ?brand_uri a <http://magelon.com/ontologies/brands> .
+        ?brand_uri <http://magelon.com/ontologies/brands#brand> ?name .
     }"""
 
 brands = virtuoso.getAll(brands_query)
@@ -197,7 +197,7 @@ for node in brands:
     rdf_graph.add(
         (
             URIRef(node["brand_uri"]),
-            URIRef("http://omikron44/ontologies/tags#hasTag"),
+            URIRef("http://magelon.com/ontologies/tags#hasTag"),
             Literal("valid"),
         )
     )
@@ -206,7 +206,7 @@ for remove_brand in brands_to_remove:
     rdf_graph.add(
         (
             URIRef(remove_brand["brand_uri"]),
-            URIRef("http://omikron44/ontologies/tags#hasTag"),
+            URIRef("http://magelon.com/ontologies/tags#hasTag"),
             Literal("invalid"),
         )
     )
@@ -216,7 +216,7 @@ for edge in G.edges:
     rdf_graph.add(
         (
             URIRef(node1),
-            URIRef("http://omikron44/ontologies/brand#refers"),
+            URIRef("http://magelon.com/ontologies/brand#refers"),
             URIRef(node2),
         )
     )

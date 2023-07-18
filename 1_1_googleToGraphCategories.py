@@ -6,7 +6,7 @@ from classes.VirtuosoWrapper import VirtuosoWrapper
 # g = rdflib.Graph()
 
 # set namespace
-ns = rdflib.Namespace("http://omikron44/ontologies/google_categories/id=")
+ns = rdflib.Namespace("http://magelon.com/ontologies/google_categories/id=")
 
 # dictionary to store parent-child relationships
 relationships = {}
@@ -54,7 +54,7 @@ for category_id, category_info in relationships.items():
         (
             category,
             rdflib.RDF.type,
-            rdflib.URIRef("http://omikron44/ontologies/google_categories"),
+            rdflib.URIRef("http://magelon.com/ontologies/google_categories"),
         )
     )
     g.add((category, rdflib.RDFS.label, rdflib.Literal(category_info["name"])))
@@ -62,7 +62,7 @@ for category_id, category_info in relationships.items():
     g.add(
         (
             category,
-            rdflib.URIRef("http://omikron44/ontologies/google_categories#full_path"),
+            rdflib.URIRef("http://magelon.com/ontologies/google_categories#full_path"),
             rdflib.Literal(category_info["category_full_path"]),
         )
     )
