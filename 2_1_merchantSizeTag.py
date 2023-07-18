@@ -10,9 +10,9 @@ WHERE
 {{
   SELECT (COUNT(?product) AS ?productCount)
   WHERE {
-    ?merchant a <http://omikron44/ontologies/merchants> .
-    ?product <http://omikron44/ontologies/products#merchant_id> ?merchant_id.
-    ?merchant <http://omikron44/ontologies/merchants#id> ?merchant_id.
+    ?merchant a <http://magelon.com/ontologies/merchants> .
+    ?product <http://magelon.com/ontologies/products#merchant_id> ?merchant_id.
+    ?merchant <http://magelon.com/ontologies/merchants#id> ?merchant_id.
 }GROUP BY ?merchant
 }}
 """
@@ -20,9 +20,9 @@ WHERE
 merchants_product_count_query = """
 SELECT ?merchant (COUNT(?product) AS ?productCount)
 WHERE {
-  ?merchant a <http://omikron44/ontologies/merchants> .
-  ?product <http://omikron44/ontologies/products#merchant_id> ?merchant_id.
-  ?merchant <http://omikron44/ontologies/merchants#id> ?merchant_id.
+  ?merchant a <http://magelon.com/ontologies/merchants> .
+  ?product <http://magelon.com/ontologies/products#merchant_id> ?merchant_id.
+  ?merchant <http://magelon.com/ontologies/merchants#id> ?merchant_id.
 }
 GROUP BY ?merchant
 ORDER BY ?productCount
@@ -71,8 +71,8 @@ for part, name in enumerate(ranges):
             graph.add(
                 (
                     URIRef(merchant_product_count["merchant"]),
-                    URIRef("http://omikron44/ontologies/merchants#merchant-size"),
-                    URIRef(f"http://omikron44/ontologies/magelon-merchant-size/{name}"),
+                    URIRef("http://magelon.com/ontologies/merchants#merchant-size"),
+                    URIRef(f"http://magelon.com/ontologies/magelon-merchant-size/{name}"),
                 )
             )
         else:
@@ -83,8 +83,8 @@ if len(merchants) > 0:
         graph.add(
             (
                 URIRef(merchant_product_count["merchant"]),
-                URIRef("http://omikron44/ontologies/merchants#merchant-size"),
-                URIRef(f"http://omikron44/ontologies/magelon-merchant-size/large"),
+                URIRef("http://magelon.com/ontologies/merchants#merchant-size"),
+                URIRef(f"http://magelon.com/ontologies/magelon-merchant-size/large"),
             )
         )
 graph.serialize(destination="merchant-tags.ttl", format="turtle")

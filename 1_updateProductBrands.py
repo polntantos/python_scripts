@@ -3,16 +3,16 @@ from classes.VirtuosoWrapper import VirtuosoWrapper
 
 update_query = """
 DELETE {
-  ?product <http://omikron44/ontologies/products#brand> ?oldBrand .
+  ?product <http://magelon.com/ontologies/products#brand> ?oldBrand .
 }
 INSERT {
-  ?product <http://omikron44/ontologies/products#brand> ?brand .
+  ?product <http://magelon.com/ontologies/products#brand> ?brand .
 }
 WHERE {
-  ?product a <http://omikron44/ontologies/products>;
-           <http://omikron44/ontologies/products#brand> ?oldBrand .
-  ?brand a <http://omikron44/ontologies/brands>;
-        <http://omikron44/ontologies/brands#brand> ?oldBrand .
+  ?product a <http://magelon.com/ontologies/products>;
+           <http://magelon.com/ontologies/products#brand> ?oldBrand .
+  ?brand a <http://magelon.com/ontologies/brands>;
+        <http://magelon.com/ontologies/brands#brand> ?oldBrand .
 }
 """
 
@@ -20,10 +20,12 @@ count_query = """
 SELECT 
  (COUNT(?product) AS ?count) (COUNT(?product_all) AS ?count_all)
 WHERE {
-  ?product a <http://omikron44/ontologies/products>;
-           <http://omikron44/ontologies/products#brand> ?brand .
-  ?brand a <http://omikron44/ontologies/brands>.
-  ?product_all a <http://omikron44/ontologies/products>.
+    {?product a <http://magelon.com/ontologies/products>;
+            <http://magelon.com/ontologies/products#brand> ?brand .
+    ?brand a <http://magelon.com/ontologies/brands>.}
+  UNION{
+    ?product_all a <http://magelon.com/ontologies/products>.
+  }
 }
 """
 
@@ -39,5 +41,6 @@ while True:
     count_query_response = virtuoso.get(count_query)
     print("count_query_response currently updated")
     print(count_query_response[0]["count"])
-    if int(count_query_response[0]["count"]) >= count_query_response[0]["count_all"]:
+    print(count_query_response)
+    if int(count_query_response[0]["count"]) >= int(count_query_response[0]["count_all"]):
         break

@@ -81,8 +81,8 @@ colors_query = """
     {
       SELECT ?color (COUNT(?s) as ?product_count) 
       WHERE {
-          ?s a <http://omikron44/ontologies/products>.
-          ?s <http://omikron44/ontologies/products#color> ?color.
+          ?s a <http://magelon.com/ontologies/products>.
+          ?s <http://magelon.com/ontologies/products#color> ?color.
       }
       GROUP BY ?color
       ORDER BY DESC(?product_count )
@@ -118,23 +118,23 @@ rdf_graph = Graph()
 for color in peer_validated_colors:
     rdf_graph.add(
         (
-            URIRef(base="http://omikron44/ontologies/colors/", value=color),
+            URIRef(base="http://magelon.com/ontologies/colors/", value=color),
             RDFS.label,
             Literal(color.capitalize()),
         )
     )
     rdf_graph.add(
         (
-            URIRef(base="http://omikron44/ontologies/colors/", value=color),
+            URIRef(base="http://magelon.com/ontologies/colors/", value=color),
             RDF.type,
-            URIRef("http://omikron44/ontologies/colors"),
+            URIRef("http://magelon.com/ontologies/colors"),
         )
     )
     rdf_graph.add(
         (
-            URIRef(base="http://omikron44/ontologies/colors/", value=color),
+            URIRef(base="http://magelon.com/ontologies/colors/", value=color),
             RDF.type,
-            URIRef("http://omikron44/ontologies/basic_colors"),
+            URIRef("http://magelon.com/ontologies/basic_colors"),
         )
     )
 
@@ -302,7 +302,7 @@ for node in colors:
     rdf_graph.add(
         (
             URIRef(
-                base="http://omikron44/ontologies/colors/", value=slugify(node["color"])
+                base="http://magelon.com/ontologies/colors/", value=slugify(node["color"])
             ),
             RDFS.label,
             Literal(node["color"]),
@@ -313,7 +313,7 @@ for remove_brand in colors_to_remove:
     rdf_graph.add(
         (
             URIRef(
-                base="http://omikron44/ontologies/colors/", value=slugify(node["color"])
+                base="http://magelon.com/ontologies/colors/", value=slugify(node["color"])
             ),
             RDFS.label,
             Literal(node["color"]),
@@ -322,9 +322,9 @@ for remove_brand in colors_to_remove:
     rdf_graph.add(
         (
             URIRef(
-                base="http://omikron44/ontologies/colors/", value=slugify(node["color"])
+                base="http://magelon.com/ontologies/colors/", value=slugify(node["color"])
             ),
-            URIRef("http://omikron44/ontologies/tags#hasTag"),
+            URIRef("http://magelon.com/ontologies/tags#hasTag"),
             Literal("invalid"),
         )
     )
@@ -333,9 +333,9 @@ for edge in G.edges:
     node1, node2 = edge
     rdf_graph.add(
         (
-            URIRef(base="http://omikron44/ontologies/colors/", value=slugify(node1)),
-            URIRef("http://omikron44/ontologies/color#refers"),
-            URIRef(base="http://omikron44/ontologies/colors/", value=slugify(node2)),
+            URIRef(base="http://magelon.com/ontologies/colors/", value=slugify(node1)),
+            URIRef("http://magelon.com/ontologies/color#refers"),
+            URIRef(base="http://magelon.com/ontologies/colors/", value=slugify(node2)),
         )
     )
 
