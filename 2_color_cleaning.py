@@ -27,12 +27,12 @@ def evaluate_string(string):
     return score
 
 
-def contains_duplicate_word(string):
-    words = string.split()
-    unique_words = set(words)
-    if len(words) != len(unique_words):
-        print(words, unique_words, len(words), len(unique_words), string)
-    return len(words) != len(unique_words)
+# def contains_duplicate_word(string):
+#     words = string.split()
+#     unique_words = set(words)
+#     if len(words) != len(unique_words):
+#         print(words, unique_words, len(words), len(unique_words), string)
+#     return len(words) != len(unique_words)
 
 
 def clean_words(string):
@@ -49,10 +49,13 @@ def clean_words(string):
     return words
 
 
-def create_graph_vis(graph, name="graph_vis"):
+def create_graph_vis(graph, name="graph_vis", ego=None, distance=1):
     net = Network(
         "1000px", "1900px", directed=False, font_color="white", bgcolor="#111111"
     )
+    if ego != None:
+        graph = nx.ego_graph(graph, ego, radius=distance, undirected=True)
+        name = f"{name}_{ego}"
     net.from_nx(graph)
     net.show(
         f"{name}.html",
@@ -60,7 +63,7 @@ def create_graph_vis(graph, name="graph_vis"):
     )
 
 
-def get_degree_arrays(graph):
+def get_degree_arrays(G):
     no_incoming = [(color, degree) for color, degree in G.in_degree() if degree == 0]
     # no incoming connections / end colors
     incoming = [(color, degree) for color, degree in G.in_degree() if degree > 0]
@@ -100,9 +103,24 @@ single_colors = [color["color"].lower() for color in colors if color["color"].is
 
 print(f"Basic colors extracted:{len(single_colors)}")
 single_colors = set(single_colors)  # keep unique values
+
 single_colors = [
     color for color in single_colors if len(color) > 2
 ]  # keep unique values
+
+# we extracted these manually with inspection
+known_variation_stopwords = [
+    "light",
+    "dark",
+    "striped",
+    "soft",
+    "deep",
+    "medium",
+    "checked",
+    "faded",
+    "stripped",
+    "stars",
+]
 
 peer_validated_colors = []
 for db_color in colors:
@@ -112,7 +130,12 @@ for db_color in colors:
             peer_validated_colors.append(color)
 
 peer_validated_colors = set(peer_validated_colors)
+peer_validated_colors = [
+    color for color in peer_validated_colors if color not in known_variation_stopwords
+]
 rdf_graph = Graph()
+
+print(f"Total colors validated by peers : {len(single_colors)}")
 
 # Iterate over the nodes and edges of the NetworkX graph
 for color in peer_validated_colors:
@@ -160,13 +183,6 @@ for color in colors:
 colors = [color for color in colors if color not in colors_to_remove]
 
 
-# elif contains_duplicate_word(color["color"]):
-#     colors_to_remove.append(color)
-
-
-# print(f"Total colors:{len(colors)}")
-# print(f"Total colors_to_remove:{len(colors_to_remove)}")
-
 transformed_array = [
     re.sub(r"[^a-z0-9]+", "", color["color"].lower())
     for color in colors
@@ -204,9 +220,11 @@ for duplicate_invalidate in duplicate_invalidates:
     if duplicate_invalidate in colors:
         colors_to_remove.append(colors.pop(colors.index(duplicate_invalidate)))
 
+colors = [color for color in colors if color not in colors_to_remove]
+
 print(f"Duplicate remains {len(duplicate_remains)}")
 print(f"Total colors:{len(colors)}")
-print(f"Total colors_to_remove:{len(colors_to_remove)}")
+print(f"Total colors removed:{len(colors_to_remove)}")
 
 # Check for variations split by "/"
 variations = {}
@@ -218,11 +236,14 @@ for color in colors:
         for part in color_parts:
             words = clean_words(part)
             for word in words:
-                if word in peer_validated_colors and part not in peer_validated_colors:
+                if (
+                    word in peer_validated_colors
+                    and part.strip() not in peer_validated_colors
+                ):
                     if word not in variations.keys():
                         variations[word] = []
-                    if part not in variations[word]:
-                        variations[word].append(part)
+                    if part.strip() not in variations[word]:
+                        variations[word].append(part.strip())
 
 # build the graph with the variations to check if they are mixed colors
 variations_graph = nx.DiGraph()
@@ -231,122 +252,87 @@ for valid, variation_arr in variations.items():
     for variation in variation_arr:
         variations_graph.add_edge(variation, valid)
 
-create_graph_vis(variations_graph, "color_variations_graph")
+print(f"Total colors kept by peer {len(peer_validated_colors)}")
+secondary_colors = []
+secondary_colors.extend([sec_array for sec_array in variations.values()])
+print(f"Total colors kept by connection to peer {len(secondary_colors)}")
 
-degree_arrays = get_degree_arrays(variation_arr)
+show_examples = input("Wanna see graph visual examples?[Y/n]")
+if show_examples == "y" or show_examples == "Y" or show_examples == "":
+    create_graph_vis(variations_graph, "color_variations_graph", "pink")
+    create_graph_vis(variations_graph, "color_variations_graph", "black")
+    create_graph_vis(variations_graph, "color_variations_graph", "white")
 
-# result_dict = {}
-# # check if valid colors are contained in other colors
-# for i, value in enumerate(colors):
-#     print(f"current key {i}")
-#     contained_values = []
-#     for valid_color in peer_validated_colors:
-#         if valid_color in value["color"].lower() and value["color"] != "":
-#             contained_values.append(valid_color)
-#     print(contained_values)
-#     if len(contained_values) > 0:
-#         result_dict[value["color"]] = {}
-#         result_dict[value["color"]]["main"] = value
-#         result_dict[value["color"]]["contained"] = contained_values
+no_incoming, incoming, no_outgoing, outgoing = get_degree_arrays(variations_graph)
 
-# print(result_dict)
+color_variations = [color for color, degree in outgoing if degree == 1]
+color_mixtures = [color for color, degree in outgoing if degree > 1]
 
-G = nx.DiGraph()
+# checkpoint
+rdf_graph.serialize(format="ttl", destination="basic_colors.ttl")
 
-# len(result_dict.values())
-for result_key, result_list in result_dict.items():
-    G.add_node(result_list["main"]["color"])
-    for dep_color in result_list["contained"]:
-        G.add_node(dep_color)
-        G.add_edge(dep_color, result_list["main"]["color"])
 
-for color_degree in G.degree():
-    print(color_degree)
-
-no_in_colors = [color for color, degree in G.in_degree() if degree == 0]
-# no incoming connections / end colors
-in_colors = [color for color, degree in G.in_degree() if degree > 0]
-# incoming connection /colors that are referenced
-variation_colors = [color for color, degree in G.in_degree() if degree == 1]
-mix_colors = [color for color, degree in G.in_degree() if degree > 1]
-
-no_out_colors = [color for color, degree in G.out_degree() if degree == 0]
-# no outgoing connections / master colors /only referenced not refering others
-out_colors = [color for color, degree in G.out_degree() if degree > 0]
-# outgoing connections / colors that reference other colors
-
-# print(in_colors)
-# print(out_colors)
-
-# print(no_in_colors)
-# print(no_out_colors)
-
-net = Network("1000px", "1900px", directed=False, font_color="white", bgcolor="#111111")
-ego_graph = nx.ego_graph(G, "pink", radius=1, undirected=True)
-net.from_nx(ego_graph)
-net.show(
-    "related_colors.html",
-    notebook=False,
-)
-# Turn this into graph
-# Take colors with ONLY incoming connections as parents
-# Take colors with ONLY one outgoing connection as color variation
-# Take colors with two or more outgoing connections as color mix
-# By binding colors to brands with products find colors only available through some brands as brand related colors and through product title analysis find if they are related to a parent color that may be present
-
-# Create an RDF graph
-rdf_graph = Graph()
-
-# Iterate over the nodes and edges of the NetworkX graph
-for node in colors:
+for edge in variations_graph.edges:
+    refering_color, refered_color = edge
     rdf_graph.add(
         (
             URIRef(
-                base="http://omikron44/ontologies/colors/", value=slugify(node["color"])
+                base="http://omikron44/ontologies/colors/",
+                value=slugify(refering_color),
             ),
             RDFS.label,
-            Literal(node["color"]),
-        )
-    )
-
-for remove_brand in colors_to_remove:
-    rdf_graph.add(
-        (
-            URIRef(
-                base="http://omikron44/ontologies/colors/", value=slugify(node["color"])
-            ),
-            RDFS.label,
-            Literal(node["color"]),
+            Literal(refering_color.capitalize()),
         )
     )
     rdf_graph.add(
         (
             URIRef(
-                base="http://omikron44/ontologies/colors/", value=slugify(node["color"])
+                base="http://omikron44/ontologies/colors/",
+                value=slugify(refering_color),
             ),
-            URIRef("http://omikron44/ontologies/tags#hasTag"),
-            Literal("invalid"),
-        )
-    )
-
-for edge in G.edges:
-    node1, node2 = edge
-    rdf_graph.add(
-        (
-            URIRef(base="http://omikron44/ontologies/colors/", value=slugify(node1)),
             URIRef("http://omikron44/ontologies/color#refers"),
-            URIRef(base="http://omikron44/ontologies/colors/", value=slugify(node2)),
+            URIRef(
+                base="http://omikron44/ontologies/colors/",
+                value=slugify(refered_color),
+            ),
         )
     )
+    rdf_graph.add(
+        (
+            URIRef(
+                base="http://omikron44/ontologies/colors/",
+                value=slugify(refering_color),
+            ),
+            RDF.type,
+            URIRef("http://omikron44/ontologies/colors"),
+        )
+    )
+    if refering_color in color_variations:
+        rdf_graph.add(
+            (
+                URIRef(
+                    base="http://omikron44/ontologies/colors/",
+                    value=slugify(refering_color),
+                ),
+                RDF.type,
+                URIRef("http://omikron44/ontologies/color_variations"),
+            )
+        )
+    if refering_color in color_mixtures:
+        rdf_graph.add(
+            (
+                URIRef(
+                    base="http://omikron44/ontologies/colors/",
+                    value=slugify(refering_color),
+                ),
+                RDF.type,
+                URIRef("http://omikron44/ontologies/mixture_colors"),
+            )
+        )
 
-rdf_graph.serialize(format="ttl", destination="office_colors.ttl")
+# checkpoint
+rdf_graph.serialize(format="ttl", destination="basic_full_colors.ttl")
 
-# virtuoso.save(rdf_graph)
-ego_graph = nx.ego_graph(G, "black", radius=1, undirected=True)
-
-net = Network("1000px", "1900px", directed=False, font_color="white", bgcolor="#111111")
-net.from_nx(ego_graph)
-net.show(
-    "black_1_colors.html",
-    notebook=False,
-)
+save_input = input("Hit 'Y' and commit to save your colors")
+if save_input == "Y":
+    virtuoso.save(rdf_graph)

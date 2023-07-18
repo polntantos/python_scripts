@@ -470,3 +470,45 @@ DELETE WHERE {
     }
   }
 }
+
+
+# this query selects all brands with name and uri that are related to or have as a name Bosch (from brand cleaning)
+Select ?brand_uri ?brand_name
+WHERE {
+  {
+  ?brand_uri ?p "Bosch".
+  ?brand_uri <http://omikron44/ontologies/brands#brand> ?brand_name.
+  ?brand_uri a <http://omikron44/ontologies/brands>.
+  }
+  UNION
+  {
+  ?b ?n "Bosch".
+  ?brand_uri ?refers ?b.
+  ?brand_uri <http://omikron44/ontologies/brands#brand> ?brand_name.
+  ?brand_uri a <http://omikron44/ontologies/brands>.
+  }
+}
+
+#Extention of the above query that returns all product uris related to one of the brands
+SELECT ?product_title
+WHERE {
+  ?product <http://omikron44/ontologies/products#brand> ?brand_uri ;
+           <http://omikron44/ontologies/products#title> ?product_title .
+  {
+    Select ?brand_uri ?brand_name
+    WHERE {
+      {
+      ?brand_uri ?p "Bosch".
+      ?brand_uri <http://omikron44/ontologies/brands#brand> ?brand_name.
+      ?brand_uri a <http://omikron44/ontologies/brands>.
+      }
+      UNION
+      {
+      ?b ?n "Bosch".
+      ?brand_uri ?refers ?b.
+      ?brand_uri <http://omikron44/ontologies/brands#brand> ?brand_name.
+      ?brand_uri a <http://omikron44/ontologies/brands>.
+      }
+    }
+  }
+}
