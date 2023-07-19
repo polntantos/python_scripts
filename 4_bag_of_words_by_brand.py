@@ -63,6 +63,30 @@ virtuoso = VirtuosoWrapper()
 query_res = virtuoso.getAll(query)
 product_titles = [row["product_title"] for row in query_res]
 
+vectorizer1 = TfidfVectorizer(
+    stop_words="english", ngram_range=(1, 1), min_df=1, max_df=0.5
+)  # to catch product sku
+vectorizer2 = TfidfVectorizer(
+    stop_words="english", ngram_range=(2, 2), min_df=2, max_df=0.5
+)
+vectorizer3 = TfidfVectorizer(
+    stop_words="english", ngram_range=(3, 3), min_df=2, max_df=0.5
+)
+
+X1 = vectorizer1.fit_transform(product_titles)
+X2 = vectorizer2.fit_transform(product_titles)
+X3 = vectorizer3.fit_transform(product_titles)
+
+vocab1 = [
+    word for word in vectorizer1.vocabulary_.keys() if brand_name.lower() not in word
+]
+vocab2 = [
+    word for word in vectorizer2.vocabulary_.keys() if brand_name.lower() not in word
+]
+vocab3 = [
+    word for word in vectorizer3.vocabulary_.keys() if brand_name.lower() not in word
+]
+
 G = nx.DiGraph()
 
 transformed_titles = []
@@ -83,39 +107,40 @@ for product_title in product_titles:
                     G.add_edge(previous_word, word, weight=1)
             previous_word = word
 
-# create_graph_vis(G, "bosch_attr_brand_word_network") # uncomment this for visual graph (small graph only)
+termdict1 = {}
+for name1 in vocab1:
+    for name2 in vocab2:
+        if name1 in name2.split():
+            if name1 not in termdict1.keys():
+                termdict1[name1] = []
+            print(name1, name2)
+            termdict1[name1].append(name2)
 
-# for degree, in_degree, out_degree in zip(G.degree(), G.in_degree(), G.out_degree()):
-#     print(degree, in_degree[1], out_degree[1])
+for ngram, ngrams in termdict1.items():
+    if len(G.out_edges(ngram)) == 1:
+        for dual in ngrams:
+            if dual in vocab2:
+                vocab2.pop(vocab2.index(dual))
+    elif len(G.out_edges(ngram)) > len(
+        [word for word in ngrams if word.startswith(ngram + " ")]
+    ):  # Must be a dual word feature filter
+        for word in ngrams:
+            if word in vocab2:
+                print(word)
+                vocab2.pop(vocab2.index(word))
+        for edge in G.out_edges(ngram):
+            value = " ".join(edge)
+            if value not in vocab2:
+                # print(value)
+                vocab2.append(value)
+        vocab1.pop(vocab1.index(ngram))
+    else:
+        vocab1.pop(vocab1.index(ngram))
 
-# suspected_values = []
-# feature_values = []
-# for node, degree in G.degree():
-#     if degree % 2 == 1:
-#         suspected_values.append(node)
-#         # print(node)
-#     else:
-#         feature_values.append(node)
-
-# possible_features = []
-# for node1 in suspected_values:
-#     previous_node = None
-#     string_val = ""
-#     for node2 in suspected_values:
-#         if G.has_edge(node1, node2):
-#             previous_node = node2
-#             string_val = node2
-#             possible_features.append("_".join([node1, node2]))
-#         elif G.has_edge(previous_node, node2):
-#             string_val = "_".join([string_val, node2])
-#             possible_features.append(string_val)
-#         else:
-#             previous_node = None
-#             string_val = ""
-
-# for value in possible_features:
-#     if "lawnmower" in value:
-#         print(value)
+for word1 in vocab1:
+    for word2 in vocab2:
+        if word1 in word2.split():
+            vocab2.pop(vocab2.index(word2))
 
 sorted_word_pairs = sorted(G.edges(data="weight"), key=lambda x: x[2], reverse=True)
 
@@ -137,10 +162,6 @@ for pair1 in sorted_word_pairs:
                 possible_feature_paths.append(possible_feature)
 
 # for possible_feature in possible_feature_paths:
-
-vectorizer = TfidfVectorizer(
-    stop_words="english", ngram_range=(1, 2), min_df=10, max_df=0.5
-)
 
 vectorizer.fit(product_titles)
 
