@@ -61,13 +61,17 @@ def create_graph_vis(graph, name="graph_vis"):
 
 
 def get_degree_arrays(graph):
-    no_incoming = [(color, degree) for color, degree in G.in_degree() if degree == 0]
+    no_incoming = [
+        (color, degree) for color, degree in graph.in_degree() if degree == 0
+    ]
     # no incoming connections / end colors
-    incoming = [(color, degree) for color, degree in G.in_degree() if degree > 0]
+    incoming = [(color, degree) for color, degree in graph.in_degree() if degree > 0]
     # incoming connection /colors that are referenced
-    no_outgoing = [(color, degree) for color, degree in G.out_degree() if degree == 0]
+    no_outgoing = [
+        (color, degree) for color, degree in graph.out_degree() if degree == 0
+    ]
     # no outgoing connections / master colors /only referenced not refering others
-    outgoing = [(color, degree) for color, degree in G.out_degree() if degree > 0]
+    outgoing = [(color, degree) for color, degree in graph.out_degree() if degree > 0]
     # variation_colors = [color for color, degree in G.in_degree() if degree == 1]
     # mix_colors = [color for color, degree in G.in_degree() if degree > 1]
     return no_incoming, incoming, no_outgoing, outgoing
@@ -145,7 +149,7 @@ colors = [
 colors_to_remove = []
 
 for color in colors:
-    if re.search(r"[>#+'?$%^*®™()]+", color["color"]):
+    if re.search(r"[>#+'?$%^*®™/()]+", color["color"]):
         colors_to_remove.append(color)
     elif re.search(r"[0-9]+", color["color"]):
         colors_to_remove.append(color)
@@ -158,14 +162,6 @@ for color in colors:
         colors_to_remove.append(color)
 
 colors = [color for color in colors if color not in colors_to_remove]
-
-
-# elif contains_duplicate_word(color["color"]):
-#     colors_to_remove.append(color)
-
-
-# print(f"Total colors:{len(colors)}")
-# print(f"Total colors_to_remove:{len(colors_to_remove)}")
 
 transformed_array = [
     re.sub(r"[^a-z0-9]+", "", color["color"].lower())
@@ -233,87 +229,38 @@ for valid, variation_arr in variations.items():
 
 create_graph_vis(variations_graph, "color_variations_graph")
 
-degree_arrays = get_degree_arrays(variation_arr)
+degree_arrays = get_degree_arrays(variations_graph)
 
-# result_dict = {}
-# # check if valid colors are contained in other colors
-# for i, value in enumerate(colors):
-#     print(f"current key {i}")
-#     contained_values = []
-#     for valid_color in peer_validated_colors:
-#         if valid_color in value["color"].lower() and value["color"] != "":
-#             contained_values.append(valid_color)
-#     print(contained_values)
-#     if len(contained_values) > 0:
-#         result_dict[value["color"]] = {}
-#         result_dict[value["color"]]["main"] = value
-#         result_dict[value["color"]]["contained"] = contained_values
-
-# print(result_dict)
-
-G = nx.DiGraph()
-
-# len(result_dict.values())
-for result_key, result_list in result_dict.items():
-    G.add_node(result_list["main"]["color"])
-    for dep_color in result_list["contained"]:
-        G.add_node(dep_color)
-        G.add_edge(dep_color, result_list["main"]["color"])
-
-for color_degree in G.degree():
-    print(color_degree)
-
-no_in_colors = [color for color, degree in G.in_degree() if degree == 0]
-# no incoming connections / end colors
-in_colors = [color for color, degree in G.in_degree() if degree > 0]
-# incoming connection /colors that are referenced
-variation_colors = [color for color, degree in G.in_degree() if degree == 1]
-mix_colors = [color for color, degree in G.in_degree() if degree > 1]
-
-no_out_colors = [color for color, degree in G.out_degree() if degree == 0]
-# no outgoing connections / master colors /only referenced not refering others
-out_colors = [color for color, degree in G.out_degree() if degree > 0]
-# outgoing connections / colors that reference other colors
-
-# print(in_colors)
-# print(out_colors)
-
-# print(no_in_colors)
-# print(no_out_colors)
-
-net = Network("1000px", "1900px", directed=False, font_color="white", bgcolor="#111111")
-ego_graph = nx.ego_graph(G, "pink", radius=1, undirected=True)
-net.from_nx(ego_graph)
-net.show(
-    "related_colors.html",
-    notebook=False,
-)
-# Turn this into graph
-# Take colors with ONLY incoming connections as parents
-# Take colors with ONLY one outgoing connection as color variation
-# Take colors with two or more outgoing connections as color mix
-# By binding colors to brands with products find colors only available through some brands as brand related colors and through product title analysis find if they are related to a parent color that may be present
+# net = Network("1000px", "1900px", directed=False, font_color="white", bgcolor="#111111")
+# ego_graph = nx.ego_graph(variations_graph, "pink", radius=1, undirected=True)
+# net.from_nx(ego_graph)
+# net.show(
+#     "related_colors.html",
+#     notebook=False,
+# )
 
 # Create an RDF graph
-rdf_graph = Graph()
+# rdf_graph = Graph()
 
 # Iterate over the nodes and edges of the NetworkX graph
-for node in colors:
-    rdf_graph.add(
-        (
-            URIRef(
-                base="http://magelon.com/ontologies/colors/", value=slugify(node["color"])
-            ),
-            RDFS.label,
-            Literal(node["color"]),
-        )
-    )
+# for node in colors:
+#     rdf_graph.add(
+#         (
+#             URIRef(
+#                 base="http://magelon.com/ontologies/colors/",
+#                 value=slugify(node["color"]),
+#             ),
+#             RDFS.label,
+#             Literal(node["color"]),
+#         )
+#     )
 
 for remove_brand in colors_to_remove:
     rdf_graph.add(
         (
             URIRef(
-                base="http://magelon.com/ontologies/colors/", value=slugify(node["color"])
+                base="http://magelon.com/ontologies/colors/",
+                value=slugify(node["color"]),
             ),
             RDFS.label,
             Literal(node["color"]),
@@ -322,14 +269,15 @@ for remove_brand in colors_to_remove:
     rdf_graph.add(
         (
             URIRef(
-                base="http://magelon.com/ontologies/colors/", value=slugify(node["color"])
+                base="http://magelon.com/ontologies/colors/",
+                value=slugify(node["color"]),
             ),
             URIRef("http://magelon.com/ontologies/tags#hasTag"),
             Literal("invalid"),
         )
     )
 
-for edge in G.edges:
+for edge in variations_graph.edges:
     node1, node2 = edge
     rdf_graph.add(
         (
@@ -341,12 +289,12 @@ for edge in G.edges:
 
 rdf_graph.serialize(format="ttl", destination="office_colors.ttl")
 
-# virtuoso.save(rdf_graph)
-ego_graph = nx.ego_graph(G, "black", radius=1, undirected=True)
+virtuoso.save(rdf_graph)
+# ego_graph = nx.ego_graph(variations_graph, "black", radius=1, undirected=True)
 
-net = Network("1000px", "1900px", directed=False, font_color="white", bgcolor="#111111")
-net.from_nx(ego_graph)
-net.show(
-    "black_1_colors.html",
-    notebook=False,
-)
+# net = Network("1000px", "1900px", directed=False, font_color="white", bgcolor="#111111")
+# net.from_nx(ego_graph)
+# net.show(
+#     "black_1_colors.html",
+#     notebook=False,
+# )
