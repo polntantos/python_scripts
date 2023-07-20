@@ -4,8 +4,11 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import re
 import nltk
 from nltk.corpus import stopwords
-from rdflib import Graph
+from rdflib import Graph, URIRef, RDF, RDFS
 import json
+import node2vec
+from slugify import slugify
+import networkx as nx
 
 nltk.download("stopwords")
 
@@ -77,13 +80,13 @@ X = vectorizer.fit_transform(product_titles)
 
 vocab = [word for word in vectorizer.vocabulary_]
 
-filtered_vocab =[]
+filtered_vocab = []
 for word in vocab:
-  if word.isdigit() and len(word)<=3:
-    continue
-  if word.isalpha() and len(word)<=2:
-    continue
-  filtered_vocab.append(word)
+    if word.isdigit() and len(word) <= 3:
+        continue
+    if word.isalpha() and len(word) <= 2:
+        continue
+    filtered_vocab.append(word)
 
 
 # assign colors and mpns to products by checking their titles in rdf.Graph
@@ -107,19 +110,80 @@ for word in vocab:
 # maybe categories find a word to word match in the attributes and help us assign them
 product_dict = {}
 for row in response:
-  transformed_title = row['product_title'].lower()
-  product_dict[row['product']]={"product_title":row['product_title']}
-  if row['mpn'] != "" and row['mpn'].lower() in transformed_title:
-    product_dict[row['product']]['product_number'] = row['mpn']
-  else:
-    for mpn in mpns:
-      if mpn.lower() in transformed_title:
-        product_dict[row['product']]['product_number'] = mpn
-  for color in colors:
-    if color.lower() in transformed_title:
-        product_dict[row['product']]['color'] = color
-  for feature in filtered_vocab:
-    if feature in transformed_title:
-      if "features" not in product_dict[row['product']]:
-        product_dict[row['product']]['features']=[]
-      product_dict[row['product']]['features'].append(feature)
+    transformed_title = row["product_title"].lower()
+    product_dict[row["product"]] = {"product_title": row["product_title"]}
+    if brand_name.lower() in transformed_title:
+        product_dict[row["product"]]["brand"] = brand_name
+    if row["mpn"] != "" and row["mpn"].lower() in transformed_title:
+        product_dict[row["product"]]["product_number"] = row["mpn"]
+    else:
+        for mpn in mpns:
+            if mpn.lower() in transformed_title:
+                product_dict[row["product"]]["product_number"] = mpn
+    for color in colors:
+        if color.lower() in transformed_title:
+            product_dict[row["product"]]["color"] = color
+    for feature in filtered_vocab:
+        if feature in transformed_title:
+            if "features" not in product_dict[row["product"]]:
+                product_dict[row["product"]]["features"] = []
+            product_dict[row["product"]]["features"].append(feature)
+
+# create rdf graph
+graph = Graph()
+for product_uri, product_data in product_dict.items():
+    if "brand" in product_data.keys():
+        graph.add(
+            (
+                URIRef(product_uri),
+                URIRef("http://magelon.com/ontologies/has_attribute#brand"),
+                URIRef(
+                    base="http://magelon.com/ontologies/attribute/",
+                    value=slugify(brand_name),
+                ),
+            )
+        )
+    if "product_number" in product_data.keys():
+        graph.add(
+            (
+                URIRef(product_uri),
+                URIRef("http://magelon.com/ontologies/has_attribute#product_number"),
+                URIRef(
+                    base="http://magelon.com/ontologies/attribute/",
+                    value=slugify(product_data["product_number"]),
+                ),
+            )
+        )
+    if "color" in product_data.keys():
+        graph.add(
+            (
+                URIRef(product_uri),
+                URIRef("http://magelon.com/ontologies/has_attribute#color"),
+                URIRef(
+                    base="http://magelon.com/ontologies/attribute/",
+                    value=slugify(product_data["color"]),
+                ),
+            )
+        )
+    if "features" in product_data.keys():
+        for feature in product_data["features"]:
+            graph.add(
+                (
+                    URIRef(product_uri),
+                    URIRef("http://magelon.com/ontologies/has_attribute#uknown"),
+                    URIRef(
+                        base="http://magelon.com/ontologies/attribute/",
+                        value=slugify(feature),
+                    ),
+                )
+            )
+
+
+nx_graph = nx.Graph()
+for s, p, o in graph.triples((None, None, None)):
+    nx_graph.add_edge(s, o)
+
+print(len(nx_graph.nodes()))
+print(len(nx_graph.edges()))
+
+model = node2vec.Node2Vec(graph=nx_graph, dimensions=128, walk_length=100)
