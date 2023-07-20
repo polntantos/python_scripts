@@ -1,40 +1,82 @@
 from classes.VirtuosoWrapper import VirtuosoWrapper
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
+import re
+import nltk
+from nltk.corpus import stopwords
 
-query = """SELECT ?product_title
+nltk.download("stopwords")
+
+color_query = """
+select ?color_uri ?label
+where { 
+{?color_uri a <http://magelon.com/ontologies/colors>.}
+UNION
+{?color_uri a <http://omikron44/ontologies/mixture_colors>.}
+UNION
+{?color_uri a <http://magelon.com/ontologies/color_variations>.}
+?color_uri <http://www.w3.org/2000/01/rdf-schema#label> ?label.
+}
+"""
+
+brand_name = "Bosch"
+query = """
+SELECT ?product_title ?mpn ?merchant_id
 WHERE {
   ?product <http://magelon.com/ontologies/products#brand> ?brand_uri ;
            <http://magelon.com/ontologies/products#title> ?product_title .
+           ?product <http://magelon.com/ontologies/products#mpn> ?mpn.
+           OPTIONAL{?product <http://magelon.com/ontologies/products#merchant_id> ?merchant_id }
   {
-    SELECT ?brand_uri
+    Select ?brand_uri ?brand_name
     WHERE {
       {
-        ?brand_uri ?p "Bosch" ;
-                   <http://magelon.com/ontologies/brands#brand> ?brand_name ;
-                   a <http://magelon.com/ontologies/brands> .
+      ?brand_uri ?p "Bosch".
+      ?brand_uri <http://magelon.com/ontologies/brands#brand> ?brand_name.
+      ?brand_uri a <http://magelon.com/ontologies/brands>.
       }
       UNION
       {
-        ?b ?n "Bosch" ;
-           ?refers ?brand_uri ;
-           <http://magelon.com/ontologies/brands#brand> ?brand_name ;
-           a <http://magelon.com/ontologies/brands> .
+      ?b ?n "Bosch".
+      ?brand_uri ?refers ?b.
+      ?brand_uri <http://magelon.com/ontologies/brands#brand> ?brand_name.
+      ?brand_uri a <http://magelon.com/ontologies/brands>.
       }
     }
   }
-}"""
+}
+"""
 
 virtuoso = VirtuosoWrapper()
-product_titles =[row['product_title'] for row in virtuoso.getAll(query)]
+response = virtuoso.getAll(query)
+product_titles = [row["product_title"] for row in response]
+mpns = set([row["mpn"] for row in response])
+response_colors = virtuoso.getAll(color_query)
+colors = set([row["label"] for row in response_colors])
+stopwords_list = stopwords.words("english")
+stopwords_list.extend([brand_name, brand_name.lower()])
+stopwords_list.extend(map(lambda x: x.lower(), mpns))
+stopwords_list.extend(map(lambda x: x.lower(), colors))
 
-vectorizer1 = TfidfVectorizer(stop_words="english",ngram_range=(1,1),min_df=1,max_df=0.5) # to catch product sku
-vectorizer2 = TfidfVectorizer(stop_words="english",ngram_range=(2,2),min_df=2,max_df=0.5)
-vectorizer3 = TfidfVectorizer(stop_words="english",ngram_range=(3,3),min_df=2,max_df=0.5)
+vectorizer = TfidfVectorizer(
+    stop_words=stopwords_list, ngram_range=(1, 2), min_df=1, max_df=0.5
+)
 
-X1=vectorizer1.fit_transform(product_titles)
-X2=vectorizer2.fit_transform(product_titles)
-X3=vectorizer3.fit_transform(product_titles)
+# vectorizer1 = TfidfVectorizer(
+#     stop_words="english", ngram_range=(1, 1), min_df=1, max_df=0.5
+# )  # to catch product sku
+# vectorizer2 = TfidfVectorizer(
+#     stop_words="english", ngram_range=(2, 2), min_df=2, max_df=0.5
+# )
+# vectorizer3 = TfidfVectorizer(
+#     stop_words="english", ngram_range=(3, 3), min_df=2, max_df=0.5
+# )
+
+X = vectorizer.fit_transform(product_titles)
+
+# X1 = vectorizer1.fit_transform(product_titles)
+# X2 = vectorizer2.fit_transform(product_titles)
+# X3 = vectorizer3.fit_transform(product_titles)
 
 # tf_idf_vectors = vectorizer.transform(product_titles)
 
@@ -42,13 +84,24 @@ X3=vectorizer3.fit_transform(product_titles)
 # print(tf_idf_vectors)
 input("Press any key to continue...")
 
-vocab1 = vectorizer1.vocabulary_
+vocab = [word for word in vectorizer.vocabulary_]
 
-vocab = sorted(vocab1.items(),key=lambda x:x[1],reverse=True)
+# assign colors and mpns to products by checking their titles in rdf.Graph
+sand_words = [word for word in vocab if "sand" in word]
 
-feature_values = [i[0] for i in vocab]
-for value, seen in vocab:
-  for value2, seen in vocab:
-    if value2 != value and value2 in value:
-      if(value2 in feature_values):
-        feature_values.pop(feature_values.index(value2))
+# You now have features to assign to products
+# You have named features (brand,color,mpn)
+# You have unknown features (
+# 'battery 334', '334 year'
+# 'plus sanding', 'sanding sh'
+# ) etc
+
+# now we need to make a graph out of everything
+# assign values as
+# ?product <http://magelon.com/ontologies/has_attribute#value_type> <http://magelon.com/ontologies/attribute/value>;
+# a <http://magelon.com/ontologies/attribute_type>.
+# ?product <http://magelon.com/ontologies/has_attribute#brand> <http://magelon.com/ontologies/attribute/Bosch>;
+# a <http://magelon.com/ontologies/brand>.
+# maybe we can reason with that (whatever reason is)
+# maybe same attribute products show their category by grouping together
+# maybe categories find a word to word match in the attributes and help us assign them

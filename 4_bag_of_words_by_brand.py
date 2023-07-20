@@ -35,10 +35,11 @@ def create_graph_vis(graph, name="brand_word_network", ego=None, distance=1):
 
 brand_name = "Bosch"
 query = f"""
-SELECT ?product ?brand_uri ?product_title
+SELECT ?product ?brand_uri ?product_title ?mpn
 WHERE {{
   ?product <http://omikron44/ontologies/products#brand> ?brand_uri ;
            <http://omikron44/ontologies/products#title> ?product_title .
+           OPTIONAL{{?product_title <http://omikron44/ontologies/products#mpn> ?mpn}}
   {{
     Select ?brand_uri ?brand_name
     WHERE {{
@@ -62,6 +63,7 @@ WHERE {{
 virtuoso = VirtuosoWrapper()
 query_res = virtuoso.getAll(query)
 product_titles = [row["product_title"] for row in query_res]
+mpns = [row["mpn"] for row in query_res if "mpn" in row]
 
 vectorizer1 = TfidfVectorizer(
     stop_words="english", ngram_range=(1, 1), min_df=1, max_df=0.5

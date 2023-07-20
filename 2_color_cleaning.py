@@ -49,10 +49,13 @@ def clean_words(string):
     return words
 
 
-def create_graph_vis(graph, name="graph_vis"):
+def create_graph_vis(graph, name="graph_vis", ego=None, distance=1):
     net = Network(
         "1000px", "1900px", directed=False, font_color="white", bgcolor="#111111"
     )
+    if ego != None:
+        graph = nx.ego_graph(graph, ego, radius=distance, undirected=True)
+        name = f"{name}_{ego}"
     net.from_nx(graph)
     net.show(
         f"{name}.html",
@@ -72,8 +75,6 @@ def get_degree_arrays(graph):
     ]
     # no outgoing connections / master colors /only referenced not refering others
     outgoing = [(color, degree) for color, degree in graph.out_degree() if degree > 0]
-    # variation_colors = [color for color, degree in G.in_degree() if degree == 1]
-    # mix_colors = [color for color, degree in G.in_degree() if degree > 1]
     return no_incoming, incoming, no_outgoing, outgoing
 
 
@@ -108,6 +109,20 @@ single_colors = [
     color for color in single_colors if len(color) > 2
 ]  # keep unique values
 
+# we extracted these manually with inspection
+known_variation_stopwords = [
+    "light",
+    "dark",
+    "striped",
+    "soft",
+    "deep",
+    "medium",
+    "checked",
+    "faded",
+    "stripped",
+    "stars",
+]
+
 peer_validated_colors = []
 for db_color in colors:
     check_color = db_color["color"].lower()
@@ -116,7 +131,13 @@ for db_color in colors:
             peer_validated_colors.append(color)
 
 peer_validated_colors = set(peer_validated_colors)
+peer_validated_colors = [
+    color for color in peer_validated_colors if color not in known_variation_stopwords
+]
+
 rdf_graph = Graph()
+
+print(f"Total colors validated by peers : {len(single_colors)}")
 
 # Iterate over the nodes and edges of the NetworkX graph
 for color in peer_validated_colors:
@@ -149,7 +170,7 @@ colors = [
 colors_to_remove = []
 
 for color in colors:
-    if re.search(r"[>#+'?$%^*®™/()]+", color["color"]):
+    if re.search(r"[>#+'?$%^*®™()]+", color["color"]):
         colors_to_remove.append(color)
     elif re.search(r"[0-9]+", color["color"]):
         colors_to_remove.append(color)
@@ -200,9 +221,11 @@ for duplicate_invalidate in duplicate_invalidates:
     if duplicate_invalidate in colors:
         colors_to_remove.append(colors.pop(colors.index(duplicate_invalidate)))
 
+colors = [color for color in colors if color not in colors_to_remove]
+
 print(f"Duplicate remains {len(duplicate_remains)}")
 print(f"Total colors:{len(colors)}")
-print(f"Total colors_to_remove:{len(colors_to_remove)}")
+print(f"Total colors removed:{len(colors_to_remove)}")
 
 # Check for variations split by "/"
 variations = {}
@@ -214,11 +237,14 @@ for color in colors:
         for part in color_parts:
             words = clean_words(part)
             for word in words:
-                if word in peer_validated_colors and part not in peer_validated_colors:
+                if (
+                    word in peer_validated_colors
+                    and part.strip() not in peer_validated_colors
+                ):
                     if word not in variations.keys():
                         variations[word] = []
-                    if part not in variations[word]:
-                        variations[word].append(part)
+                    if part.strip() not in variations[word]:
+                        variations[word].append(part.strip())
 
 # build the graph with the variations to check if they are mixed colors
 variations_graph = nx.DiGraph()
@@ -227,74 +253,85 @@ for valid, variation_arr in variations.items():
     for variation in variation_arr:
         variations_graph.add_edge(variation, valid)
 
-create_graph_vis(variations_graph, "color_variations_graph")
+print(f"Total colors kept by peer {len(peer_validated_colors)}")
+secondary_colors = []
+secondary_colors.extend([sec_array for sec_array in variations.values()])
+print(f"Total colors kept by connection to peer {len(secondary_colors)}")
 
-degree_arrays = get_degree_arrays(variations_graph)
+show_examples = input("Wanna see graph visual examples?[Y/n]")
+if show_examples == "y" or show_examples == "Y" or show_examples == "":
+    create_graph_vis(variations_graph, "color_variations_graph", "pink")
+    create_graph_vis(variations_graph, "color_variations_graph", "black")
+    create_graph_vis(variations_graph, "color_variations_graph", "white")
 
-# net = Network("1000px", "1900px", directed=False, font_color="white", bgcolor="#111111")
-# ego_graph = nx.ego_graph(variations_graph, "pink", radius=1, undirected=True)
-# net.from_nx(ego_graph)
-# net.show(
-#     "related_colors.html",
-#     notebook=False,
-# )
+no_incoming, incoming, no_outgoing, outgoing = get_degree_arrays(variations_graph)
 
-# Create an RDF graph
-# rdf_graph = Graph()
+color_variations = [color for color, degree in outgoing if degree == 1]
+color_mixtures = [color for color, degree in outgoing if degree > 1]
 
-# Iterate over the nodes and edges of the NetworkX graph
-# for node in colors:
-#     rdf_graph.add(
-#         (
-#             URIRef(
-#                 base="http://magelon.com/ontologies/colors/",
-#                 value=slugify(node["color"]),
-#             ),
-#             RDFS.label,
-#             Literal(node["color"]),
-#         )
-#     )
-
-for remove_brand in colors_to_remove:
-    rdf_graph.add(
-        (
-            URIRef(
-                base="http://magelon.com/ontologies/colors/",
-                value=slugify(node["color"]),
-            ),
-            RDFS.label,
-            Literal(node["color"]),
-        )
-    )
-    rdf_graph.add(
-        (
-            URIRef(
-                base="http://magelon.com/ontologies/colors/",
-                value=slugify(node["color"]),
-            ),
-            URIRef("http://magelon.com/ontologies/tags#hasTag"),
-            Literal("invalid"),
-        )
-    )
+rdf_graph.serialize(format="ttl", destination="basic_colors.ttl")
 
 for edge in variations_graph.edges:
-    node1, node2 = edge
+    refering_color, refered_color = edge
     rdf_graph.add(
         (
-            URIRef(base="http://magelon.com/ontologies/colors/", value=slugify(node1)),
-            URIRef("http://magelon.com/ontologies/color#refers"),
-            URIRef(base="http://magelon.com/ontologies/colors/", value=slugify(node2)),
+            URIRef(
+                base="http://magelon.com/ontologies/colors/",
+                value=slugify(refering_color),
+            ),
+            RDFS.label,
+            Literal(refering_color.capitalize()),
         )
     )
+    rdf_graph.add(
+        (
+            URIRef(
+                base="http://magelon.com/ontologies/colors/",
+                value=slugify(refering_color),
+            ),
+            URIRef("http://magelon.com/ontologies/color#refers"),
+            URIRef(
+                base="http://magelon.com/ontologies/colors/",
+                value=slugify(refered_color),
+            ),
+        )
+    )
+    rdf_graph.add(
+        (
+            URIRef(
+                base="http://magelon.com/ontologies/colors/",
+                value=slugify(refering_color),
+            ),
+            RDF.type,
+            URIRef("http://magelon.com/ontologies/colors"),
+        )
+    )
+    if refering_color in color_variations:
+        rdf_graph.add(
+            (
+                URIRef(
+                    base="http://magelon.com/ontologies/colors/",
+                    value=slugify(refering_color),
+                ),
+                RDF.type,
+                URIRef("http://magelon.com/ontologies/color_variations"),
+            )
+        )
+    if refering_color in color_mixtures:
+        rdf_graph.add(
+            (
+                URIRef(
+                    base="http://magelon.com/ontologies/colors/",
+                    value=slugify(refering_color),
+                ),
+                RDF.type,
+                URIRef("http://magelon.com/ontologies/mixture_colors"),
+            )
+        )
 
-rdf_graph.serialize(format="ttl", destination="office_colors.ttl")
+# checkpoint
+rdf_graph.serialize(format="ttl", destination="basic_full_colors.ttl")
 
-virtuoso.save(rdf_graph)
-# ego_graph = nx.ego_graph(variations_graph, "black", radius=1, undirected=True)
-
-# net = Network("1000px", "1900px", directed=False, font_color="white", bgcolor="#111111")
-# net.from_nx(ego_graph)
-# net.show(
-#     "black_1_colors.html",
-#     notebook=False,
-# )
+save_input = input("Hit 'Y' and commit to save your colors :")
+if save_input == "Y":
+    virtuoso.save(rdf_graph)

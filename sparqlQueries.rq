@@ -512,3 +512,26 @@ WHERE {
     }
   }
 }
+
+# Get all colors grouped
+select DISTINCT ?s (GROUP_CONCAT(DISTINCT ?o; separator=", ") AS ?labels)
+where { 
+{?s a <http://magelon.com/ontologies/colors>.}
+UNION
+{?s a <http://omikron44/ontologies/mixture_colors>.}
+UNION
+{?s a <http://magelon.com/ontologies/color_variations>}.
+?s <http://www.w3.org/2000/01/rdf-schema#label> ?o.
+}
+
+
+# Get all colors grouped
+select ?s ?o
+where { 
+{?s a <http://magelon.com/ontologies/colors>.}
+UNION
+{?s a <http://omikron44/ontologies/mixture_colors>.}
+UNION
+{?s a <http://magelon.com/ontologies/color_variations>}.
+?s <http://www.w3.org/2000/01/rdf-schema#label> ?o.
+}
