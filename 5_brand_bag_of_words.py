@@ -4,6 +4,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import re
 import nltk
 from nltk.corpus import stopwords
+from rdflib import Graph
+import json
 
 nltk.download("stopwords")
 
@@ -20,31 +22,31 @@ UNION
 """
 
 brand_name = "Bosch"
-query = """
-SELECT ?product_title ?mpn ?merchant_id
-WHERE {
+query = f"""
+SELECT ?product ?product_title ?mpn ?merchant_id
+WHERE {{
   ?product <http://magelon.com/ontologies/products#brand> ?brand_uri ;
            <http://magelon.com/ontologies/products#title> ?product_title .
            ?product <http://magelon.com/ontologies/products#mpn> ?mpn.
-           OPTIONAL{?product <http://magelon.com/ontologies/products#merchant_id> ?merchant_id }
-  {
+           OPTIONAL{{?product <http://magelon.com/ontologies/products#merchant_id> ?merchant_id }}
+  {{
     Select ?brand_uri ?brand_name
-    WHERE {
-      {
-      ?brand_uri ?p "Bosch".
+    WHERE {{
+      {{
+      ?brand_uri ?p "{brand_name}".
       ?brand_uri <http://magelon.com/ontologies/brands#brand> ?brand_name.
       ?brand_uri a <http://magelon.com/ontologies/brands>.
-      }
+      }}
       UNION
-      {
-      ?b ?n "Bosch".
+      {{
+      ?b ?n "{brand_name}".
       ?brand_uri ?refers ?b.
       ?brand_uri <http://magelon.com/ontologies/brands#brand> ?brand_name.
       ?brand_uri a <http://magelon.com/ontologies/brands>.
-      }
-    }
-  }
-}
+      }}
+    }}
+  }}
+}}
 """
 
 virtuoso = VirtuosoWrapper()
@@ -58,36 +60,34 @@ stopwords_list.extend([brand_name, brand_name.lower()])
 stopwords_list.extend(map(lambda x: x.lower(), mpns))
 stopwords_list.extend(map(lambda x: x.lower(), colors))
 
+json_prods = json.dumps(response)
+json_colors = json.dumps(response_colors)
+
+with open("storage/prods.json", "w") as f:
+    f.write(json_prods)
+
+with open("storage/colors.json", "w") as f:
+    f.write(json_colors)
+
 vectorizer = TfidfVectorizer(
     stop_words=stopwords_list, ngram_range=(1, 2), min_df=1, max_df=0.5
 )
 
-# vectorizer1 = TfidfVectorizer(
-#     stop_words="english", ngram_range=(1, 1), min_df=1, max_df=0.5
-# )  # to catch product sku
-# vectorizer2 = TfidfVectorizer(
-#     stop_words="english", ngram_range=(2, 2), min_df=2, max_df=0.5
-# )
-# vectorizer3 = TfidfVectorizer(
-#     stop_words="english", ngram_range=(3, 3), min_df=2, max_df=0.5
-# )
-
 X = vectorizer.fit_transform(product_titles)
-
-# X1 = vectorizer1.fit_transform(product_titles)
-# X2 = vectorizer2.fit_transform(product_titles)
-# X3 = vectorizer3.fit_transform(product_titles)
-
-# tf_idf_vectors = vectorizer.transform(product_titles)
-
-# Print the TF-IDF vectors
-# print(tf_idf_vectors)
-input("Press any key to continue...")
 
 vocab = [word for word in vectorizer.vocabulary_]
 
+filtered_vocab =[]
+for word in vocab:
+  if word.isdigit() and len(word)<=3:
+    continue
+  if word.isalpha() and len(word)<=2:
+    continue
+  filtered_vocab.append(word)
+
+
 # assign colors and mpns to products by checking their titles in rdf.Graph
-sand_words = [word for word in vocab if "sand" in word]
+# sand_words = [word for word in vocab if "sand" in word]
 
 # You now have features to assign to products
 # You have named features (brand,color,mpn)
@@ -105,3 +105,21 @@ sand_words = [word for word in vocab if "sand" in word]
 # maybe we can reason with that (whatever reason is)
 # maybe same attribute products show their category by grouping together
 # maybe categories find a word to word match in the attributes and help us assign them
+product_dict = {}
+for row in response:
+  transformed_title = row['product_title'].lower()
+  product_dict[row['product']]={"product_title":row['product_title']}
+  if row['mpn'] != "" and row['mpn'].lower() in transformed_title:
+    product_dict[row['product']]['product_number'] = row['mpn']
+  else:
+    for mpn in mpns:
+      if mpn.lower() in transformed_title:
+        product_dict[row['product']]['product_number'] = mpn
+  for color in colors:
+    if color.lower() in transformed_title:
+        product_dict[row['product']]['color'] = color
+  for feature in filtered_vocab:
+    if feature in transformed_title:
+      if "features" not in product_dict[row['product']]:
+        product_dict[row['product']]['features']=[]
+      product_dict[row['product']]['features'].append(feature)
