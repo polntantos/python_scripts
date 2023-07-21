@@ -4,11 +4,26 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import re
 import nltk
 from nltk.corpus import stopwords
-from rdflib import Graph, URIRef, RDF, RDFS
+from rdflib import Graph, URIRef, RDF, RDFS,Literal
 import json
-import node2vec
+from node2vec import Node2Vec
 from slugify import slugify
 import networkx as nx
+from pyvis.network import Network
+import math
+
+def create_graph_vis(graph, name="graph_vis", ego=None, distance=1):
+    net = Network(
+        "1000px", "1900px", directed=True, font_color="white", bgcolor="#111111"
+    )
+    if ego != None:
+        graph = nx.ego_graph(graph, ego, radius=distance, undirected=True)
+        name = f"{name}_{ego}"
+    net.from_nx(graph)
+    net.show(
+        f"{name}.html",
+        notebook=False,
+    )
 
 nltk.download("stopwords")
 
@@ -24,7 +39,7 @@ UNION
 }
 """
 
-brand_name = "Bosch"
+brand_name = "Lenovo"
 query = f"""
 SELECT ?product ?product_title ?mpn ?merchant_id
 WHERE {{
@@ -58,6 +73,87 @@ product_titles = [row["product_title"] for row in response]
 mpns = set([row["mpn"] for row in response])
 response_colors = virtuoso.getAll(color_query)
 colors = set([row["label"] for row in response_colors])
+
+G = nx.DiGraph()
+for product_title in product_titles:
+    # title_parts = re.split(r"\W+", title.lower())
+    title= re.sub(r"[>#+'?$%^*®™()]+|-","",product_title)
+    title_parts = title.lower().split()
+    previous_part=""
+    for title_part in title_parts:
+        if previous_part !="":
+            if(G.has_edge(previous_part,title_part)):
+                weight = G[previous_part][title_part]['weight']+1
+            else:
+                weight = 1
+            G.add_edge(previous_part,title_part,weight=weight)
+        previous_part = title_part
+
+create_graph_vis(G.copy(),'Lenovo')
+most_common_edges = sorted(G.edges(data=True), key=lambda x: x[2]['weight'], reverse=True)[:20]
+
+def get_most_common_paths(G,start,finish):
+    paths = []
+    try:
+        all_shortest_paths = nx.all_shortest_paths(G, start, finish)
+        # Score each path using the weight of the edges
+        for shortest_path in all_shortest_paths:
+            if len(shortest_path) >3:
+                continue
+            score = 0
+            for i in range(len(shortest_path) - 1):
+                score += G.edges[shortest_path[i],shortest_path[i+1]]['weight']
+            # print(shortest_path, score)
+            paths.append(
+                {"path":shortest_path,"score":score,"path_score":score/len(shortest_path)}
+                )
+    except nx.NetworkXNoPath:
+        print(f"No path for {start}->{finish}")
+    return paths
+
+all_paths = []
+for node1 in G.nodes():
+    for node2 in G.nodes():
+        if node1 != node2:
+            all_paths.extend(get_most_common_paths(G,node1,node2))
+
+normal_sorted_paths = sorted(all_paths,key=lambda x:x['score'],reverse=True)
+
+for path in normal_sorted_paths[0:100]:
+    print(f"PATH:{' '.join(path['path'])}")
+    print(f"SCORE:{path['score']}")
+    print(f"FINAL_SCORE:{path['path_score']}\n")
+
+sorted_paths = sorted(all_paths,key=lambda x:x['path_score'],reverse=True)
+top_paths_count = math.ceil(len(sorted_paths)/100)*30#top 30%
+for path in sorted_paths[0:top_paths_count]:
+    print(f"PATH:{' '.join(path['path'])}")
+    print(f"SCORE:{path['score']}")
+    print(f"FINAL_SCORE:{path['path_score']}\n")
+
+features_in_products = {}
+product_features = {}
+
+for product_title in product_titles:
+    title= re.sub(r"[>#+'?$%^*®™()]+|-","",product_title)
+    title = " ".join(title.lower().split())
+    for path in sorted_paths[0:top_paths_count]:
+        feature = " ".join(path['path'])
+        if feature in title:
+            if title not in features_in_products.keys():
+                features_in_products[title]=[]
+            features_in_products[title].append(feature)
+            if slugify(feature) not in product_features.keys():
+                product_features[slugify(feature)]= 0
+            product_features[slugify(feature)]=product_features[slugify(feature)]+1
+
+for product,features in features_in_products.items():
+    print(product)
+    print(set(features))
+
+#create them as attributes and throw them in the graph
+
+
 stopwords_list = stopwords.words("english")
 stopwords_list.extend([brand_name, brand_name.lower()])
 stopwords_list.extend(map(lambda x: x.lower(), mpns))
@@ -177,13 +273,45 @@ for product_uri, product_data in product_dict.items():
                     ),
                 )
             )
+            graph.add(
+                (
+                    URIRef(
+                        base="http://magelon.com/ontologies/attribute/",
+                        value=slugify(feature),
+                    ),
+                    RDFS.label,
+                    Literal(feature)
+                )
+            )
 
 
-nx_graph = nx.Graph()
-for s, p, o in graph.triples((None, None, None)):
-    nx_graph.add_edge(s, o)
+nx_graph = nx.DiGraph()
+for product_uri, product_data in product_dict.items():
+    if "brand" in product_data.keys():
+        nx_graph.add_edge(product_data['product_title'], product_data['brand'])
+    if "product_number" in product_data.keys():
+        nx_graph.add_edge(product_data['product_title'], product_data['product_number'])
+    if "color" in product_data.keys():
+        nx_graph.add_edge(product_data['product_title'], product_data['color'])
+    if "features" in product_data.keys():
+        for feature in product_data["features"]:
+            nx_graph.add_edge(product_data['product_title'], feature)
 
 print(len(nx_graph.nodes()))
 print(len(nx_graph.edges()))
 
-model = node2vec.Node2Vec(graph=nx_graph, dimensions=128, walk_length=100)
+n2v = Node2Vec(graph=nx_graph, dimensions=128, walk_length=100,num_walks=100,workers=4)
+model = n2v.fit(window=10,min_count=1,batch_words=4)
+
+# Save embeddings for later use
+model.wv.save_word2vec_format("storage/embedings.txt")
+
+# Save model for later use
+model.save("storage/embeding_model")
+
+model.wv.distance("Xiaomi","4g")
+# Get the latent representations of the nodes
+latent_representations = model.get_embeddings()
+
+# Print the latent representations
+print(latent_representations)

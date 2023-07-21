@@ -96,7 +96,7 @@ while True:
       ?s <http://omikron44/ontologies/products#title> ?title.
   }}
   ORDER BY ?s
-  OFFSET {}
+  OFFSET {offset}
   LIMIT 10000 
   """
 

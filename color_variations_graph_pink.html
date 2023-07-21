@@ -1,0 +1,250 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 1900px;
+                 height: 1000px;
+                 background-color: #111111;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 1900px;
+                 height: 1000px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "font": {"color": "white"}, "id": "strong pink", "label": "strong pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink", "label": "pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "maroon pink", "label": "maroon pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "light cerise pink", "label": "light cerise pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "clover pink", "label": "clover pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "grey \u0026 pink", "label": "grey \u0026 pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "shocking pink", "label": "shocking pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "peach pink", "label": "peach pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 neon pink", "label": "white \u0026 neon pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "coral pink", "label": "coral pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white with pink", "label": "white with pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "bara pink", "label": "bara pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "petal pink", "label": "petal pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "soft pink", "label": "soft pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "green \u0026 pink", "label": "green \u0026 pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "faded pink", "label": "faded pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink on ivory", "label": "pink on ivory", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "old rose pink", "label": "old rose pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "baby pink \u0026 yellow", "label": "baby pink \u0026 yellow", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink punch", "label": "pink punch", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "navy \u0026 pink", "label": "navy \u0026 pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink white gold black", "label": "pink white gold black", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink on white", "label": "pink on white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "flamingo pink", "label": "flamingo pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 blue", "label": "pink \u0026 blue", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "old pink", "label": "old pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pure pink", "label": "pure pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "mauve pink", "label": "mauve pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 turquoise", "label": "pink \u0026 turquoise", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "guava pink", "label": "guava pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "dusty pink \u0026 gold", "label": "dusty pink \u0026 gold", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 bue", "label": "pink \u0026 bue", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "rowan pink", "label": "rowan pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "hot pink", "label": "hot pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "red \u0026 pink", "label": "red \u0026 pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "hot pink \u0026 green", "label": "hot pink \u0026 green", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "brilliant pink", "label": "brilliant pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink stripe", "label": "pink stripe", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "triceratops pink", "label": "triceratops pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink milkshake", "label": "pink milkshake", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "dusky pink", "label": "dusky pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink foliage print", "label": "pink foliage print", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "flo pink", "label": "flo pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "sorbet pink", "label": "sorbet pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pale pink \u0026 white", "label": "pale pink \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "dark dusky pink", "label": "dark dusky pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 green", "label": "pink \u0026 green", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 multicoloured", "label": "pink \u0026 multicoloured", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "lavender pink", "label": "lavender pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "small red pink navy", "label": "small red pink navy", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "blushing pink", "label": "blushing pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink on blush", "label": "pink on blush", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "desaturated pink", "label": "desaturated pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "fingerpaint pink", "label": "fingerpaint pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "garnet pink", "label": "garnet pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "cerise pink", "label": "cerise pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 silver", "label": "pink \u0026 silver", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "nude pink", "label": "nude pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "magenta pink", "label": "magenta pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "retro pink", "label": "retro pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "sandy pink", "label": "sandy pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink turquoise", "label": "pink turquoise", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink duck egg yellow", "label": "pink duck egg yellow", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "vintage pink", "label": "vintage pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink floral print", "label": "pink floral print", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "sugar pink", "label": "sugar pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "dusky pink \u0026 gold", "label": "dusky pink \u0026 gold", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 pink", "label": "white \u0026 pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink on black", "label": "pink on black", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink gold plated", "label": "pink gold plated", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 pink", "label": "pink \u0026 pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "recycled pink", "label": "recycled pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink on cream", "label": "pink on cream", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "neon pink", "label": "neon pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "mid pink", "label": "mid pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "light pink \u0026 cream", "label": "light pink \u0026 cream", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "bubblegum pink", "label": "bubblegum pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "black \u0026 pink", "label": "black \u0026 pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "fuschia pink", "label": "fuschia pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 lime", "label": "pink \u0026 lime", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink on navy", "label": "pink on navy", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "fluorescent pink", "label": "fluorescent pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "cream \u0026 pink", "label": "cream \u0026 pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "rose pink on black", "label": "rose pink on black", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 white", "label": "pink \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "baby pink \u0026 green", "label": "baby pink \u0026 green", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "matte pink", "label": "matte pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "prismatic pink", "label": "prismatic pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink clay", "label": "pink clay", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "brown \u0026 pink", "label": "brown \u0026 pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "bright pink", "label": "bright pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "transparent pink", "label": "transparent pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink on peach", "label": "pink on peach", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "lilac pink", "label": "lilac pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink multi", "label": "pink multi", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "salmon pink", "label": "salmon pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "french pink", "label": "french pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "ballerina pink", "label": "ballerina pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "beige \u0026 pink", "label": "beige \u0026 pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "blue \u0026 pink", "label": "blue \u0026 pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "havana pink", "label": "havana pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 cream", "label": "pink \u0026 cream", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink check print", "label": "pink check print", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "purple pink lilac", "label": "purple pink lilac", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "fluo pink", "label": "fluo pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 orange", "label": "pink \u0026 orange", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pale pink", "label": "pale pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "light pink", "label": "light pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 amethyst", "label": "pink \u0026 amethyst", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "blush pink", "label": "blush pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "patterned pink", "label": "patterned pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink background", "label": "pink background", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink stars", "label": "pink stars", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink on aqua", "label": "pink on aqua", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white-pink fluo", "label": "white-pink fluo", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink sienna", "label": "pink sienna", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink gold", "label": "pink gold", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "dusty pink", "label": "dusty pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "prettiest pink", "label": "prettiest pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pastel pink", "label": "pastel pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 navy", "label": "pink \u0026 navy", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink pearl \u0026 gold", "label": "pink pearl \u0026 gold", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink stripes", "label": "pink stripes", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink animal", "label": "pink animal", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink horn fade", "label": "pink horn fade", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 gold", "label": "pink \u0026 gold", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "shell pink", "label": "shell pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pearl pink", "label": "pearl pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink on beige", "label": "pink on beige", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "multi-coloured pink", "label": "multi-coloured pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink black", "label": "pink black", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "cerise \u0026 pink", "label": "cerise \u0026 pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "top black pink", "label": "top black pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink floral", "label": "pink floral", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "flash pink", "label": "flash pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "peony pink", "label": "peony pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 sage", "label": "pink \u0026 sage", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink print", "label": "pink print", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink mix", "label": "pink mix", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink check", "label": "pink check", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink purple", "label": "pink purple", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "raspberry pink", "label": "raspberry pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "blush pink print", "label": "blush pink print", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "dark pink", "label": "dark pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 mauve", "label": "pink \u0026 mauve", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "skintone pink", "label": "skintone pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "burgundy \u0026 pink", "label": "burgundy \u0026 pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "camelia pink", "label": "camelia pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "misty pink", "label": "misty pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "dark rose pink", "label": "dark rose pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "deep pink", "label": "deep pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 black", "label": "pink \u0026 black", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "sunset pink", "label": "sunset pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink mauve", "label": "pink mauve", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "azalea pink", "label": "azalea pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "hot pink gold", "label": "hot pink gold", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "berry pink", "label": "berry pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "burgundy pink", "label": "burgundy pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "candy pink", "label": "candy pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "rose pink", "label": "rose pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "top pink", "label": "top pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "smoky pink", "label": "smoky pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "smocked pink", "label": "smocked pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "powdery pink", "label": "powdery pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "sky blue \u0026 pink", "label": "sky blue \u0026 pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 grey", "label": "pink \u0026 grey", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "heather pink", "label": "heather pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink on dark pink", "label": "pink on dark pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink havana", "label": "pink havana", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink white", "label": "pink white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "striped sleek pink", "label": "striped sleek pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "blossom pink", "label": "blossom pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "plum pink", "label": "plum pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "super pink", "label": "super pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "fuchsia pink", "label": "fuchsia pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "powder pink", "label": "powder pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink striped", "label": "pink striped", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "baby pink", "label": "baby pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "large red pink navy", "label": "large red pink navy", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "checked pink", "label": "checked pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 yellow", "label": "pink \u0026 yellow", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink blue", "label": "pink blue", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "punch pink", "label": "punch pink", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "strong pink", "to": "pink", "width": 1}, {"from": "maroon pink", "to": "pink", "width": 1}, {"from": "light cerise pink", "to": "pink", "width": 1}, {"from": "clover pink", "to": "pink", "width": 1}, {"from": "grey \u0026 pink", "to": "pink", "width": 1}, {"from": "shocking pink", "to": "pink", "width": 1}, {"from": "peach pink", "to": "pink", "width": 1}, {"from": "white \u0026 neon pink", "to": "pink", "width": 1}, {"from": "coral pink", "to": "pink", "width": 1}, {"from": "white with pink", "to": "pink", "width": 1}, {"from": "bara pink", "to": "pink", "width": 1}, {"from": "petal pink", "to": "pink", "width": 1}, {"from": "soft pink", "to": "pink", "width": 1}, {"from": "green \u0026 pink", "to": "pink", "width": 1}, {"from": "faded pink", "to": "pink", "width": 1}, {"from": "pink on ivory", "to": "pink", "width": 1}, {"from": "old rose pink", "to": "pink", "width": 1}, {"from": "baby pink \u0026 yellow", "to": "pink", "width": 1}, {"from": "pink punch", "to": "pink", "width": 1}, {"from": "navy \u0026 pink", "to": "pink", "width": 1}, {"from": "pink white gold black", "to": "pink", "width": 1}, {"from": "pink on white", "to": "pink", "width": 1}, {"from": "flamingo pink", "to": "pink", "width": 1}, {"from": "pink \u0026 blue", "to": "pink", "width": 1}, {"from": "old pink", "to": "pink", "width": 1}, {"from": "pure pink", "to": "pink", "width": 1}, {"from": "mauve pink", "to": "pink", "width": 1}, {"from": "pink \u0026 turquoise", "to": "pink", "width": 1}, {"from": "guava pink", "to": "pink", "width": 1}, {"from": "dusty pink \u0026 gold", "to": "pink", "width": 1}, {"from": "pink \u0026 bue", "to": "pink", "width": 1}, {"from": "rowan pink", "to": "pink", "width": 1}, {"from": "hot pink", "to": "pink", "width": 1}, {"from": "red \u0026 pink", "to": "pink", "width": 1}, {"from": "hot pink \u0026 green", "to": "pink", "width": 1}, {"from": "brilliant pink", "to": "pink", "width": 1}, {"from": "pink stripe", "to": "pink", "width": 1}, {"from": "triceratops pink", "to": "pink", "width": 1}, {"from": "pink milkshake", "to": "pink", "width": 1}, {"from": "dusky pink", "to": "pink", "width": 1}, {"from": "pink foliage print", "to": "pink", "width": 1}, {"from": "flo pink", "to": "pink", "width": 1}, {"from": "sorbet pink", "to": "pink", "width": 1}, {"from": "pale pink \u0026 white", "to": "pink", "width": 1}, {"from": "dark dusky pink", "to": "pink", "width": 1}, {"from": "pink \u0026 green", "to": "pink", "width": 1}, {"from": "pink \u0026 multicoloured", "to": "pink", "width": 1}, {"from": "lavender pink", "to": "pink", "width": 1}, {"from": "small red pink navy", "to": "pink", "width": 1}, {"from": "blushing pink", "to": "pink", "width": 1}, {"from": "pink on blush", "to": "pink", "width": 1}, {"from": "desaturated pink", "to": "pink", "width": 1}, {"from": "fingerpaint pink", "to": "pink", "width": 1}, {"from": "garnet pink", "to": "pink", "width": 1}, {"from": "cerise pink", "to": "pink", "width": 1}, {"from": "pink \u0026 silver", "to": "pink", "width": 1}, {"from": "nude pink", "to": "pink", "width": 1}, {"from": "magenta pink", "to": "pink", "width": 1}, {"from": "retro pink", "to": "pink", "width": 1}, {"from": "sandy pink", "to": "pink", "width": 1}, {"from": "pink turquoise", "to": "pink", "width": 1}, {"from": "pink duck egg yellow", "to": "pink", "width": 1}, {"from": "vintage pink", "to": "pink", "width": 1}, {"from": "pink floral print", "to": "pink", "width": 1}, {"from": "sugar pink", "to": "pink", "width": 1}, {"from": "dusky pink \u0026 gold", "to": "pink", "width": 1}, {"from": "white \u0026 pink", "to": "pink", "width": 1}, {"from": "pink on black", "to": "pink", "width": 1}, {"from": "pink gold plated", "to": "pink", "width": 1}, {"from": "pink \u0026 pink", "to": "pink", "width": 1}, {"from": "recycled pink", "to": "pink", "width": 1}, {"from": "pink on cream", "to": "pink", "width": 1}, {"from": "neon pink", "to": "pink", "width": 1}, {"from": "mid pink", "to": "pink", "width": 1}, {"from": "light pink \u0026 cream", "to": "pink", "width": 1}, {"from": "bubblegum pink", "to": "pink", "width": 1}, {"from": "black \u0026 pink", "to": "pink", "width": 1}, {"from": "fuschia pink", "to": "pink", "width": 1}, {"from": "pink \u0026 lime", "to": "pink", "width": 1}, {"from": "pink on navy", "to": "pink", "width": 1}, {"from": "fluorescent pink", "to": "pink", "width": 1}, {"from": "cream \u0026 pink", "to": "pink", "width": 1}, {"from": "rose pink on black", "to": "pink", "width": 1}, {"from": "pink \u0026 white", "to": "pink", "width": 1}, {"from": "baby pink \u0026 green", "to": "pink", "width": 1}, {"from": "matte pink", "to": "pink", "width": 1}, {"from": "prismatic pink", "to": "pink", "width": 1}, {"from": "pink clay", "to": "pink", "width": 1}, {"from": "brown \u0026 pink", "to": "pink", "width": 1}, {"from": "bright pink", "to": "pink", "width": 1}, {"from": "transparent pink", "to": "pink", "width": 1}, {"from": "pink on peach", "to": "pink", "width": 1}, {"from": "lilac pink", "to": "pink", "width": 1}, {"from": "pink multi", "to": "pink", "width": 1}, {"from": "salmon pink", "to": "pink", "width": 1}, {"from": "french pink", "to": "pink", "width": 1}, {"from": "ballerina pink", "to": "pink", "width": 1}, {"from": "beige \u0026 pink", "to": "pink", "width": 1}, {"from": "blue \u0026 pink", "to": "pink", "width": 1}, {"from": "havana pink", "to": "pink", "width": 1}, {"from": "pink \u0026 cream", "to": "pink", "width": 1}, {"from": "pink check print", "to": "pink", "width": 1}, {"from": "purple pink lilac", "to": "pink", "width": 1}, {"from": "fluo pink", "to": "pink", "width": 1}, {"from": "pink \u0026 orange", "to": "pink", "width": 1}, {"from": "pale pink", "to": "pink", "width": 1}, {"from": "light pink", "to": "pink", "width": 1}, {"from": "pink \u0026 amethyst", "to": "pink", "width": 1}, {"from": "blush pink", "to": "pink", "width": 1}, {"from": "patterned pink", "to": "pink", "width": 1}, {"from": "pink background", "to": "pink", "width": 1}, {"from": "pink stars", "to": "pink", "width": 1}, {"from": "pink on aqua", "to": "pink", "width": 1}, {"from": "white-pink fluo", "to": "pink", "width": 1}, {"from": "pink sienna", "to": "pink", "width": 1}, {"from": "pink gold", "to": "pink", "width": 1}, {"from": "dusty pink", "to": "pink", "width": 1}, {"from": "prettiest pink", "to": "pink", "width": 1}, {"from": "pastel pink", "to": "pink", "width": 1}, {"from": "pink \u0026 navy", "to": "pink", "width": 1}, {"from": "pink pearl \u0026 gold", "to": "pink", "width": 1}, {"from": "pink stripes", "to": "pink", "width": 1}, {"from": "pink animal", "to": "pink", "width": 1}, {"from": "pink horn fade", "to": "pink", "width": 1}, {"from": "pink \u0026 gold", "to": "pink", "width": 1}, {"from": "shell pink", "to": "pink", "width": 1}, {"from": "pearl pink", "to": "pink", "width": 1}, {"from": "pink on beige", "to": "pink", "width": 1}, {"from": "multi-coloured pink", "to": "pink", "width": 1}, {"from": "pink black", "to": "pink", "width": 1}, {"from": "cerise \u0026 pink", "to": "pink", "width": 1}, {"from": "top black pink", "to": "pink", "width": 1}, {"from": "pink floral", "to": "pink", "width": 1}, {"from": "flash pink", "to": "pink", "width": 1}, {"from": "peony pink", "to": "pink", "width": 1}, {"from": "pink \u0026 sage", "to": "pink", "width": 1}, {"from": "pink print", "to": "pink", "width": 1}, {"from": "pink mix", "to": "pink", "width": 1}, {"from": "pink check", "to": "pink", "width": 1}, {"from": "pink purple", "to": "pink", "width": 1}, {"from": "raspberry pink", "to": "pink", "width": 1}, {"from": "blush pink print", "to": "pink", "width": 1}, {"from": "dark pink", "to": "pink", "width": 1}, {"from": "pink \u0026 mauve", "to": "pink", "width": 1}, {"from": "skintone pink", "to": "pink", "width": 1}, {"from": "burgundy \u0026 pink", "to": "pink", "width": 1}, {"from": "camelia pink", "to": "pink", "width": 1}, {"from": "misty pink", "to": "pink", "width": 1}, {"from": "dark rose pink", "to": "pink", "width": 1}, {"from": "deep pink", "to": "pink", "width": 1}, {"from": "pink \u0026 black", "to": "pink", "width": 1}, {"from": "sunset pink", "to": "pink", "width": 1}, {"from": "pink mauve", "to": "pink", "width": 1}, {"from": "azalea pink", "to": "pink", "width": 1}, {"from": "hot pink gold", "to": "pink", "width": 1}, {"from": "berry pink", "to": "pink", "width": 1}, {"from": "burgundy pink", "to": "pink", "width": 1}, {"from": "candy pink", "to": "pink", "width": 1}, {"from": "rose pink", "to": "pink", "width": 1}, {"from": "top pink", "to": "pink", "width": 1}, {"from": "smoky pink", "to": "pink", "width": 1}, {"from": "smocked pink", "to": "pink", "width": 1}, {"from": "powdery pink", "to": "pink", "width": 1}, {"from": "sky blue \u0026 pink", "to": "pink", "width": 1}, {"from": "pink \u0026 grey", "to": "pink", "width": 1}, {"from": "heather pink", "to": "pink", "width": 1}, {"from": "pink on dark pink", "to": "pink", "width": 1}, {"from": "pink havana", "to": "pink", "width": 1}, {"from": "pink white", "to": "pink", "width": 1}, {"from": "striped sleek pink", "to": "pink", "width": 1}, {"from": "blossom pink", "to": "pink", "width": 1}, {"from": "plum pink", "to": "pink", "width": 1}, {"from": "super pink", "to": "pink", "width": 1}, {"from": "fuchsia pink", "to": "pink", "width": 1}, {"from": "powder pink", "to": "pink", "width": 1}, {"from": "pink striped", "to": "pink", "width": 1}, {"from": "baby pink", "to": "pink", "width": 1}, {"from": "large red pink navy", "to": "pink", "width": 1}, {"from": "checked pink", "to": "pink", "width": 1}, {"from": "pink \u0026 yellow", "to": "pink", "width": 1}, {"from": "pink blue", "to": "pink", "width": 1}, {"from": "punch pink", "to": "pink", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
