@@ -1,0 +1,1005 @@
+@prefix ns1: <http://magelon.com/ontologies/has_attribute#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://magelon.com/ontologies/products/id=1545013> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/dream> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/controller>,
+        <http://magelon.com/ontologies/attribute/daydream>,
+        <http://magelon.com/ontologies/attribute/daydream-os>,
+        <http://magelon.com/ontologies/attribute/hand>,
+        <http://magelon.com/ontologies/attribute/hand-controller>,
+        <http://magelon.com/ontologies/attribute/solo> .
+
+<http://magelon.com/ontologies/products/id=1904999> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/3-celeron>,
+        <http://magelon.com/ontologies/attribute/3-celeron-4gb>,
+        <http://magelon.com/ontologies/attribute/4gb>,
+        <http://magelon.com/ontologies/attribute/4gb-64gb>,
+        <http://magelon.com/ontologies/attribute/64gb>,
+        <http://magelon.com/ontologies/attribute/celeron>,
+        <http://magelon.com/ontologies/attribute/celeron-4gb>,
+        <http://magelon.com/ontologies/attribute/duet>,
+        <http://magelon.com/ontologies/attribute/duet-3-celeron> .
+
+<http://magelon.com/ontologies/products/id=1905000> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/rome> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/3-celeron>,
+        <http://magelon.com/ontologies/attribute/3-celeron-chromebook>,
+        <http://magelon.com/ontologies/attribute/celeron>,
+        <http://magelon.com/ontologies/attribute/celeron-chromebook>,
+        <http://magelon.com/ontologies/attribute/chromebook>,
+        <http://magelon.com/ontologies/attribute/flex>,
+        <http://magelon.com/ontologies/attribute/flex-3-celeron>,
+        <http://magelon.com/ontologies/attribute/ideapad>,
+        <http://magelon.com/ontologies/attribute/ideapad-flex>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad-flex> .
+
+<http://magelon.com/ontologies/products/id=1905001> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/grey> .
+
+<http://magelon.com/ontologies/products/id=1905002> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/grey> .
+
+<http://magelon.com/ontologies/products/id=1905003> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/6in>,
+        <http://magelon.com/ontologies/attribute/6in-laptop>,
+        <http://magelon.com/ontologies/attribute/flex>,
+        <http://magelon.com/ontologies/attribute/flex-i3>,
+        <http://magelon.com/ontologies/attribute/flex-i3-11-6in>,
+        <http://magelon.com/ontologies/attribute/i3>,
+        <http://magelon.com/ontologies/attribute/i3-11>,
+        <http://magelon.com/ontologies/attribute/i3-11-6in-laptop>,
+        <http://magelon.com/ontologies/attribute/ideapad>,
+        <http://magelon.com/ontologies/attribute/ideapad-flex>,
+        <http://magelon.com/ontologies/attribute/ideapad-flex-i3>,
+        <http://magelon.com/ontologies/attribute/laptop>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad-flex> .
+
+<http://magelon.com/ontologies/products/id=1905004> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ore> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/cor>,
+        <http://magelon.com/ontologies/attribute/core-i5>,
+        <http://magelon.com/ontologies/attribute/core-i5-game>,
+        <http://magelon.com/ontologies/attribute/game>,
+        <http://magelon.com/ontologies/attribute/game-laptop>,
+        <http://magelon.com/ontologies/attribute/i5>,
+        <http://magelon.com/ontologies/attribute/i5-game>,
+        <http://magelon.com/ontologies/attribute/i5-game-laptop>,
+        <http://magelon.com/ontologies/attribute/ideapad>,
+        <http://magelon.com/ontologies/attribute/ideapad-intel>,
+        <http://magelon.com/ontologies/attribute/ideapad-intel-core>,
+        <http://magelon.com/ontologies/attribute/intel>,
+        <http://magelon.com/ontologies/attribute/intel-core>,
+        <http://magelon.com/ontologies/attribute/intel-core-i5>,
+        <http://magelon.com/ontologies/attribute/laptop>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad-intel> .
+
+<http://magelon.com/ontologies/products/id=1905005> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/silver> .
+
+<http://magelon.com/ontologies/products/id=1965065> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/grey> .
+
+<http://magelon.com/ontologies/products/id=1965066> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/grey> .
+
+<http://magelon.com/ontologies/products/id=1965067> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/6in>,
+        <http://magelon.com/ontologies/attribute/6in-laptop>,
+        <http://magelon.com/ontologies/attribute/flex>,
+        <http://magelon.com/ontologies/attribute/flex-i3>,
+        <http://magelon.com/ontologies/attribute/flex-i3-11-6in>,
+        <http://magelon.com/ontologies/attribute/i3>,
+        <http://magelon.com/ontologies/attribute/i3-11>,
+        <http://magelon.com/ontologies/attribute/i3-11-6in-laptop>,
+        <http://magelon.com/ontologies/attribute/ideapad>,
+        <http://magelon.com/ontologies/attribute/ideapad-flex>,
+        <http://magelon.com/ontologies/attribute/ideapad-flex-i3>,
+        <http://magelon.com/ontologies/attribute/laptop>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad-flex> .
+
+<http://magelon.com/ontologies/products/id=1965068> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ore> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/cor>,
+        <http://magelon.com/ontologies/attribute/core-i5>,
+        <http://magelon.com/ontologies/attribute/core-i5-game>,
+        <http://magelon.com/ontologies/attribute/game>,
+        <http://magelon.com/ontologies/attribute/game-laptop>,
+        <http://magelon.com/ontologies/attribute/i5>,
+        <http://magelon.com/ontologies/attribute/i5-game>,
+        <http://magelon.com/ontologies/attribute/i5-game-laptop>,
+        <http://magelon.com/ontologies/attribute/ideapad>,
+        <http://magelon.com/ontologies/attribute/ideapad-intel>,
+        <http://magelon.com/ontologies/attribute/ideapad-intel-core>,
+        <http://magelon.com/ontologies/attribute/intel>,
+        <http://magelon.com/ontologies/attribute/intel-core>,
+        <http://magelon.com/ontologies/attribute/intel-core-i5>,
+        <http://magelon.com/ontologies/attribute/laptop>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad-intel> .
+
+<http://magelon.com/ontologies/products/id=1965069> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/silver> .
+
+<http://magelon.com/ontologies/products/id=1996707> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/10-1in-64gb-tablet>,
+        <http://magelon.com/ontologies/attribute/1i>,
+        <http://magelon.com/ontologies/attribute/1in>,
+        <http://magelon.com/ontologies/attribute/1in-64gb>,
+        <http://magelon.com/ontologies/attribute/3rd>,
+        <http://magelon.com/ontologies/attribute/3rd-gen>,
+        <http://magelon.com/ontologies/attribute/4gb>,
+        <http://magelon.com/ontologies/attribute/64gb>,
+        <http://magelon.com/ontologies/attribute/64gb-tablet>,
+        <http://magelon.com/ontologies/attribute/gen>,
+        <http://magelon.com/ontologies/attribute/gen-10>,
+        <http://magelon.com/ontologies/attribute/lenovo-m10>,
+        <http://magelon.com/ontologies/attribute/lenovo-m10-3rd>,
+        <http://magelon.com/ontologies/attribute/m10>,
+        <http://magelon.com/ontologies/attribute/m10-3rd>,
+        <http://magelon.com/ontologies/attribute/tab>,
+        <http://magelon.com/ontologies/attribute/tablet> .
+
+<http://magelon.com/ontologies/products/id=1996708> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/4gb>,
+        <http://magelon.com/ontologies/attribute/4th>,
+        <http://magelon.com/ontologies/attribute/4th-gen>,
+        <http://magelon.com/ontologies/attribute/64gb>,
+        <http://magelon.com/ontologies/attribute/64gb-tablet>,
+        <http://magelon.com/ontologies/attribute/8in>,
+        <http://magelon.com/ontologies/attribute/8in-64gb>,
+        <http://magelon.com/ontologies/attribute/8in-64gb-tablet>,
+        <http://magelon.com/ontologies/attribute/gen>,
+        <http://magelon.com/ontologies/attribute/gen-8in>,
+        <http://magelon.com/ontologies/attribute/m8>,
+        <http://magelon.com/ontologies/attribute/m8-4th>,
+        <http://magelon.com/ontologies/attribute/tab>,
+        <http://magelon.com/ontologies/attribute/tablet> .
+
+<http://magelon.com/ontologies/products/id=1996709> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/128gb>,
+        <http://magelon.com/ontologies/attribute/128gb-tablet>,
+        <http://magelon.com/ontologies/attribute/6in>,
+        <http://magelon.com/ontologies/attribute/6in-128gb>,
+        <http://magelon.com/ontologies/attribute/in-1>,
+        <http://magelon.com/ontologies/attribute/lenovo-m10>,
+        <http://magelon.com/ontologies/attribute/lenovo-m10-plus>,
+        <http://magelon.com/ontologies/attribute/m10>,
+        <http://magelon.com/ontologies/attribute/m10-plus>,
+        <http://magelon.com/ontologies/attribute/plus>,
+        <http://magelon.com/ontologies/attribute/plus-10>,
+        <http://magelon.com/ontologies/attribute/tab>,
+        <http://magelon.com/ontologies/attribute/tablet> .
+
+<http://magelon.com/ontologies/products/id=2125239> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/10-1in-64gb-tablet>,
+        <http://magelon.com/ontologies/attribute/1i>,
+        <http://magelon.com/ontologies/attribute/1in>,
+        <http://magelon.com/ontologies/attribute/1in-64gb>,
+        <http://magelon.com/ontologies/attribute/3rd>,
+        <http://magelon.com/ontologies/attribute/3rd-gen>,
+        <http://magelon.com/ontologies/attribute/4gb>,
+        <http://magelon.com/ontologies/attribute/64gb>,
+        <http://magelon.com/ontologies/attribute/64gb-tablet>,
+        <http://magelon.com/ontologies/attribute/gen>,
+        <http://magelon.com/ontologies/attribute/gen-10>,
+        <http://magelon.com/ontologies/attribute/lenovo-m10>,
+        <http://magelon.com/ontologies/attribute/lenovo-m10-3rd>,
+        <http://magelon.com/ontologies/attribute/m10>,
+        <http://magelon.com/ontologies/attribute/m10-3rd>,
+        <http://magelon.com/ontologies/attribute/tab>,
+        <http://magelon.com/ontologies/attribute/tablet> .
+
+<http://magelon.com/ontologies/products/id=2125240> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/4gb>,
+        <http://magelon.com/ontologies/attribute/4th>,
+        <http://magelon.com/ontologies/attribute/4th-gen>,
+        <http://magelon.com/ontologies/attribute/64gb>,
+        <http://magelon.com/ontologies/attribute/64gb-tablet>,
+        <http://magelon.com/ontologies/attribute/8in>,
+        <http://magelon.com/ontologies/attribute/8in-64gb>,
+        <http://magelon.com/ontologies/attribute/8in-64gb-tablet>,
+        <http://magelon.com/ontologies/attribute/gen>,
+        <http://magelon.com/ontologies/attribute/gen-8in>,
+        <http://magelon.com/ontologies/attribute/m8>,
+        <http://magelon.com/ontologies/attribute/m8-4th>,
+        <http://magelon.com/ontologies/attribute/tab>,
+        <http://magelon.com/ontologies/attribute/tablet> .
+
+<http://magelon.com/ontologies/products/id=2125241> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/128gb>,
+        <http://magelon.com/ontologies/attribute/128gb-tablet>,
+        <http://magelon.com/ontologies/attribute/6in>,
+        <http://magelon.com/ontologies/attribute/6in-128gb>,
+        <http://magelon.com/ontologies/attribute/in-1>,
+        <http://magelon.com/ontologies/attribute/lenovo-m10>,
+        <http://magelon.com/ontologies/attribute/lenovo-m10-plus>,
+        <http://magelon.com/ontologies/attribute/m10>,
+        <http://magelon.com/ontologies/attribute/m10-plus>,
+        <http://magelon.com/ontologies/attribute/plus>,
+        <http://magelon.com/ontologies/attribute/plus-10>,
+        <http://magelon.com/ontologies/attribute/tab>,
+        <http://magelon.com/ontologies/attribute/tablet> .
+
+<http://magelon.com/ontologies/products/id=2130577> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/128gb>,
+        <http://magelon.com/ontologies/attribute/128gb-amd>,
+        <http://magelon.com/ontologies/attribute/4gb>,
+        <http://magelon.com/ontologies/attribute/4gb-128gb>,
+        <http://magelon.com/ontologies/attribute/amd>,
+        <http://magelon.com/ontologies/attribute/ideapad>,
+        <http://magelon.com/ontologies/attribute/ideapad-15>,
+        <http://magelon.com/ontologies/attribute/laptop>,
+        <http://magelon.com/ontologies/attribute/laptop-4gb>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad-1>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad-15-6> .
+
+<http://magelon.com/ontologies/products/id=2159893> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/grey> .
+
+<http://magelon.com/ontologies/products/id=2159894> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/grey> .
+
+<http://magelon.com/ontologies/products/id=2159895> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/6in>,
+        <http://magelon.com/ontologies/attribute/6in-laptop>,
+        <http://magelon.com/ontologies/attribute/flex>,
+        <http://magelon.com/ontologies/attribute/flex-i3>,
+        <http://magelon.com/ontologies/attribute/flex-i3-11-6in>,
+        <http://magelon.com/ontologies/attribute/i3>,
+        <http://magelon.com/ontologies/attribute/i3-11>,
+        <http://magelon.com/ontologies/attribute/i3-11-6in-laptop>,
+        <http://magelon.com/ontologies/attribute/ideapad>,
+        <http://magelon.com/ontologies/attribute/ideapad-flex>,
+        <http://magelon.com/ontologies/attribute/ideapad-flex-i3>,
+        <http://magelon.com/ontologies/attribute/laptop>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad-flex> .
+
+<http://magelon.com/ontologies/products/id=2159896> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ore> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/cor>,
+        <http://magelon.com/ontologies/attribute/core-i5>,
+        <http://magelon.com/ontologies/attribute/core-i5-game>,
+        <http://magelon.com/ontologies/attribute/game>,
+        <http://magelon.com/ontologies/attribute/game-laptop>,
+        <http://magelon.com/ontologies/attribute/i5>,
+        <http://magelon.com/ontologies/attribute/i5-game>,
+        <http://magelon.com/ontologies/attribute/i5-game-laptop>,
+        <http://magelon.com/ontologies/attribute/ideapad>,
+        <http://magelon.com/ontologies/attribute/ideapad-intel>,
+        <http://magelon.com/ontologies/attribute/ideapad-intel-core>,
+        <http://magelon.com/ontologies/attribute/intel>,
+        <http://magelon.com/ontologies/attribute/intel-core>,
+        <http://magelon.com/ontologies/attribute/intel-core-i5>,
+        <http://magelon.com/ontologies/attribute/laptop>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad-intel> .
+
+<http://magelon.com/ontologies/products/id=2159897> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/silver> .
+
+<http://magelon.com/ontologies/products/id=2221950> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/zen> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/14in>,
+        <http://magelon.com/ontologies/attribute/14in-ideapad>,
+        <http://magelon.com/ontologies/attribute/amd>,
+        <http://magelon.com/ontologies/attribute/amd-ryzen>,
+        <http://magelon.com/ontologies/attribute/ideapad>,
+        <http://magelon.com/ontologies/attribute/ideapad-s145>,
+        <http://magelon.com/ontologies/attribute/ryzen>,
+        <http://magelon.com/ontologies/attribute/s145>,
+        <http://magelon.com/ontologies/attribute/s145-amd> .
+
+<http://magelon.com/ontologies/products/id=2221951> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/rome> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/4gb>,
+        <http://magelon.com/ontologies/attribute/mk-p60t>,
+        <http://magelon.com/ontologies/attribute/p60t>,
+        <http://magelon.com/ontologies/attribute/p60t-4gb>,
+        <http://magelon.com/ontologies/attribute/tab>,
+        <http://magelon.com/ontologies/attribute/tablet>,
+        <http://magelon.com/ontologies/attribute/tablet-mk> .
+
+<http://magelon.com/ontologies/products/id=2221952> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/3-celeron>,
+        <http://magelon.com/ontologies/attribute/3-celeron-4gb>,
+        <http://magelon.com/ontologies/attribute/4gb>,
+        <http://magelon.com/ontologies/attribute/4gb-64gb>,
+        <http://magelon.com/ontologies/attribute/64gb>,
+        <http://magelon.com/ontologies/attribute/celeron>,
+        <http://magelon.com/ontologies/attribute/celeron-4gb>,
+        <http://magelon.com/ontologies/attribute/duet>,
+        <http://magelon.com/ontologies/attribute/duet-3-celeron> .
+
+<http://magelon.com/ontologies/products/id=2221953> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/rome> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/3-celeron>,
+        <http://magelon.com/ontologies/attribute/3-celeron-chromebook>,
+        <http://magelon.com/ontologies/attribute/celeron>,
+        <http://magelon.com/ontologies/attribute/celeron-chromebook>,
+        <http://magelon.com/ontologies/attribute/chromebook>,
+        <http://magelon.com/ontologies/attribute/flex>,
+        <http://magelon.com/ontologies/attribute/flex-3-celeron>,
+        <http://magelon.com/ontologies/attribute/ideapad>,
+        <http://magelon.com/ontologies/attribute/ideapad-flex>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad>,
+        <http://magelon.com/ontologies/attribute/lenovo-ideapad-flex> .
+
+<http://magelon.com/ontologies/products/id=2221954> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ore> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/6in>,
+        <http://magelon.com/ontologies/attribute/6in-ideapad>,
+        <http://magelon.com/ontologies/attribute/cor>,
+        <http://magelon.com/ontologies/attribute/core-i7>,
+        <http://magelon.com/ontologies/attribute/i7>,
+        <http://magelon.com/ontologies/attribute/ideapad>,
+        <http://magelon.com/ontologies/attribute/ideapad-s340>,
+        <http://magelon.com/ontologies/attribute/intel>,
+        <http://magelon.com/ontologies/attribute/intel-core>,
+        <http://magelon.com/ontologies/attribute/intel-core-i7>,
+        <http://magelon.com/ontologies/attribute/s340>,
+        <http://magelon.com/ontologies/attribute/s340-intel>,
+        <http://magelon.com/ontologies/attribute/s340-intel-core> .
+
+<http://magelon.com/ontologies/products/id=240095> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> .
+
+<http://magelon.com/ontologies/products/id=240096> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/20v>,
+        <http://magelon.com/ontologies/attribute/20v-adapter>,
+        <http://magelon.com/ontologies/attribute/65watt>,
+        <http://magelon.com/ontologies/attribute/65watt-20v>,
+        <http://magelon.com/ontologies/attribute/adapter>,
+        <http://magelon.com/ontologies/attribute/watt> .
+
+<http://magelon.com/ontologies/products/id=240166> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/port> .
+
+<http://magelon.com/ontologies/products/id=240167> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/45-watt>,
+        <http://magelon.com/ontologies/attribute/dock>,
+        <http://magelon.com/ontologies/attribute/dock-docking>,
+        <http://magelon.com/ontologies/attribute/docking>,
+        <http://magelon.com/ontologies/attribute/docking-station>,
+        <http://magelon.com/ontologies/attribute/gige>,
+        <http://magelon.com/ontologies/attribute/gige-45>,
+        <http://magelon.com/ontologies/attribute/l470>,
+        <http://magelon.com/ontologies/attribute/l570>,
+        <http://magelon.com/ontologies/attribute/lenovo-thinkpad>,
+        <http://magelon.com/ontologies/attribute/lenovo-thinkpad-usb>,
+        <http://magelon.com/ontologies/attribute/miix>,
+        <http://magelon.com/ontologies/attribute/miix-510>,
+        <http://magelon.com/ontologies/attribute/p51>,
+        <http://magelon.com/ontologies/attribute/p71>,
+        <http://magelon.com/ontologies/attribute/pro>,
+        <http://magelon.com/ontologies/attribute/pro-dock>,
+        <http://magelon.com/ontologies/attribute/station>,
+        <http://magelon.com/ontologies/attribute/station-usb>,
+        <http://magelon.com/ontologies/attribute/t470>,
+        <http://magelon.com/ontologies/attribute/t570>,
+        <http://magelon.com/ontologies/attribute/thinkpad>,
+        <http://magelon.com/ontologies/attribute/thinkpad-l470>,
+        <http://magelon.com/ontologies/attribute/thinkpad-usb>,
+        <http://magelon.com/ontologies/attribute/thinkpad-yoga>,
+        <http://magelon.com/ontologies/attribute/usb>,
+        <http://magelon.com/ontologies/attribute/usb-gige>,
+        <http://magelon.com/ontologies/attribute/watt>,
+        <http://magelon.com/ontologies/attribute/x270>,
+        <http://magelon.com/ontologies/attribute/yoga>,
+        <http://magelon.com/ontologies/attribute/yoga-370> .
+
+<http://magelon.com/ontologies/products/id=240522> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20fq0041uk> .
+
+<http://magelon.com/ontologies/products/id=240523> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20j80020uk> .
+
+<http://magelon.com/ontologies/products/id=240524> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ore> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/80tl000ruk> .
+
+<http://magelon.com/ontologies/products/id=240525> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ore> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/80ur0046uk> .
+
+<http://magelon.com/ontologies/products/id=240526> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20h1006luk> .
+
+<http://magelon.com/ontologies/products/id=240527> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20fd0047uk> .
+
+<http://magelon.com/ontologies/products/id=240528> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20hd000luk> .
+
+<http://magelon.com/ontologies/products/id=240529> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20hf0047uk> .
+
+<http://magelon.com/ontologies/products/id=240530> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20h10038uk> .
+
+<http://magelon.com/ontologies/products/id=240531> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ore> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/80vv003uuk> .
+
+<http://magelon.com/ontologies/products/id=240532> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20fq003yuk> .
+
+<http://magelon.com/ontologies/products/id=240533> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20hn002ruk> .
+
+<http://magelon.com/ontologies/products/id=240534> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20fd0048uk> .
+
+<http://magelon.com/ontologies/products/id=240535> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/carbon> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20hrs08k00> .
+
+<http://magelon.com/ontologies/products/id=240536> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20hd0001uk> .
+
+<http://magelon.com/ontologies/products/id=240537> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ore> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/80xe001buk> .
+
+<http://magelon.com/ontologies/products/id=240538> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20hf000vuk> .
+
+<http://magelon.com/ontologies/products/id=240539> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20h500b4uk> .
+
+<http://magelon.com/ontologies/products/id=240540> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20rr0003uk> .
+
+<http://magelon.com/ontologies/products/id=240541> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/gray> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20r90054uk> .
+
+<http://magelon.com/ontologies/products/id=240542> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20rv0002uk> .
+
+<http://magelon.com/ontologies/products/id=240543> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/gray> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20sm001vuk> .
+
+<http://magelon.com/ontologies/products/id=240544> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/gray> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20rw0001uk> .
+
+<http://magelon.com/ontologies/products/id=240545> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/gray> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20rw0002uk> .
+
+<http://magelon.com/ontologies/products/id=240546> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/black> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20q7000yuk> .
+
+<http://magelon.com/ontologies/products/id=240547> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20q7001fuk> .
+
+<http://magelon.com/ontologies/products/id=240548> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20q700aluk> .
+
+<http://magelon.com/ontologies/products/id=240549> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/black> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20qr0026uk> .
+
+<http://magelon.com/ontologies/products/id=240550> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/black> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20qr002duk> .
+
+<http://magelon.com/ontologies/products/id=240551> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/black> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20qr0031uk> .
+
+<http://magelon.com/ontologies/products/id=240552> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/black> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20n4000auk> .
+
+<http://magelon.com/ontologies/products/id=240553> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/black> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20n4004luk> .
+
+<http://magelon.com/ontologies/products/id=240554> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/black> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20n5000auk> .
+
+<http://magelon.com/ontologies/products/id=240555> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/black> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20q0003vuk> .
+
+<http://magelon.com/ontologies/products/id=240556> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/black> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20q0003wuk> .
+
+<http://magelon.com/ontologies/products/id=240557> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/black> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20q1000luk> .
+
+<http://magelon.com/ontologies/products/id=240558> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20nn002auk> .
+
+<http://magelon.com/ontologies/products/id=240559> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20nn002nuk> .
+
+<http://magelon.com/ontologies/products/id=240560> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/gray> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/82c500g5uk> .
+
+<http://magelon.com/ontologies/products/id=240561> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/rome> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/81mh0002uk> .
+
+<http://magelon.com/ontologies/products/id=240562> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/black> .
+
+<http://magelon.com/ontologies/products/id=240563> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/carbon> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20u9006yuk> .
+
+<http://magelon.com/ontologies/products/id=240564> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/hex> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20st0060uk> .
+
+<http://magelon.com/ontologies/products/id=240565> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20yq001fuk> .
+
+<http://magelon.com/ontologies/products/id=240566> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/carbon> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20xw004yuk> .
+
+<http://magelon.com/ontologies/products/id=240567> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20xy004buk> .
+
+<http://magelon.com/ontologies/products/id=240568> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/titanium> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20qa0055uk> .
+
+<http://magelon.com/ontologies/products/id=240569> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/20xy00efuk> .
+
+<http://magelon.com/ontologies/products/id=240570> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ore> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/82kb00n5uk> .
+
+<http://magelon.com/ontologies/products/id=240571> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/21br001cuk> .
+
+<http://magelon.com/ontologies/products/id=240572> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ore> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/za8n0034gb> .
+
+<http://magelon.com/ontologies/products/id=240573> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ink> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/21b3000luk> .
+
+<http://magelon.com/ontologies/products/id=240905> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/black> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/1080>,
+        <http://magelon.com/ontologies/attribute/1080-pixels>,
+        <http://magelon.com/ontologies/attribute/1920>,
+        <http://magelon.com/ontologies/attribute/1920-x>,
+        <http://magelon.com/ontologies/attribute/1920-x-1080>,
+        <http://magelon.com/ontologies/attribute/20-60>,
+        <http://magelon.com/ontologies/attribute/23-8-1920-x>,
+        <http://magelon.com/ontologies/attribute/cm-23>,
+        <http://magelon.com/ontologies/attribute/full>,
+        <http://magelon.com/ontologies/attribute/full-hd>,
+        <http://magelon.com/ontologies/attribute/full-hd-led>,
+        <http://magelon.com/ontologies/attribute/hd-led>,
+        <http://magelon.com/ontologies/attribute/led>,
+        <http://magelon.com/ontologies/attribute/pixels>,
+        <http://magelon.com/ontologies/attribute/pixels-full>,
+        <http://magelon.com/ontologies/attribute/pixels-full-hd>,
+        <http://magelon.com/ontologies/attribute/t24t>,
+        <http://magelon.com/ontologies/attribute/thinkvision>,
+        <http://magelon.com/ontologies/attribute/thinkvision-t24t>,
+        <http://magelon.com/ontologies/attribute/x-1080>,
+        <http://magelon.com/ontologies/attribute/x-1080-pixels> .
+
+<http://magelon.com/ontologies/products/id=240906> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/black> .
+
+<http://magelon.com/ontologies/products/id=241463> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/black> ;
+    ns1:product_number <http://magelon.com/ontologies/attribute/0a36188> .
+
+<http://magelon.com/ontologies/products/id=241464> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/black> .
+
+<http://magelon.com/ontologies/products/id=241623> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ice> .
+
+<http://magelon.com/ontologies/products/id=241624> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/black> .
+
+<http://magelon.com/ontologies/products/id=243534> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/grey> .
+
+<http://magelon.com/ontologies/products/id=243535> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/car> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/carrying>,
+        <http://magelon.com/ontologies/attribute/carrying-case>,
+        <http://magelon.com/ontologies/attribute/case>,
+        <http://magelon.com/ontologies/attribute/notebook>,
+        <http://magelon.com/ontologies/attribute/pro>,
+        <http://magelon.com/ontologies/attribute/professional>,
+        <http://magelon.com/ontologies/attribute/professional-carrying> .
+
+<http://magelon.com/ontologies/products/id=244261> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/air> .
+
+<http://magelon.com/ontologies/products/id=367708> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/dream> ;
+    ns1:uknown <http://magelon.com/ontologies/attribute/controller>,
+        <http://magelon.com/ontologies/attribute/daydream>,
+        <http://magelon.com/ontologies/attribute/daydream-os>,
+        <http://magelon.com/ontologies/attribute/hand>,
+        <http://magelon.com/ontologies/attribute/hand-controller>,
+        <http://magelon.com/ontologies/attribute/solo> .
+
+<http://magelon.com/ontologies/products/id=990117> ns1:brand <http://magelon.com/ontologies/attribute/lenovo> ;
+    ns1:color <http://magelon.com/ontologies/attribute/ore> .
+
+<http://magelon.com/ontologies/attribute/1080> rdfs:label "1080" .
+
+<http://magelon.com/ontologies/attribute/1080-pixels> rdfs:label "1080 pixels" .
+
+<http://magelon.com/ontologies/attribute/128gb-amd> rdfs:label "128gb amd" .
+
+<http://magelon.com/ontologies/attribute/14in> rdfs:label "14in" .
+
+<http://magelon.com/ontologies/attribute/14in-ideapad> rdfs:label "14in ideapad" .
+
+<http://magelon.com/ontologies/attribute/1920> rdfs:label "1920" .
+
+<http://magelon.com/ontologies/attribute/1920-x> rdfs:label "1920 x" .
+
+<http://magelon.com/ontologies/attribute/1920-x-1080> rdfs:label "1920 x 1080" .
+
+<http://magelon.com/ontologies/attribute/20-60> rdfs:label "20 60" .
+
+<http://magelon.com/ontologies/attribute/20v> rdfs:label "20v" .
+
+<http://magelon.com/ontologies/attribute/20v-adapter> rdfs:label "20v adapter" .
+
+<http://magelon.com/ontologies/attribute/23-8-1920-x> rdfs:label "23.8\" 1920 x" .
+
+<http://magelon.com/ontologies/attribute/45-watt> rdfs:label "45 watt" .
+
+<http://magelon.com/ontologies/attribute/4gb-128gb> rdfs:label "4gb 128gb" .
+
+<http://magelon.com/ontologies/attribute/65watt> rdfs:label "65watt" .
+
+<http://magelon.com/ontologies/attribute/65watt-20v> rdfs:label "65watt 20v" .
+
+<http://magelon.com/ontologies/attribute/6in-ideapad> rdfs:label "6in ideapad" .
+
+<http://magelon.com/ontologies/attribute/adapter> rdfs:label "adapter" .
+
+<http://magelon.com/ontologies/attribute/amd-ryzen> rdfs:label "amd ryzen" .
+
+<http://magelon.com/ontologies/attribute/carrying> rdfs:label "carrying" .
+
+<http://magelon.com/ontologies/attribute/carrying-case> rdfs:label "carrying case" .
+
+<http://magelon.com/ontologies/attribute/case> rdfs:label "case" .
+
+<http://magelon.com/ontologies/attribute/cm-23> rdfs:label "cm 23" .
+
+<http://magelon.com/ontologies/attribute/core-i7> rdfs:label "core i7" .
+
+<http://magelon.com/ontologies/attribute/dock> rdfs:label "dock" .
+
+<http://magelon.com/ontologies/attribute/dock-docking> rdfs:label "dock docking" .
+
+<http://magelon.com/ontologies/attribute/docking> rdfs:label "docking" .
+
+<http://magelon.com/ontologies/attribute/docking-station> rdfs:label "docking station" .
+
+<http://magelon.com/ontologies/attribute/full> rdfs:label "full" .
+
+<http://magelon.com/ontologies/attribute/full-hd> rdfs:label "full hd" .
+
+<http://magelon.com/ontologies/attribute/full-hd-led> rdfs:label "full hd led" .
+
+<http://magelon.com/ontologies/attribute/gige> rdfs:label "gige" .
+
+<http://magelon.com/ontologies/attribute/gige-45> rdfs:label "gige 45" .
+
+<http://magelon.com/ontologies/attribute/hd-led> rdfs:label "hd led" .
+
+<http://magelon.com/ontologies/attribute/i7> rdfs:label "i7" .
+
+<http://magelon.com/ontologies/attribute/ideapad-15> rdfs:label "ideapad 15" .
+
+<http://magelon.com/ontologies/attribute/ideapad-s145> rdfs:label "ideapad s145" .
+
+<http://magelon.com/ontologies/attribute/ideapad-s340> rdfs:label "ideapad s340" .
+
+<http://magelon.com/ontologies/attribute/intel-core-i7> rdfs:label "intel core i7" .
+
+<http://magelon.com/ontologies/attribute/l470> rdfs:label "l470" .
+
+<http://magelon.com/ontologies/attribute/l570> rdfs:label "l570" .
+
+<http://magelon.com/ontologies/attribute/laptop-4gb> rdfs:label "laptop 4gb" .
+
+<http://magelon.com/ontologies/attribute/led> rdfs:label "led" .
+
+<http://magelon.com/ontologies/attribute/lenovo-ideapad-1> rdfs:label "lenovo ideapad 1" .
+
+<http://magelon.com/ontologies/attribute/lenovo-ideapad-15-6> rdfs:label "lenovo ideapad 15.6" .
+
+<http://magelon.com/ontologies/attribute/lenovo-thinkpad> rdfs:label "lenovo thinkpad" .
+
+<http://magelon.com/ontologies/attribute/lenovo-thinkpad-usb> rdfs:label "lenovo thinkpad usb" .
+
+<http://magelon.com/ontologies/attribute/miix> rdfs:label "miix" .
+
+<http://magelon.com/ontologies/attribute/miix-510> rdfs:label "miix 510" .
+
+<http://magelon.com/ontologies/attribute/mk-p60t> rdfs:label "mk p60t" .
+
+<http://magelon.com/ontologies/attribute/notebook> rdfs:label "notebook" .
+
+<http://magelon.com/ontologies/attribute/p51> rdfs:label "p51" .
+
+<http://magelon.com/ontologies/attribute/p60t> rdfs:label "p60t" .
+
+<http://magelon.com/ontologies/attribute/p60t-4gb> rdfs:label "p60t 4gb" .
+
+<http://magelon.com/ontologies/attribute/p71> rdfs:label "p71" .
+
+<http://magelon.com/ontologies/attribute/pixels> rdfs:label "pixels" .
+
+<http://magelon.com/ontologies/attribute/pixels-full> rdfs:label "pixels full" .
+
+<http://magelon.com/ontologies/attribute/pixels-full-hd> rdfs:label "pixels full hd" .
+
+<http://magelon.com/ontologies/attribute/pro-dock> rdfs:label "pro dock" .
+
+<http://magelon.com/ontologies/attribute/professional> rdfs:label "professional" .
+
+<http://magelon.com/ontologies/attribute/professional-carrying> rdfs:label "professional carrying" .
+
+<http://magelon.com/ontologies/attribute/ryzen> rdfs:label "ryzen" .
+
+<http://magelon.com/ontologies/attribute/s145> rdfs:label "s145" .
+
+<http://magelon.com/ontologies/attribute/s145-amd> rdfs:label "s145 amd" .
+
+<http://magelon.com/ontologies/attribute/s340> rdfs:label "s340" .
+
+<http://magelon.com/ontologies/attribute/s340-intel> rdfs:label "s340 intel" .
+
+<http://magelon.com/ontologies/attribute/s340-intel-core> rdfs:label "s340 intel core" .
+
+<http://magelon.com/ontologies/attribute/station> rdfs:label "station" .
+
+<http://magelon.com/ontologies/attribute/station-usb> rdfs:label "station usb" .
+
+<http://magelon.com/ontologies/attribute/t24t> rdfs:label "t24t" .
+
+<http://magelon.com/ontologies/attribute/t470> rdfs:label "t470" .
+
+<http://magelon.com/ontologies/attribute/t570> rdfs:label "t570" .
+
+<http://magelon.com/ontologies/attribute/tablet-mk> rdfs:label "tablet mk" .
+
+<http://magelon.com/ontologies/attribute/thinkpad> rdfs:label "thinkpad" .
+
+<http://magelon.com/ontologies/attribute/thinkpad-l470> rdfs:label "thinkpad l470" .
+
+<http://magelon.com/ontologies/attribute/thinkpad-usb> rdfs:label "thinkpad usb" .
+
+<http://magelon.com/ontologies/attribute/thinkpad-yoga> rdfs:label "thinkpad yoga" .
+
+<http://magelon.com/ontologies/attribute/thinkvision> rdfs:label "thinkvision" .
+
+<http://magelon.com/ontologies/attribute/thinkvision-t24t> rdfs:label "thinkvision t24t" .
+
+<http://magelon.com/ontologies/attribute/usb> rdfs:label "usb" .
+
+<http://magelon.com/ontologies/attribute/usb-gige> rdfs:label "usb gige" .
+
+<http://magelon.com/ontologies/attribute/x-1080> rdfs:label "x 1080" .
+
+<http://magelon.com/ontologies/attribute/x-1080-pixels> rdfs:label "x 1080 pixels" .
+
+<http://magelon.com/ontologies/attribute/x270> rdfs:label "x270" .
+
+<http://magelon.com/ontologies/attribute/yoga> rdfs:label "yoga" .
+
+<http://magelon.com/ontologies/attribute/yoga-370> rdfs:label "yoga 370" .
+
+<http://magelon.com/ontologies/attribute/10-1in-64gb-tablet> rdfs:label "10.1in 64gb tablet" .
+
+<http://magelon.com/ontologies/attribute/128gb-tablet> rdfs:label "128gb tablet" .
+
+<http://magelon.com/ontologies/attribute/1i> rdfs:label "1i" .
+
+<http://magelon.com/ontologies/attribute/1in> rdfs:label "1in" .
+
+<http://magelon.com/ontologies/attribute/1in-64gb> rdfs:label "1in 64gb" .
+
+<http://magelon.com/ontologies/attribute/3-celeron-4gb> rdfs:label "3 celeron 4gb" .
+
+<http://magelon.com/ontologies/attribute/3-celeron-chromebook> rdfs:label "3 celeron chromebook" .
+
+<http://magelon.com/ontologies/attribute/3rd> rdfs:label "3rd" .
+
+<http://magelon.com/ontologies/attribute/3rd-gen> rdfs:label "3rd gen" .
+
+<http://magelon.com/ontologies/attribute/4gb-64gb> rdfs:label "4gb 64gb" .
+
+<http://magelon.com/ontologies/attribute/4th> rdfs:label "4th" .
+
+<http://magelon.com/ontologies/attribute/4th-gen> rdfs:label "4th gen" .
+
+<http://magelon.com/ontologies/attribute/6in-128gb> rdfs:label "6in 128gb" .
+
+<http://magelon.com/ontologies/attribute/8in> rdfs:label "8in" .
+
+<http://magelon.com/ontologies/attribute/8in-64gb> rdfs:label "8in 64gb" .
+
+<http://magelon.com/ontologies/attribute/8in-64gb-tablet> rdfs:label "8in 64gb tablet" .
+
+<http://magelon.com/ontologies/attribute/amd> rdfs:label "amd" .
+
+<http://magelon.com/ontologies/attribute/celeron-4gb> rdfs:label "celeron 4gb" .
+
+<http://magelon.com/ontologies/attribute/celeron-chromebook> rdfs:label "celeron chromebook" .
+
+<http://magelon.com/ontologies/attribute/chromebook> rdfs:label "chromebook" .
+
+<http://magelon.com/ontologies/attribute/controller> rdfs:label "controller" .
+
+<http://magelon.com/ontologies/attribute/daydream> rdfs:label "daydream" .
+
+<http://magelon.com/ontologies/attribute/daydream-os> rdfs:label "daydream os" .
+
+<http://magelon.com/ontologies/attribute/duet> rdfs:label "duet" .
+
+<http://magelon.com/ontologies/attribute/duet-3-celeron> rdfs:label "duet 3 celeron" .
+
+<http://magelon.com/ontologies/attribute/flex-3-celeron> rdfs:label "flex 3 celeron" .
+
+<http://magelon.com/ontologies/attribute/gen-10> rdfs:label "gen 10" .
+
+<http://magelon.com/ontologies/attribute/gen-8in> rdfs:label "gen 8in" .
+
+<http://magelon.com/ontologies/attribute/hand> rdfs:label "hand" .
+
+<http://magelon.com/ontologies/attribute/hand-controller> rdfs:label "hand controller" .
+
+<http://magelon.com/ontologies/attribute/in-1> rdfs:label "in 1" .
+
+<http://magelon.com/ontologies/attribute/lenovo-m10-3rd> rdfs:label "lenovo m10 3rd" .
+
+<http://magelon.com/ontologies/attribute/lenovo-m10-plus> rdfs:label "lenovo m10 plus" .
+
+<http://magelon.com/ontologies/attribute/m10-3rd> rdfs:label "m10 3rd" .
+
+<http://magelon.com/ontologies/attribute/m10-plus> rdfs:label "m10 plus" .
+
+<http://magelon.com/ontologies/attribute/m8> rdfs:label "m8" .
+
+<http://magelon.com/ontologies/attribute/m8-4th> rdfs:label "m8 4th" .
+
+<http://magelon.com/ontologies/attribute/plus> rdfs:label "plus" .
+
+<http://magelon.com/ontologies/attribute/plus-10> rdfs:label "plus 10" .
+
+<http://magelon.com/ontologies/attribute/pro> rdfs:label "pro" .
+
+<http://magelon.com/ontologies/attribute/solo> rdfs:label "solo" .
+
+<http://magelon.com/ontologies/attribute/watt> rdfs:label "watt" .
+
+<http://magelon.com/ontologies/attribute/128gb> rdfs:label "128gb" .
+
+<http://magelon.com/ontologies/attribute/6in-laptop> rdfs:label "6in laptop" .
+
+<http://magelon.com/ontologies/attribute/core-i5> rdfs:label "core i5" .
+
+<http://magelon.com/ontologies/attribute/core-i5-game> rdfs:label "core i5 game" .
+
+<http://magelon.com/ontologies/attribute/flex-i3> rdfs:label "flex i3" .
+
+<http://magelon.com/ontologies/attribute/flex-i3-11-6in> rdfs:label "flex i3 11.6in" .
+
+<http://magelon.com/ontologies/attribute/game> rdfs:label "game" .
+
+<http://magelon.com/ontologies/attribute/game-laptop> rdfs:label "game laptop" .
+
+<http://magelon.com/ontologies/attribute/i3> rdfs:label "i3" .
+
+<http://magelon.com/ontologies/attribute/i3-11> rdfs:label "i3 11" .
+
+<http://magelon.com/ontologies/attribute/i3-11-6in-laptop> rdfs:label "i3 11.6in laptop" .
+
+<http://magelon.com/ontologies/attribute/i5> rdfs:label "i5" .
+
+<http://magelon.com/ontologies/attribute/i5-game> rdfs:label "i5 game" .
+
+<http://magelon.com/ontologies/attribute/i5-game-laptop> rdfs:label "i5 game laptop" .
+
+<http://magelon.com/ontologies/attribute/ideapad-flex-i3> rdfs:label "ideapad flex i3" .
+
+<http://magelon.com/ontologies/attribute/ideapad-intel> rdfs:label "ideapad intel" .
+
+<http://magelon.com/ontologies/attribute/ideapad-intel-core> rdfs:label "ideapad intel core" .
+
+<http://magelon.com/ontologies/attribute/intel-core-i5> rdfs:label "intel core i5" .
+
+<http://magelon.com/ontologies/attribute/lenovo-ideapad-intel> rdfs:label "lenovo ideapad intel" .
+
+<http://magelon.com/ontologies/attribute/3-celeron> rdfs:label "3 celeron" .
+
+<http://magelon.com/ontologies/attribute/64gb-tablet> rdfs:label "64gb tablet" .
+
+<http://magelon.com/ontologies/attribute/celeron> rdfs:label "celeron" .
+
+<http://magelon.com/ontologies/attribute/cor> rdfs:label "cor" .
+
+<http://magelon.com/ontologies/attribute/gen> rdfs:label "gen" .
+
+<http://magelon.com/ontologies/attribute/intel> rdfs:label "intel" .
+
+<http://magelon.com/ontologies/attribute/intel-core> rdfs:label "intel core" .
+
+<http://magelon.com/ontologies/attribute/lenovo-m10> rdfs:label "lenovo m10" .
+
+<http://magelon.com/ontologies/attribute/m10> rdfs:label "m10" .
+
+<http://magelon.com/ontologies/attribute/flex> rdfs:label "flex" .
+
+<http://magelon.com/ontologies/attribute/ideapad-flex> rdfs:label "ideapad flex" .
+
+<http://magelon.com/ontologies/attribute/lenovo-ideapad-flex> rdfs:label "lenovo ideapad flex" .
+
+<http://magelon.com/ontologies/attribute/64gb> rdfs:label "64gb" .
+
+<http://magelon.com/ontologies/attribute/6in> rdfs:label "6in" .
+
+<http://magelon.com/ontologies/attribute/laptop> rdfs:label "laptop" .
+
+<http://magelon.com/ontologies/attribute/tab> rdfs:label "tab" .
+
+<http://magelon.com/ontologies/attribute/tablet> rdfs:label "tablet" .
+
+<http://magelon.com/ontologies/attribute/4gb> rdfs:label "4gb" .
+
+<http://magelon.com/ontologies/attribute/lenovo-ideapad> rdfs:label "lenovo ideapad" .
+
+<http://magelon.com/ontologies/attribute/ideapad> rdfs:label "ideapad" .
+
