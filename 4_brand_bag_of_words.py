@@ -158,7 +158,7 @@ def generate_product_dict(response,brand_name,mpns,colors,features_in_products):
         transformed_title = row["product_title"].lower()
         cleared_title = re.sub(r"[>#+'?$%^*®™()]+|-","",row["product_title"].lower())
         product_dict[row["product"]] = {"product_title": row["product_title"]}
-        if brand_name.lower() in transformed_title:
+        if brand_name.lower() in transformed_title.split():
             product_dict[row["product"]]["brand"] = brand_name
         if row["mpn"] != "" and row["mpn"].lower() in transformed_title:
             product_dict[row["product"]]["product_number"] = row["mpn"]
