@@ -3,12 +3,12 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import re
 import nltk
 from nltk.corpus import stopwords
-from rdflib import Graph, URIRef, RDF, RDFS, Literal
+from rdflib import Graph, URIRef, RDF, RDFS,Literal
 from slugify import slugify
 import networkx as nx
 from pyvis.network import Network
 import math
-
+import click
 
 def create_graph_vis(graph, name="graph_vis", ego=None, distance=1):
     net = Network(
@@ -22,7 +22,6 @@ def create_graph_vis(graph, name="graph_vis", ego=None, distance=1):
         f"{name}.html",
         notebook=False,
     )
-
 
 def get_data(brand_name):
     query = f"""
@@ -56,78 +55,67 @@ def get_data(brand_name):
     response = virtuoso.getAll(query)
     return response
 
-
 def create_feature_word_graph(product_titles):
     G = nx.DiGraph()
     for product_title in product_titles:
-        title = re.sub(r"[>#+'?$%^*®™()]+|-", "", product_title)
+        title= re.sub(r"[>#+'?$%^*®™()]+|-","",product_title)
         title_parts = title.lower().split()
-        previous_part = ""
+        previous_part=""
         for title_part in title_parts:
-            if previous_part != "":
-                if G.has_edge(previous_part, title_part):
-                    weight = G[previous_part][title_part]["weight"] + 1
+            if previous_part !="":
+                if(G.has_edge(previous_part,title_part)):
+                    weight = G[previous_part][title_part]['weight']+1
                 else:
                     weight = 1
-                G.add_edge(previous_part, title_part, weight=weight)
+                G.add_edge(previous_part,title_part,weight=weight)
             previous_part = title_part
     return G
 
-
-def get_most_common_paths(G, start, finish):
+def get_most_common_paths(G,start,finish):
     paths = []
     try:
         all_shortest_paths = nx.all_shortest_paths(G, start, finish)
         # Score each path using the weight of the edges
         for shortest_path in all_shortest_paths:
-            if len(shortest_path) > 3:
+            if len(shortest_path) >3:
                 continue
             score = 0
             for i in range(len(shortest_path) - 1):
-                score += G.edges[shortest_path[i], shortest_path[i + 1]]["weight"]
+                score += G.edges[shortest_path[i],shortest_path[i+1]]['weight']
             # print(shortest_path, score)
             paths.append(
-                {
-                    "path": shortest_path,
-                    "score": score,
-                    "path_score": score / len(shortest_path),
-                }
-            )
+                {"path":shortest_path,"score":score,"path_score":score/len(shortest_path)}
+                )
     except nx.NetworkXNoPath:
         print(f"No path for {start}->{finish}")
     return paths
 
-
-def get_all_paths(G: nx.DiGraph):
+def get_all_paths(G:nx.DiGraph):
     all_paths = []
     for node1 in G.nodes():
         for node2 in G.nodes():
             if node1 != node2:
-                all_paths.extend(get_most_common_paths(G, node1, node2))
+                all_paths.extend(get_most_common_paths(G,node1,node2))
     return all_paths
 
-
-def assign_product_features(product_titles, sorted_paths, top_paths_count):
+def assign_product_features(product_titles,sorted_paths,top_paths_count):
     features_in_products = {}
     product_features = {}
     for product_title in product_titles:
-        title = re.sub(r"[>#+'?$%^*®™()]+|-", "", product_title)
+        title= re.sub(r"[>#+'?$%^*®™()]+|-","",product_title)
         title = " ".join(title.lower().split())
         for path in sorted_paths[0:top_paths_count]:
-            feature = " ".join(path["path"])
+            feature = " ".join(path['path'])
             if feature in title:
                 if title not in features_in_products.keys():
-                    features_in_products[title] = []
+                    features_in_products[title]=[]
                 features_in_products[title].append(feature)
                 if slugify(feature) not in product_features.keys():
-                    product_features[slugify(feature)] = 0
-                product_features[slugify(feature)] = (
-                    product_features[slugify(feature)] + 1
-                )
+                    product_features[slugify(feature)]= 0
+                product_features[slugify(feature)]=product_features[slugify(feature)]+1
     return features_in_products, product_features
 
-
-def extract_extra_keywords(brand_name, mpns, colors):
+def extract_extra_keywords(product_titles,brand_name,mpns,colors):
     stopwords_list = stopwords.words("english")
     stopwords_list.extend([brand_name, brand_name.lower()])
     stopwords_list.extend(map(lambda x: x.lower(), mpns))
@@ -139,7 +127,6 @@ def extract_extra_keywords(brand_name, mpns, colors):
     vocab = [word for word in vectorizer.vocabulary_]
     return vocab
 
-
 def filter_small_words_numbers(vocab):
     filtered_vocab = []
     for word in vocab:
@@ -150,31 +137,27 @@ def filter_small_words_numbers(vocab):
         filtered_vocab.append(word)
     return filtered_vocab
 
-
-def extend_feature_vocabs(
-    filtered_vocab, product_titles, product_features, features_in_products
-):
+def extend_feature_vocabs(filtered_vocab,product_titles,product_features,features_in_products):
     for word in filtered_vocab:
         if slugify(word) in product_features:
             continue
         for product_title in product_titles:
-            title = re.sub(r"[>#+'?$%^*®™()]+|-", "", product_title)
+            title= re.sub(r"[>#+'?$%^*®™()]+|-","",product_title)
             title = " ".join(title.lower().split())
             if word in title:
                 if title not in features_in_products:
-                    features_in_products[title] = []
+                    features_in_products[title]=[]
                 features_in_products[title].append(word)
                 if slugify(word) not in product_features.keys():
-                    product_features[slugify(word)] = 0
-                product_features[slugify(word)] = product_features[slugify(word)] + 1
-    return features_in_products, product_features
+                    product_features[slugify(word)]= 0
+                product_features[slugify(word)]=product_features[slugify(word)]+1
+    return features_in_products,product_features
 
-
-def generate_product_dict(response, brand_name, mpns, colors, features_in_products):
+def generate_product_dict(response,brand_name,mpns,colors,features_in_products):
     product_dict = {}
     for row in response:
         transformed_title = row["product_title"].lower()
-        cleared_title = re.sub(r"[>#+'?$%^*®™()]+|-", "", row["product_title"].lower())
+        cleared_title = re.sub(r"[>#+'?$%^*®™()]+|-","",row["product_title"].lower())
         product_dict[row["product"]] = {"product_title": row["product_title"]}
         if brand_name.lower() in transformed_title.split():
             product_dict[row["product"]]["brand"] = brand_name
@@ -187,15 +170,13 @@ def generate_product_dict(response, brand_name, mpns, colors, features_in_produc
         for color in colors:
             if color.lower() in transformed_title:
                 product_dict[row["product"]]["color"] = color
-        if cleared_title in features_in_products:
-            product_dict[row["product"]]["features"] = set(
-                features_in_products[cleared_title]
-            )
+        if(cleared_title in features_in_products):
+            product_dict[row["product"]]["features"]=set(features_in_products[cleared_title])
     return product_dict
-
 
 def create_rdf_graph(product_dict):
     graph = Graph()
+    className = URIRef("http://magelon.com/ontologies/attributes")
     for product_uri, product_data in product_dict.items():
         if "brand" in product_data.keys():
             graph.add(
@@ -204,23 +185,29 @@ def create_rdf_graph(product_dict):
                     URIRef("http://magelon.com/ontologies/has_attribute#brand"),
                     URIRef(
                         base="http://magelon.com/ontologies/attribute/",
-                        value=slugify(brand_name),
+                        value=slugify(product_data['brand']),
                     ),
                 )
             )
+            graph_add_class(graph,URIRef(
+                        base="http://magelon.com/ontologies/attribute/",
+                        value=slugify(product_data['brand']),
+                    ),className)
         if "product_number" in product_data.keys():
             graph.add(
                 (
                     URIRef(product_uri),
-                    URIRef(
-                        "http://magelon.com/ontologies/has_attribute#product_number"
-                    ),
+                    URIRef("http://magelon.com/ontologies/has_attribute#product_number"),
                     URIRef(
                         base="http://magelon.com/ontologies/attribute/",
                         value=slugify(product_data["product_number"]),
                     ),
                 )
             )
+            graph_add_class(graph,URIRef(
+                        base="http://magelon.com/ontologies/attribute/",
+                        value=slugify(product_data["product_number"]),
+                    ),className)
         if "color" in product_data.keys():
             graph.add(
                 (
@@ -232,6 +219,10 @@ def create_rdf_graph(product_dict):
                     ),
                 )
             )
+            graph_add_class(graph,URIRef(
+                        base="http://magelon.com/ontologies/attribute/",
+                        value=slugify(product_data["color"]),
+                    ),className)
         if "features" in product_data.keys():
             for feature in product_data["features"]:
                 graph.add(
@@ -244,6 +235,10 @@ def create_rdf_graph(product_dict):
                         ),
                     )
                 )
+                graph_add_class(graph,URIRef(
+                            base="http://magelon.com/ontologies/attribute/",
+                            value=slugify(feature),
+                        ),className)
                 graph.add(
                     (
                         URIRef(
@@ -251,57 +246,69 @@ def create_rdf_graph(product_dict):
                             value=slugify(feature),
                         ),
                         RDFS.label,
-                        Literal(feature),
+                        Literal(feature)
                     )
                 )
+        
     return graph
 
+def graph_add_class(graph:Graph,s,o):
+    graph.add((s,RDF.type,o))
 
-nltk.download("stopwords")
-
-color_query = """
-select ?color_uri ?label
-where { 
-{?color_uri a <http://magelon.com/ontologies/colors>.}
-UNION
-{?color_uri a <http://omikron44/ontologies/mixture_colors>.}
-UNION
-{?color_uri a <http://magelon.com/ontologies/color_variations>.}
-?color_uri <http://www.w3.org/2000/01/rdf-schema#label> ?label.
-}
-"""
-virtuoso = VirtuosoWrapper()
-response_colors = virtuoso.getAll(color_query)
-colors = set([row["label"] for row in response_colors])
-
-# brand_name = "Apple"
-# brand_name = "Lenovo"
-# brand_name = "Dell"
-brand_name = "Xiaomi"
+choises = ["Apple","Lenovo","Bosch","Xiaomi","Dell"]
 
 
-response = get_data(brand_name)
-
-product_titles = [row["product_title"] for row in response]
-mpns = set([row["mpn"] for row in response])
-G = create_feature_word_graph(product_titles=product_titles)
-all_paths = get_all_paths(G=G)
-sorted_paths = sorted(all_paths, key=lambda x: x["path_score"], reverse=True)
-top_paths_count = math.ceil(len(sorted_paths) / 100) * 30  # top 30%
-features_in_products, product_features = assign_product_features(
-    product_titles, sorted_paths, top_paths_count
+@click.command()
+@click.option(
+    "--brand",
+    default=",".join(choises),
+    prompt=f"Select a brand(s) to extract features from (seperate by comma for many)"
 )
-vocab = extract_extra_keywords(brand_name, mpns, colors)
-filtered_vocab = filter_small_words_numbers(vocab)
-features_in_products, product_features = extend_feature_vocabs(
-    filtered_vocab, product_titles, product_features, features_in_products
-)
-product_dict = generate_product_dict(
-    response, brand_name, mpns, colors, features_in_products
-)
-graph = create_rdf_graph(product_dict)
-# store rdf data
-virtuoso.save(graph)
-graph.serialize(
-    f"storage/{brand_name}_feature_graph.ttl", format="ttl"
-)  # if you want to see the rdf
+def export_brand_features(brand):
+    nltk.download("stopwords")
+
+    color_query = """
+    select ?color_uri ?label
+    where { 
+    {?color_uri a <http://magelon.com/ontologies/colors>.}
+    UNION
+    {?color_uri a <http://omikron44/ontologies/mixture_colors>.}
+    UNION
+    {?color_uri a <http://magelon.com/ontologies/color_variations>.}
+    ?color_uri <http://www.w3.org/2000/01/rdf-schema#label> ?label.
+    }
+    """
+    virtuoso = VirtuosoWrapper()
+    response_colors = virtuoso.getAll(color_query)
+    colors = set([row["label"] for row in response_colors])
+
+    brand_names = brand.split(",")
+    click.echo(brand_names)
+    for brand_name in brand_names:
+        click.echo(f"Extracting values from {brand_name} products")
+        response = get_data(brand_name)
+
+        product_titles = [row["product_title"] for row in response]
+        mpns = set([row["mpn"] for row in response])
+        G=create_feature_word_graph(product_titles=product_titles)
+        all_paths=get_all_paths(G=G)
+        sorted_paths = sorted(all_paths,key=lambda x:x['path_score'],reverse=True)
+        top_paths_count = math.ceil(len(sorted_paths)/100)*30#top 30%
+        features_in_products ,product_features =assign_product_features(product_titles,sorted_paths,top_paths_count)
+        vocab = extract_extra_keywords(product_titles,brand_name,mpns,colors)
+        filtered_vocab = filter_small_words_numbers(vocab)
+        features_in_products,product_features=extend_feature_vocabs(
+            filtered_vocab,
+            product_titles,
+            product_features,
+            features_in_products
+        )
+        product_dict = generate_product_dict(response,brand_name,mpns,colors,features_in_products)
+        graph = create_rdf_graph(product_dict)
+        # store rdf data
+        virtuoso.save(graph)
+        graph.serialize(f"storage/{brand_name}_feature_graph.ttl",format="ttl") # if you want to see the rdf
+
+
+if __name__ == "__main__":
+    export_brand_features()
