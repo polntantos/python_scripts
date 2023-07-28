@@ -8,3 +8,4 @@ urn:MAPPING-ID*
 /datasets/*
 /classes/__pycache__
 /clusters/*
+/storage/*
