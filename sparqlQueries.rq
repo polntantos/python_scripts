@@ -75,6 +75,18 @@ WHERE {
         <http://omikron44/ontologies/brands#brand> ?oldBrand .
 }
 
+# selects all products that have a brand class connected to them against all products
+SELECT 
+ (COUNT(?product) AS ?count) (COUNT(?product_all) AS ?count_all)
+WHERE {
+  {?product a <http://magelon.com/ontologies/products>;
+           <http://magelon.com/ontologies/products#brand> ?brand .
+  ?brand a <http://magelon.com/ontologies/brands>.}
+UNION{
+  ?product_all a <http://magelon.com/ontologies/products>.
+}}
+
+
 
 #selects product brands
 
@@ -535,3 +547,59 @@ UNION
 {?s a <http://magelon.com/ontologies/color_variations>}.
 ?s <http://www.w3.org/2000/01/rdf-schema#label> ?o.
 }
+
+
+# count an attribute's connected products and brands
+SELECT ?value COUNT(?product) as ?product_count COUNT(Distinct ?brand) as ?brand_count
+WHERE {
+  ?value a <http://magelon.com/ontologies/attributes>.
+  ?brand a <http://magelon.com/ontologies/brands>. 
+  ?product a <http://magelon.com/ontologies/products>;
+           <http://magelon.com/ontologies/has_attribute#uknown> ?value;
+           ?brand_predicate ?brand.
+} ORDER BY DESC(?product_count)
+
+#query to fetch products by brand and child brands with their basic data
+SELECT ?product_title ?mpn ?color ?product_type ?google_product_category
+WHERE {
+  ?product <http://magelon.com/ontologies/products#brand> ?brand_uri ;
+           <http://magelon.com/ontologies/products#merchant_id> ?merchant_id;
+           <http://magelon.com/ontologies/products#title> ?product_title .
+           OPTIONAL{?product <http://magelon.com/ontologies/products#mpn> ?mpn }
+           OPTIONAL{?product <http://magelon.com/ontologies/products#color> ?color}
+           OPTIONAL{?product <http://magelon.com/ontologies/products#product_type> ?product_type}
+           OPTIONAL{?product <http://magelon.com/ontologies/products#google_product_category> ?google_product_category}
+        
+  {
+    SELECT ?brand_uri
+    WHERE {
+      {
+        ?brand_uri ?p "Bosch" ;
+                   <http://magelon.com/ontologies/brands#brand> ?brand_name ;
+                   a <http://magelon.com/ontologies/brands> .
+      }
+      UNION
+      {
+        ?b ?n "Bosch" ;
+           ?refers ?brand_uri ;
+           <http://magelon.com/ontologies/brands#brand> ?brand_name ;
+           a <http://magelon.com/ontologies/brands> .
+      }
+    }
+  }
+}
+
+# this returns a product title with its pre assigned brand it's attribute count and the attribute names split by comma
+SELECT ?product_title COUNT(DISTINCT ?attribute_title) AS ?attribute_count GROUP_CONCAT(Distinct ?brand_title; separator=", ") as ?brand GROUP_CONCAT(DISTINCT ?attribute_title; separator=", ") as ?labels 
+WHERE{
+?product <http://magelon.com/ontologies/products#brand> ?brand_uri ;
+            <http://magelon.com/ontologies/products#title> ?product_title .
+?brand_uri <http://magelon.com/ontologies/brands#brand> ?brand_title.
+?attribute a <http://magelon.com/ontologies/attributes>;
+    rdfs:label ?attribute_title.
+?product ?p ?attribute.
+}
+group by ?product_title
+ORDER BY DESC(?attribute_count)
+
+# in case you want to restart with attributes 
