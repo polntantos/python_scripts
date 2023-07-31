@@ -18,17 +18,17 @@ categories = open("googleToGraph/categories.txt")
 
 # parse categories and create relationships dictionary
 for category in categories:
-    parts = category.strip().split("-")
+    parts = category.strip().split("-", 1)
     category_id = parts[0].strip()
     category_struct = parts[1].strip().split(">")
     # category_name = parts[1][len(parent_ids[0]) + 1:]
     category_name = category_struct[len(category_struct) - 1].strip()
-    category_name = re.sub("[^a-zA-Z0-9_]+", "_", category_name)
+    category_name = re.sub("[^a-zA-Z0-9_]+", " ", category_name)
     category_full_path = parts[1]
     category_dict[category_name] = category_id
 
     parent_category_name = category_struct[len(category_struct) - 2].strip()
-    parent_category_name = re.sub("[^a-zA-Z0-9_]+", "_", parent_category_name)
+    parent_category_name = re.sub("[^a-zA-Z0-9_]+", " ", parent_category_name)
     if parent_category_name != category_name:
         relationships[category_id] = {
             "name": category_name,

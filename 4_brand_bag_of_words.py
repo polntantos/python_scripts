@@ -107,18 +107,20 @@ def get_all_paths(G: nx.DiGraph):
                 all_paths.extend(get_most_common_paths(G, node1, node2))
     return all_paths
 
+
 def filter_keyword(keyword, title):
     title_parts = title.lower().split()
     keyword_parts = keyword.split()
     flag = False
     for keyword_part in keyword_parts:
         if keyword_part in title_parts:
-            flag=True
+            flag = True
             continue
         else:
-            flag=False
+            flag = False
             break
     return flag
+
 
 def assign_product_features(product_titles, sorted_paths, top_paths_count):
     features_in_products = {}
@@ -128,7 +130,7 @@ def assign_product_features(product_titles, sorted_paths, top_paths_count):
         title = " ".join(title.lower().split())
         for path in sorted_paths[0:top_paths_count]:
             feature = " ".join(path["path"])
-            if feature in title and filter_keyword(feature,title):
+            if feature in title and filter_keyword(feature, title):
                 if title not in features_in_products.keys():
                     features_in_products[title] = []
                 features_in_products[title].append(feature)
@@ -319,7 +321,9 @@ choises = [
     "Acer",
     "Gigabyte",
     "LG",
-    "Razer"
+    "Razer",
+    "Intel",
+    "Amd",
 ]  # Apple,Lenovo,Xiaomi,Intel,Amd
 # ["Apple","Lenovo","HP","Xiaomi","Dell","Toshiba","Asus","MSI","Acer","Gigabyte","LG","Razer"]
 

@@ -57,6 +57,14 @@ DELETE WHERE {
   )
 }
 
+#delete labels only
+PREFIX magelon: <http://magelon.com/ontologies/>
+DELETE {?category rdfs:label ?category_label.}
+where{
+ ?category a  magelon:google_categories.
+ ?category rdfs:label ?category_label.
+}
+
 # replace brand literal to brand object
 
 PREFIX products: <http://omikron44/ontologies/products#>
@@ -602,4 +610,25 @@ WHERE{
 group by ?product_title
 ORDER BY DESC(?attribute_count)
 
-# in case you want to restart with attributes 
+#Find attributes similar to categories
+PREFIX magelon: <http://magelon.com/ontologies/>
+
+SELECT ?attribute_label ?google_category_label
+WHERE {
+  ?attribute a magelon:attributes;
+             rdfs:label ?attribute_label.
+  ?category a magelon:google_categories;
+             rdfs:label ?google_category_label.
+  FILTER (STRSTARTS(LCASE(?google_category_label),LCASE(?attribute_label)))
+} limit 1000
+
+PREFIX magelon: <http://magelon.com/ontologies/>
+
+SELECT ?attribute_label ?google_category_label
+WHERE {
+  ?attribute a magelon:attributes;
+             rdfs:label ?attribute_label.
+  ?category a magelon:google_categories;
+             rdfs:label ?google_category_label.
+  FILTER (LCASE(?google_category_label) = LCASE(?attribute_label))
+} limit 1000
