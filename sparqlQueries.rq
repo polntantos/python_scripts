@@ -597,8 +597,8 @@ WHERE {
   }
 }
 
-# this returns a product title with its pre assigned brand it's attribute count and the attribute names split by comma
-SELECT ?product_title COUNT(DISTINCT ?attribute_title) AS ?attribute_count GROUP_CONCAT(Distinct ?brand_title; separator=", ") as ?brand GROUP_CONCAT(DISTINCT ?attribute_title; separator=", ") as ?labels 
+# this returns a product title with its pre assigned brand it's attribute count, the attribute names split by comma and the product_uris connected to the title
+SELECT ?product_title GROUP_CONCAT(DISTINCT ?product; separator=",") as ?product_uris  COUNT(DISTINCT ?attribute_title) AS ?attribute_count GROUP_CONCAT(Distinct ?brand_title; separator=", ") as ?brand GROUP_CONCAT(DISTINCT ?attribute_title; separator=", ") as ?labels 
 WHERE{
 ?product <http://magelon.com/ontologies/products#brand> ?brand_uri ;
             <http://magelon.com/ontologies/products#title> ?product_title .
@@ -632,3 +632,31 @@ WHERE {
              rdfs:label ?google_category_label.
   FILTER (LCASE(?google_category_label) = LCASE(?attribute_label))
 } limit 1000
+
+SELECT *
+WHERE{
+{<http://magelon.com/ontologies/products/id=3187359> ?p ?o.}
+UNION
+{<http://magelon.com/ontologies/products/id=3187346> ?p ?o.}
+}
+
+SELECT *
+WHERE{
+<http://magelon.com/ontologies/products/id=3187359> ?p ?o.
+<http://magelon.com/ontologies/products/id=3187346> ?p ?o.
+}
+
+SELECT ?product_title 
+WHERE{
+?product <http://magelon.com/ontologies/products#title> ?product_title .
+FILTER(?product IN (
+<http://magelon.com/ontologies/products/id=33209>,
+<http://magelon.com/ontologies/products/id=33219>, 
+<http://magelon.com/ontologies/products/id=33360>, 
+<http://magelon.com/ontologies/products/id=33405>, 
+<http://magelon.com/ontologies/products/id=33519>, 
+<http://magelon.com/ontologies/products/id=33611>, 
+<http://magelon.com/ontologies/products/id=36520>, 
+<http://magelon.com/ontologies/products/id=39527>
+))
+}
