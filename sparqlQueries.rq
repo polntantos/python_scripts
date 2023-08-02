@@ -660,3 +660,16 @@ FILTER(?product IN (
 <http://magelon.com/ontologies/products/id=39527>
 ))
 }
+
+## Get products with similar features to pass category
+SELECT ?google_product_type ?title ?relatedProduct ?value
+WHERE {
+  # Products with google_product_type
+  ?product a <http://magelon.com/ontologies/products>;
+           <http://magelon.com/ontologies/products#google_product_type> ?google_product_type;
+           <http://magelon.com/ontologies/products#title> ?title.
+  {?product ?has_attribute ?value.
+  ?relatedProduct ?has_attribute ?value.
+  ?value a <http://magelon.com/ontologies/attributes>.
+  FILTER (?product != ?relatedProduct)}  # Make sure it's not the same product
+} 
