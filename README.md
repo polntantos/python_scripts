@@ -34,3 +34,32 @@ Problem:
 Για την χαρτογράφιση του dataset μας από την βάση δεδομένων και την εξαγωγή ενός r2rml mapping θα χρησιμοποιήσουμε το Protege με το plugin Ontop
 
 Για την μεταφορά των δεδομένων από τη mysql βάση στο virtuoso db θα χρησιμοποιήσουμε δικό μας κώδικα σε python με την βιβλιοθήκη rdflib.
+
+μετά το βήμα 5_2 εκτελούμε το παρακάτω query για να δούμε τις αντιστοιχίες κατηγοριών που δώσαμε
+
+και μέσω αυτού του query μπορούμε να δούμε ποιά χαρακτιριστικά ανοίκουν σε κάθε κατηγορία
+
+SELECT DISTINCT ?attribute ?has_attribute 
+where{
+?attribute a <http://magelon.com/ontologies/attributes>.
+?product a <http://magelon.com/ontologies/products>;
+           <http://magelon.com/ontologies/products#google_product_type> <http://magelon.com/ontologies/google_categories/id=267>;
+           ?has_attribute ?attribute.
+}
+
+και κατ' επέκταση με το παρακάτω να δουμέ ποιά προϊόντα έχουν κοινά χαρακτηριστικά με μια κατηγορία αλλά δεν έχουν κατηγορία από μόνα τους
+
+
+SELECT ?product ?title
+where{
+?product a <http://magelon.com/ontologies/products>;
+                  <http://magelon.com/ontologies/products#title> ?title;
+                  ?has_attribute ?attribute.
+FILTER NOT EXISTS{?product <http://magelon.com/ontologies/products#google_product_type> ?google_product_type}
+{
+?attribute a <http://magelon.com/ontologies/attributes>.
+?p a <http://magelon.com/ontologies/products>;
+           <http://magelon.com/ontologies/products#google_product_type> <http://magelon.com/ontologies/google_categories/id=267>;
+           ?has_attribute ?attribute.
+}
+}GROUP by ?product ?title

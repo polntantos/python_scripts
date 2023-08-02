@@ -90,7 +90,7 @@ for row in categories_result:
 
 remaining_clusters = {}
 
-for i, products in clusters.items():
+for index, products in clusters.items():
     product_uris = [
         product_uri
         for product_uris in products["product_uris"]
@@ -157,12 +157,13 @@ for i, products in clusters.items():
         # exit()
     else:
         print("no selection")
-    remaining_clusters[i] = products
+    remaining_clusters[index] = products
 
-print("Manual phase")
+print("Remaining clusters")
 print(remaining_clusters)
+print("Manual phase")
 # Custom category assignment
-for cluster in remaining_clusters:
+for index,products in remaining_clusters.items():
     product_uris = [
         product_uri
         for product_uris in products["product_uris"]

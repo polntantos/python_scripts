@@ -662,14 +662,54 @@ FILTER(?product IN (
 }
 
 ## Get products with similar features to pass category
-SELECT ?google_product_type ?title ?relatedProduct ?value
+PREFIX magelon: <http://magelon.com/ontologies/>
+
+SELECT  ?product ?other_product GROUP_CONCAT(DISTINCT ?attributeLabel; separator=", ")
 WHERE {
-  # Products with google_product_type
-  ?product a <http://magelon.com/ontologies/products>;
+    ?product a magelon:products.
+    ?product ?p ?attribute.
+    ?other_product a magelon:products.
+    ?other_product ?p ?attribute.
+    ?attribute rdfs:label ?attributeLabel;
+                        a <http://magelon.com/ontologies/attributes>.
+    # Make sure the other product is not the same as the current product
+    FILTER (?product != ?other_product)
+} 
+GROUP BY ?product ?other_product
+
+# select products with their assigned google products types uri
+SELECT *
+where{
+?product a <http://magelon.com/ontologies/products>;
            <http://magelon.com/ontologies/products#google_product_type> ?google_product_type;
            <http://magelon.com/ontologies/products#title> ?title.
-  {?product ?has_attribute ?value.
-  ?relatedProduct ?has_attribute ?value.
-  ?value a <http://magelon.com/ontologies/attributes>.
-  FILTER (?product != ?relatedProduct)}  # Make sure it's not the same product
-} 
+?google_product_type rdfs:label ?category_label.
+}
+
+#see a category's attributes by hits
+SELECT COUNT(?attribute) as ?attribute_hits ?attribute ?has_attribute 
+where{
+?attribute a <http://magelon.com/ontologies/attributes>.
+?product a <http://magelon.com/ontologies/products>;
+           <http://magelon.com/ontologies/products#google_product_type> <http://magelon.com/ontologies/google_categories/id=267>;
+           ?has_attribute ?attribute.
+}GROUP BY ?attribute ?has_attribute 
+ORDER BY DESC(?attribute_hits)
+
+
+# see products with similar attributes but no category
+SELECT ?product ?title
+where{
+?product a <http://magelon.com/ontologies/products>;
+                  <http://magelon.com/ontologies/products#title> ?title;
+                  ?has_attribute ?attribute.
+FILTER NOT EXISTS{?product <http://magelon.com/ontologies/products#google_product_type> ?google_product_type}
+{
+?attribute a <http://magelon.com/ontologies/attributes>.
+?p a <http://magelon.com/ontologies/products>;
+           <http://magelon.com/ontologies/products#google_product_type> <http://magelon.com/ontologies/google_categories/id=267>;
+           ?has_attribute ?attribute.
+}
+}GROUP by ?product ?title
+
+# this will return us the google categories that have been assigned to a product
