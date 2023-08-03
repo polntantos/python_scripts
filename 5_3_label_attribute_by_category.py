@@ -23,7 +23,10 @@ def group_by_similarity_regex(array):
               continue
           match = re.match(regex, other_item)
           if match:
-              team.append(other_item)
+              remains=re.sub(regex,"", other_item)
+              if len(remains)<1:#same length regex match (must be similar)
+                team.append(other_item)
+                array.pop(array.index(other_item))
       # array.remove(item)
       if team != []:
         teams.append(team)
@@ -74,13 +77,14 @@ attributes = [row["label"] for row in attributes_array]
 
 attribute_teams = group_by_similarity_regex(attributes)
 print(attribute_teams)
-print(len(attribute_teams))
+print(f"{len(attribute_teams)} attribute teams")
 label_input=input("What are you labeling?(split by , ): ")
 labels = label_input.split(",")
 
 labeled_teams = {}
 
-for team in attribute_teams:
+for i,team in enumerate(attribute_teams):
+  print(f"{i}/{len(attribute_teams)}")
   for attribute in team:
     print(attribute)
   for index,label in enumerate(labels):

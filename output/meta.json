@@ -17,15 +17,13 @@
     "mode":"default"
   },
   "labels":{
-    "ner":[
-      "ORG"
-    ]
+
   },
   "pipeline":[
-    "ner"
+
   ],
   "components":[
-    "ner"
+
   ],
   "disabled":[
 

@@ -389,11 +389,12 @@ WHERE {
 ORDER BY RAND()
 LIMIT 1
 
-#select products that have a google product type and counts them
-SELECT (COUNT(?product) AS ?productCount)
-WHERE {
-  ?product a <http://omikron44/ontologies/products> ;
-           <http://omikron44/ontologies/products#google_product_type> ?googleProductType .
+#Get google product_type with a product_count
+SELECT DISTINCT ?google_product_type ?label COUNT(?product) as ?product_count
+where{
+?product a <http://magelon.com/ontologies/products>;
+           <http://magelon.com/ontologies/products#google_product_type> ?google_product_type.
+?google_product_type rdfs:label ?label.
 }
 
 
@@ -712,4 +713,23 @@ FILTER NOT EXISTS{?product <http://magelon.com/ontologies/products#google_produc
 }
 }GROUP by ?product ?title
 
-# this will return us the google categories that have been assigned to a product
+# get duplicate attributes on products besides unknown and color
+PREFIX magelon: <http://magelon.com/ontologies/>
+
+SELECT ?product ?predicate ?value
+WHERE {
+  # Subquery to find products with duplicate predicates
+  {
+    SELECT ?product ?predicate (COUNT(?predicate) AS ?count)
+    WHERE {
+      ?product a magelon:products.
+      ?product ?predicate ?value.
+      ?value a magelon:attributes.
+      FILTER NOT EXISTS{?product <http://magelon.com/ontologies/has_attribute#uknown> ?value}
+      FILTER NOT EXISTS{?product <http://magelon.com/ontologies/has_attribute#color> ?value}
+    }
+    GROUP BY ?product ?predicate
+    HAVING (COUNT(?predicate) > 1)
+  }
+  ?product ?predicate ?value.
+}
