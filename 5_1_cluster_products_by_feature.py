@@ -53,7 +53,8 @@ for i, attributes in enumerate(attributes_list):
 
 
 agglomerative = AgglomerativeClustering(
-    n_clusters=30
+    n_clusters=30,
+    compute_full_tree=False,
 )  # Set the number of clusters as desired
 cluster_labels = agglomerative.fit_predict(features)
 

@@ -24,12 +24,14 @@ def filter_keywords(keywords, title):
 
 
 clusters = []
-
+#contract 543513
+#cartridges 356
 
 def create_product_category_query(product_uris):
     uri_array = []
     for product_uri in product_uris:
         uri_array.append(f"<{product_uri}>")
+        if(len(uri_array)>1000):break
     return f"""SELECT DISTINCT ?o
   WHERE{{
   ?product <http://magelon.com/ontologies/products#title> ?product_title .
@@ -121,6 +123,8 @@ for index, products in clusters.items():
     selection = input("Check paths and assign if relation is found[0-4]")
     if selection != "" and int(selection) in range(0, 5):
         print(f"selection {top_categories[int(selection)]}")
+        #split in batches
+        
         query = update_product_google_categories_query(
             product_uris, top_categories[int(selection)][2]
         )

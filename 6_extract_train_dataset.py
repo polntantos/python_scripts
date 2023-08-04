@@ -37,6 +37,7 @@ nlp.add_pipe("ner")
 db = DocBin() # create a DocBin object 
 
 def get_biluo_tags(product_title,attributes):
+    print(attributes)
     attribute_dict = {}
     for attribute,attribute_name in attributes:
       attribute_parts=attribute.split()
@@ -45,29 +46,12 @@ def get_biluo_tags(product_title,attributes):
         if(part in attribute_dict):
           continue
         else:
-          attribute_labels.append(part)
-      if len(attribute_labels)>1:
-        # print(attribute_labels)
-        for index,label in enumerate(attribute_labels):
-          if(index==0):
-            attribute_dict[label]=f"B-{attribute_name.upper()}"
-          elif label==attribute_labels[-1]:
-            attribute_dict[label]=f"L-{attribute_name.upper()}"
-          else:
-            attribute_dict[label]=f"I-{attribute_name.upper()}"
-      elif(attribute_labels):
-        attribute_dict[attribute_labels[0]]=f"U-{attribute_name.upper()}"
+          attribute_dict[part]=f"U-{attribute_name.upper()}"
     biluo_tags = []
-    open_tag=False
     for word in product_title.split():
         if word.lower() in attribute_dict:
           tag=attribute_dict[word.lower()]
-          if("B-" in tag):
-            open_tag=True
-            biluo_tags.append(tag)
-          elif("L-" in tag and open_tag):
-            open_tag=False
-            biluo_tags.append(tag)
+          biluo_tags.append(tag)
         else:
           biluo_tags.append('O')
     return biluo_tags
