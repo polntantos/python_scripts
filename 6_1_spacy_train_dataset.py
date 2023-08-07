@@ -60,6 +60,20 @@ for title in product_titles:
   spans = [Span(doc, start, end, label=match_id) for match_id, start, end in matches]
   doc.ents = spans
   docs.append(doc)
+train_docs = docs[0:-200]
+train_doc_bin = DocBin(docs=train_docs)
+train_doc_bin.to_disk("./train.spacy")
 
-doc_bin = DocBin(docs=docs)
-doc_bin.to_disk("./train.spacy")
+test_docs = docs[-200:]
+test_doc_bin = DocBin(docs=test_docs)
+test_doc_bin.to_disk("./dev.spacy")
+#Generate config
+# python3 -m spacy init config ./config.cfg --lang en --pipeline ner --force
+
+#Train
+# python3 -m spacy train ./config.cfg --output ./output --paths.train train.spacy --paths.dev dev.spacy
+
+# python -m spacy package /path/to/output/model-best ./packages --name my_pipeline --version 1.0.0
+# cd ./packages/en_my_pipeline-1.0.0
+# pip install dist/en_my_pipeline-1.0.0.tar.gz
+# nlp = spacy.load("en_my_pipeline")
