@@ -687,7 +687,7 @@ where{
 ?google_product_type rdfs:label ?category_label.
 }
 
-#see a category's attributes by hits
+#see a category's attributes by hits (or comment out category to see all attributes and hits)
 SELECT COUNT(?attribute) as ?attribute_hits ?attribute ?has_attribute 
 where{
 ?attribute a <http://magelon.com/ontologies/attributes>.
@@ -771,3 +771,58 @@ WHERE {
   ?product <http://magelon.com/ontologies/products#google_product_type> ?category.
 
 } Group by ?category
+
+#after labeling a few attributes from laptop category we can see that they have affected other categories as well
+
+#this query returns the categories that are affected by labeling the words 7th 8th etc as processor generation
+PREFIX magelon: <http://magelon.com/ontologies/>
+
+SELECT ?category GROUP_CONCAT(DISTINCT ?attributeLabel;separator=", ") as ?attribute_names
+WHERE {
+  ?product a magelon:products;
+            <http://magelon.com/ontologies/has_attribute#processor_generation> ?attribute.
+  ?attribute rdfs:label ?attributeLabel.
+  ?product <http://magelon.com/ontologies/products#google_product_type> ?category.
+
+} Group by ?category
+
+# and we can see that ram has affected even more 
+PREFIX magelon: <http://magelon.com/ontologies/>
+
+SELECT ?category GROUP_CONCAT(DISTINCT ?attributeLabel;separator=", ") as ?attribute_names
+WHERE {
+  ?product a magelon:products;
+            <http://magelon.com/ontologies/has_attribute#ram> ?attribute.
+  ?attribute rdfs:label ?attributeLabel.
+  ?product <http://magelon.com/ontologies/products#google_product_type> ?category.
+
+} Group by ?category
+
+#we can see the attributes and their product count along the predicates that are used to connect to them
+
+PREFIX magelon: <http://magelon.com/ontologies/>
+
+SELECT ?attribute COUNT(?product) as ?product_count ?has_attribute
+WHERE {
+  ?product a magelon:products;
+                    ?has_attribute ?attribute.
+  ?attribute rdfs:label ?attributeLabel.
+  ?product <http://magelon.com/ontologies/products#google_product_type> ?category.
+} Group by ?attribute ?has_attribute
+
+#and also filter to see the known or unknown attributes
+
+PREFIX magelon: <http://magelon.com/ontologies/>
+
+SELECT ?attribute COUNT(?product) as ?product_count ?has_attribute
+WHERE {
+  ?product a magelon:products;
+                    ?has_attribute ?attribute.
+
+  FILTER(?has_attribute=<http://magelon.com/ontologies/has_attribute#uknown>)
+  # FILTER(?has_attribute!=<http://magelon.com/ontologies/has_attribute#uknown>)
+  ?attribute rdfs:label ?attributeLabel.
+  ?product <http://magelon.com/ontologies/products#google_product_type> ?category.
+} Group by ?attribute ?has_attribute
+
+#with these info we can proceed to try and train a NER model

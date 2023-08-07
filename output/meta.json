@@ -17,13 +17,41 @@
     "mode":"default"
   },
   "labels":{
-
+    "ner":[
+      "BRAND",
+      "CARDINAL",
+      "DATE",
+      "EVENT",
+      "FAC",
+      "GPE",
+      "LANGUAGE",
+      "LAPTOP_MODEL",
+      "LAW",
+      "LOC",
+      "MONEY",
+      "NORP",
+      "NUM_OF_CORES",
+      "ORDINAL",
+      "ORG",
+      "PERCENT",
+      "PERSON",
+      "PROCESSOR_CODE",
+      "PROCESSOR_GENERATION",
+      "PROCESSOR_MODEL",
+      "PRODUCT",
+      "QUANTITY",
+      "RAM",
+      "SCREEN_SIZE",
+      "STORAGE_CAPACITY",
+      "TIME",
+      "WORK_OF_ART"
+    ]
   },
   "pipeline":[
-
+    "ner"
   ],
   "components":[
-
+    "ner"
   ],
   "disabled":[
 

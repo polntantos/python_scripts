@@ -33,8 +33,7 @@ for row in response:
 # config = spacy.util.train_config(n_iter=100, learning_rate=0.01)
 
 nlp = spacy.blank("en")
-nlp.add_pipe("ner")
-db = DocBin() # create a DocBin object 
+nlp.add_pipe("ner",source=spacy.load("en_core_web_sm"))
 
 def get_biluo_tags(product_title,attributes):
     print(attributes)
@@ -56,8 +55,6 @@ def get_biluo_tags(product_title,attributes):
           biluo_tags.append('O')
     return biluo_tags
 
-optimizer = nlp.initialize()
-
 examples = []
 for title,product_info in title_features_dict.items():
   title_doc=nlp(title)
@@ -70,24 +67,41 @@ for title,product_info in title_features_dict.items():
   example = Example.from_dict(title_doc,{"entities":entities})
   examples.append(example)
 
-nlp = spacy.blank("en")
-nlp.begin_training()
+# nlp = spacy.blank("en")
+# nlp.begin_training()
+
+# Create and save a collection of training docs
+
 random.shuffle(examples)
-n=5
-for i in range(0,len(examples),n):
+train_examples = examples[len(examples)//2]
+test_examples = examples[len(examples)//2:]
+
+train_docbin = DocBin(docs=train_examples)
+train_docbin.to_disk("./train.spacy")
+
+n=10
+for i in range(0,len(train_examples),n):
     batch = examples[i:i+n]
-    nlp.update(batch,sgd=optimizer)
+    nlp.update(batch)
 
 nlp.to_disk("./output")
 
-sample_products=random.sample(response,10)
-for product in sample_products:
-  doc = nlp(product['title'])
-  print(product['title'])
-  for entity in doc.ents:
-    print(entity)
 
-nlp_ner = spacy.load("./model-best")
+# Create and save a collection of evaluation docs
+dev_docbin = DocBin(docs=test_examples)
+dev_docbin.to_disk("./dev.spacy")
+for product in test_examples:
+  doc = nlp(product['title'])
+  print("\n\nTitle")
+  print(product['title'])
+  print("\nPredictions")
+  for entity in doc.ents:
+    print(entity.text,entity.label_)
+
+#convert corpora in common formats
+# python -m spacy convert ./train.gold.conll ./corpus
+
+# nlp_ner = spacy.load("./model-best")
 
 
 #python3 -m spacy init config config.cfg --lang en --pipeline ner --optimize efficiency
