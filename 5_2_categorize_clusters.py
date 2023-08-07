@@ -1,6 +1,7 @@
 from classes.VirtuosoWrapper import VirtuosoWrapper
 import json
 import re
+from rdflib import Graph, URIRef
 
 
 def filter_keywords(keywords, title):
@@ -24,14 +25,16 @@ def filter_keywords(keywords, title):
 
 
 clusters = []
-#contract 543513
-#cartridges 356
+# contract 543513
+# cartridges 356
+
 
 def create_product_category_query(product_uris):
     uri_array = []
     for product_uri in product_uris:
         uri_array.append(f"<{product_uri}>")
-        if(len(uri_array)>1000):break
+        if len(uri_array) > 1000:
+            break
     return f"""SELECT DISTINCT ?o
   WHERE{{
   ?product <http://magelon.com/ontologies/products#title> ?product_title .
@@ -44,19 +47,31 @@ def create_product_category_query(product_uris):
 
 def update_product_google_categories_query(product_uris, category_uri):
     uri_array = []
+    rdf_graph = Graph()
     for product_uri in product_uris:
-        uri_array.append(f"<{product_uri}>")
-    return f"""
-      INSERT {{
-      ?product <http://magelon.com/ontologies/products#google_product_type> <{category_uri}> .
-      }}
-      WHERE {{
-      ?product a <http://magelon.com/ontologies/products>.
-      FILTER(?product IN (
-        {",".join(uri_array)}
-      ))
-      }}
-  """
+        # uri_array.append(f"<{product_uri}>")
+        rdf_graph.add(
+            (
+                URIRef(product_uri),
+                URIRef("http://magelon.com/ontologies/products#google_product_type"),
+                URIRef(category_uri),
+            )
+        )
+
+    return rdf_graph
+
+
+#     return f"""
+#       INSERT {{
+#       ?product <http://magelon.com/ontologies/products#google_product_type> <{category_uri}> .
+#       }}
+#       WHERE {{
+#       ?product a <http://magelon.com/ontologies/products>.
+#       FILTER(?product IN (
+#         {",".join(uri_array)}
+#       ))
+#       }}
+#   """
 
 
 def get_category_score(category_name, category_keywords):
@@ -123,14 +138,14 @@ for index, products in clusters.items():
     selection = input("Check paths and assign if relation is found[0-4]")
     if selection != "" and int(selection) in range(0, 5):
         print(f"selection {top_categories[int(selection)]}")
-        #split in batches
-        
-        query = update_product_google_categories_query(
+        # split in batches
+
+        graph = update_product_google_categories_query(
             product_uris, top_categories[int(selection)][2]
         )
         # print(query)
         # update product google categories
-        virtuoso.get(query)
+        virtuoso.save(graph)
         continue
     else:
         print("no selection")
@@ -151,11 +166,11 @@ for index, products in clusters.items():
     selection = input("Check paths and assign if relation is found[0-4]")
     if selection != "" and int(selection) in range(0, 5):
         print(f"selection {top_categories[int(selection)]}")
-        query = update_product_google_categories_query(
+        graph = update_product_google_categories_query(
             product_uris, top_categories[int(selection)][2]
         )
         # print(query)
-        # virtuoso.get(query)
+        virtuoso.save(graph)
         # update product google categories
         continue
         # exit()
@@ -167,7 +182,7 @@ print("Remaining clusters")
 print(remaining_clusters)
 print("Manual phase")
 # Custom category assignment
-for index,products in remaining_clusters.items():
+for index, products in remaining_clusters.items():
     product_uris = [
         product_uri
         for product_uris in products["product_uris"]
@@ -184,5 +199,5 @@ for index,products in remaining_clusters.items():
         category_uri = (
             f"http://magelon.com/ontologies/google_categories/id={category_id}"
         )
-        query = update_product_google_categories_query(product_uris, category_uri)
-        virtuoso.get(query)
+        graph = update_product_google_categories_query(product_uris, category_uri)
+        virtuoso.save(graph)

@@ -733,3 +733,41 @@ WHERE {
   }
   ?product ?predicate ?value.
 }
+
+
+#SAME attributes different categories
+
+PREFIX magelon: <http://magelon.com/ontologies/>
+
+SELECT ?product1 ?product_title1 ?attributeLabel ?product_title2 ?product2 
+WHERE {
+  ?product1 a magelon:products;
+            ?has_attribute ?attribute.
+  
+  ?attribute rdfs:label ?attributeLabel.
+  
+  # Find other products with the same attribute
+  ?product2 a magelon:products;
+            ?has_attribute ?attribute.
+  
+  ?attribute2 rdfs:label ?attributeLabel.
+  ?product1 <http://magelon.com/ontologies/products#title> ?product_title1.
+  ?product2 <http://magelon.com/ontologies/products#title> ?product_title2.
+  # Make sure the products are not in the same categories
+  ?product1 <http://magelon.com/ontologies/products#google_product_type> ?category1.
+  ?product2 <http://magelon.com/ontologies/products#google_product_type> ?category2.
+  
+  FILTER (?product1 != ?product2 && ?category1 != ?category2)
+} OFFSET 10000 LIMIT 10000
+
+#attributes per category
+PREFIX magelon: <http://magelon.com/ontologies/>
+
+SELECT ?category GROUP_CONCAT(DISTINCT ?attributeLabel;separator=", ") as ?attribute_names
+WHERE {
+  ?product a magelon:products;
+            ?has_attribute ?attribute.
+  ?attribute rdfs:label ?attributeLabel.
+  ?product <http://magelon.com/ontologies/products#google_product_type> ?category.
+
+} Group by ?category
