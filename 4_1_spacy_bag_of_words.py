@@ -184,9 +184,7 @@ def export_brand_features(brand):
   brand_names = brand.split(",")
   click.echo(brand_names)
   for brand_name in brand_names:
-    # brand = "Lenovo"
     response = get_data(brand_name)
-    # product_titles = [row["product_title"] for row in response]
     mpns = set([row["mpn"].lower() for row in response])
 
     nlp = spacy.blank("en")

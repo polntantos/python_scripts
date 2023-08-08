@@ -37,15 +37,6 @@ def evaluate_string(string):
     return score
 
 
-def find_sentences_with_phrase(phrase, sentences):
-    matched_sentences = []
-    for sentence in sentences:
-        if phrase in sentence:
-            matched_sentences.append(sentence)
-        if len(matched_sentences) == 2:
-            break
-    return matched_sentences
-
 virtuoso = VirtuosoWrapper()
 
 brands_query = """
@@ -228,7 +219,7 @@ virtuoso.save(rdf_graph)
 
 net = Network("1000px", "1900px", directed=False, font_color="white", bgcolor="#111111")
 net.from_nx(G)
-net.show("office_merchant_brand.html", notebook=False)
+net.show("merchant_brand.html", notebook=False)
 
 flattened_list = set([item for sublist in result_dict.values() for item in sublist])
 print(duplicates)

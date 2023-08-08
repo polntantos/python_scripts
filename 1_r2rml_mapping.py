@@ -49,6 +49,13 @@ def start_conversion(mode, mappingfile, checkpoint, savetodb):
         user_input = input("Enter one or more numbers (separated by spaces): ")
         selected_numbers = user_input.split()
         print(selected_numbers)
+    else:
+        keys = []
+        for key, triplesMap in enumerate(rmlMapping.mappings):
+            print(f"{key}:{triplesMap.name}")
+            keys.append(str(key))
+        print("Auto mode will run all mappings")
+        selected_numbers=",".join(keys)
     for key, mapping in enumerate(rmlMapping.mappings):
         if len(selected_numbers) != 0 and str(key) not in selected_numbers:
             continue

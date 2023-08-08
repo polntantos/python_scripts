@@ -30,24 +30,23 @@ ORDER BY ?productCount
 
 virtuoso = VirtuosoWrapper()
 response = virtuoso.get(minmax_query)
-bindings = response["results"]["bindings"]
+print(response)
 
-minProductCount = bindings[0]["minProductCount"]["value"]
-maxProductCount = bindings[0]["maxProductCount"]["value"]
-avgProductCount = bindings[0]["avgProductCount"]["value"]
+minProductCount = response[0]["minProductCount"]
+maxProductCount = response[0]["maxProductCount"]
+avgProductCount = response[0]["avgProductCount"]
 
 print(f"min product count {minProductCount}")
 print(f"max product count {maxProductCount}")
 print(f"avg product count {avgProductCount}")
 
 response = virtuoso.get(merchants_product_count_query)
-bindings = response["results"]["bindings"]
 merchants = []
-for merchant_product_count in bindings:
+for merchant_product_count in response:
     merchants.append(
         {
-            "merchant": merchant_product_count["merchant"]["value"],
-            "product_count": merchant_product_count["productCount"]["value"],
+            "merchant": merchant_product_count["merchant"],
+            "product_count": merchant_product_count["productCount"],
         }
     )
 
@@ -89,3 +88,16 @@ if len(merchants) > 0:
         )
 graph.serialize(destination="merchant-tags.ttl", format="turtle")
 virtuoso.save(graph)
+
+delete_merchants_query = """
+DELETE
+WHERE {
+  ?merchant a <http://magelon.com/ontologies/merchants> .
+  ?merchant <http://magelon.com/ontologies/merchants#id> ?merchant_id.
+
+  FILTER NOT EXISTS {
+    ?product <http://magelon.com/ontologies/products#merchant_id> ?merchant_id.
+  }
+}
+"""
+virtuoso.get(delete_merchants_query)
