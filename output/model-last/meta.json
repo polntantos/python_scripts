@@ -22,7 +22,16 @@
     ],
     "ner":[
       "architecture",
-      "brand"
+      "brand",
+      "laptop_model",
+      "model_name",
+      "num_of_cores",
+      "processor_code",
+      "processor_generation",
+      "processor_model",
+      "product_model",
+      "ram",
+      "storage_capacity"
     ]
   },
   "pipeline":[
@@ -37,22 +46,67 @@
 
   ],
   "performance":{
-    "ents_f":0.976,
-    "ents_p":0.953125,
-    "ents_r":1.0,
+    "ents_f":0.8753269398,
+    "ents_p":0.8494077834,
+    "ents_r":0.9028776978,
     "ents_per_type":{
+      "storage_capacity":{
+        "p":0.8376623377,
+        "r":0.998065764,
+        "f":0.9108561342
+      },
+      "ram":{
+        "p":0.8866213152,
+        "r":0.9536585366,
+        "f":0.9189189189
+      },
+      "num_of_cores":{
+        "p":0.6805555556,
+        "r":0.8596491228,
+        "f":0.7596899225
+      },
+      "processor_model":{
+        "p":0.4102564103,
+        "r":0.5,
+        "f":0.4507042254
+      },
       "brand":{
+        "p":0.9892761394,
+        "r":0.7884615385,
+        "f":0.8775267539
+      },
+      "architecture":{
+        "p":0.6196319018,
+        "r":0.9017857143,
+        "f":0.7345454545
+      },
+      "processor_code":{
         "p":1.0,
         "r":1.0,
         "f":1.0
       },
-      "architecture":{
-        "p":0.88,
+      "laptop_model":{
+        "p":1.0,
+        "r":0.8461538462,
+        "f":0.9166666667
+      },
+      "processor_generation":{
+        "p":0.7777777778,
         "r":1.0,
-        "f":0.9361702128
+        "f":0.875
+      },
+      "model_name":{
+        "p":0.0,
+        "r":0.0,
+        "f":0.0
+      },
+      "product_model":{
+        "p":0.0,
+        "r":0.0,
+        "f":0.0
       }
     },
-    "tok2vec_loss":31.705450845,
-    "ner_loss":978.8310578526
+    "tok2vec_loss":281.4987093156,
+    "ner_loss":857.7957157912
   }
 }

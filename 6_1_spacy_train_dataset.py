@@ -2,7 +2,6 @@ from classes.VirtuosoWrapper import VirtuosoWrapper
 from spacy.tokens import DocBin,Span
 from spacy.training import Example
 from spacy.matcher import PhraseMatcher
-from spacy import Span
 import spacy
 from spacy.training import biluo_tags_to_offsets
 import random
@@ -56,15 +55,15 @@ for title in product_titles:
     matcher = PhraseMatcher(nlp.vocab)
     matcher.add(label,pattern_values)
   matches = matcher(doc)
-  print(f"Found {len(matches)} matches")
+  # print(f"Found {len(matches)} matches")
   spans = [Span(doc, start, end, label=match_id) for match_id, start, end in matches]
   doc.ents = spans
   docs.append(doc)
-train_docs = docs[0:-200]
+train_docs = docs[0:-1000]
 train_doc_bin = DocBin(docs=train_docs)
 train_doc_bin.to_disk("./train.spacy")
 
-test_docs = docs[-200:]
+test_docs = docs[-1000:]
 test_doc_bin = DocBin(docs=test_docs)
 test_doc_bin.to_disk("./dev.spacy")
 #Generate config
@@ -72,8 +71,3 @@ test_doc_bin.to_disk("./dev.spacy")
 
 #Train
 # python3 -m spacy train ./config.cfg --output ./output --paths.train train.spacy --paths.dev dev.spacy
-
-# python -m spacy package /path/to/output/model-best ./packages --name my_pipeline --version 1.0.0
-# cd ./packages/en_my_pipeline-1.0.0
-# pip install dist/en_my_pipeline-1.0.0.tar.gz
-# nlp = spacy.load("en_my_pipeline")
