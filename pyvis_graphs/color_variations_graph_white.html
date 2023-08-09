@@ -1,0 +1,250 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 1900px;
+                 height: 1000px;
+                 background-color: #111111;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 1900px;
+                 height: 1000px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "font": {"color": "white"}, "id": "multicoloured on white", "label": "multicoloured on white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white", "label": "white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "optical white", "label": "optical white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 light gold", "label": "white \u0026 light gold", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "off-white striped", "label": "off-white striped", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white checked print", "label": "white checked print", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter t", "label": "white on blue letter t", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 cerise", "label": "white \u0026 cerise", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white with yellow stripes", "label": "white with yellow stripes", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 navy", "label": "white \u0026 navy", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white striped", "label": "white striped", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white foam", "label": "white foam", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "stripe white", "label": "stripe white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter b", "label": "white on blue letter b", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on white", "label": "white on white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter h", "label": "white on blue letter h", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 red \u0026 blue", "label": "white \u0026 red \u0026 blue", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 neon pink", "label": "white \u0026 neon pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white with pink", "label": "white with pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue", "label": "white on blue", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "black \u0026 creamy white", "label": "black \u0026 creamy white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "red white navy", "label": "red white navy", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white with navy stripes", "label": "white with navy stripes", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "blue \u0026 white", "label": "blue \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "creamy white", "label": "creamy white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter n", "label": "white on blue letter n", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "off-white", "label": "off-white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on black", "label": "white on black", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter u", "label": "white on blue letter u", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink white gold black", "label": "pink white gold black", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white reflex", "label": "white reflex", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white background", "label": "white background", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink on white", "label": "pink on white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter g", "label": "white on blue letter g", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 black", "label": "white \u0026 black", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter a", "label": "white on blue letter a", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "black and white", "label": "black and white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white gold black", "label": "white gold black", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white and red", "label": "white and red", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white pqr", "label": "white pqr", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "red on white", "label": "red on white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "linen white", "label": "linen white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "navy \u0026 white", "label": "navy \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "matte white", "label": "matte white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white floral print", "label": "white floral print", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pale pink \u0026 white", "label": "pale pink \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter r", "label": "white on blue letter r", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "red \u0026 white", "label": "red \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white micro", "label": "white micro", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white silver black", "label": "white silver black", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 grey", "label": "white \u0026 grey", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "red green white", "label": "red green white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 gold", "label": "white \u0026 gold", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "snow white", "label": "snow white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter i", "label": "white on blue letter i", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 brown", "label": "white \u0026 brown", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white linen", "label": "white linen", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "lacquered white", "label": "lacquered white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white floral", "label": "white floral", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "black with white polka dots", "label": "black with white polka dots", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "virgin white", "label": "virgin white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "black \u0026 white", "label": "black \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 beige", "label": "white \u0026 beige", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 light silver", "label": "white \u0026 light silver", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "western white", "label": "western white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white multi", "label": "white multi", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 pink", "label": "white \u0026 pink", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "burgundy \u0026 white", "label": "burgundy \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white girl", "label": "white girl", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "navy with white polka dots", "label": "navy with white polka dots", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink \u0026 white", "label": "pink \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "red black white silver gold", "label": "red black white silver gold", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white writing", "label": "white writing", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pale blue \u0026 white", "label": "pale blue \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "purple \u0026 white", "label": "purple \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white-chalk", "label": "white-chalk", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "turquoise on white", "label": "turquoise on white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "mint \u0026 white", "label": "mint \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on ivory", "label": "white on ivory", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "hydrogen white", "label": "hydrogen white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "chalk white", "label": "chalk white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter y", "label": "white on blue letter y", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white print", "label": "white print", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 royal", "label": "white \u0026 royal", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "green \u0026 white", "label": "green \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "royal blue \u0026 white", "label": "royal blue \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "off white", "label": "off white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "black silver white", "label": "black silver white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "dark denim \u0026 white", "label": "dark denim \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "mauve \u0026 white", "label": "mauve \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "blue on white", "label": "blue on white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter p", "label": "white on blue letter p", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter e", "label": "white on blue letter e", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter v", "label": "white on blue letter v", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "orange \u0026 white", "label": "orange \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter x", "label": "white on blue letter x", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white gingham", "label": "white gingham", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white tortoise", "label": "white tortoise", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white spot", "label": "white spot", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "black denim \u0026 white", "label": "black denim \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "brilliant white", "label": "brilliant white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "bright white", "label": "bright white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter o", "label": "white on blue letter o", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white with print", "label": "white with print", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter q", "label": "white on blue letter q", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "beige \u0026 white", "label": "beige \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "gold on white", "label": "gold on white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white-pink fluo", "label": "white-pink fluo", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 neon orange", "label": "white \u0026 neon orange", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "black on white", "label": "black on white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "crystal white", "label": "crystal white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter w", "label": "white on blue letter w", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white structured", "label": "white structured", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "matt white", "label": "matt white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "grey \u0026 white", "label": "grey \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "sky \u0026 white", "label": "sky \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white gold", "label": "white gold", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on navy", "label": "white on navy", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white and black", "label": "white and black", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "silver on white", "label": "silver on white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white silver", "label": "white silver", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "black and white and beige", "label": "black and white and beige", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white twill", "label": "white twill", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "red black white", "label": "red black white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "black gold white", "label": "black gold white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter k", "label": "white on blue letter k", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white stripes", "label": "white stripes", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white chrome", "label": "white chrome", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "navy blue \u0026 white", "label": "navy blue \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "fuchsia \u0026 white", "label": "fuchsia \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter j", "label": "white on blue letter j", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "navy with white stripes", "label": "navy with white stripes", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "soft white", "label": "soft white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "off-white background", "label": "off-white background", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white stripe", "label": "white stripe", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "antique sail white", "label": "antique sail white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter z", "label": "white on blue letter z", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "wood white", "label": "wood white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white checks", "label": "white checks", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "ice blue \u0026 white", "label": "ice blue \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "striped green white", "label": "striped green white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "navy on white", "label": "navy on white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter m", "label": "white on blue letter m", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "top white", "label": "top white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "paper white", "label": "paper white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pink white", "label": "pink white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "transparent white", "label": "transparent white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "ivory white", "label": "ivory white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white black print", "label": "white black print", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "yellow \u0026 white", "label": "yellow \u0026 white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "blanc white", "label": "blanc white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pure white", "label": "pure white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter s", "label": "white on blue letter s", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 navy blue", "label": "white \u0026 navy blue", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "ecru white", "label": "ecru white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white check", "label": "white check", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white tie-dye", "label": "white tie-dye", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "warm white", "label": "warm white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white on blue letter c", "label": "white on blue letter c", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 turquoise", "label": "white \u0026 turquoise", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 red", "label": "white \u0026 red", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "winter white", "label": "winter white", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white marl", "label": "white marl", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 berry", "label": "white \u0026 berry", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white \u0026 silver", "label": "white \u0026 silver", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "white boy", "label": "white boy", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "multicoloured on white", "to": "white", "width": 1}, {"from": "optical white", "to": "white", "width": 1}, {"from": "white \u0026 light gold", "to": "white", "width": 1}, {"from": "off-white striped", "to": "white", "width": 1}, {"from": "white checked print", "to": "white", "width": 1}, {"from": "white on blue letter t", "to": "white", "width": 1}, {"from": "white \u0026 cerise", "to": "white", "width": 1}, {"from": "white with yellow stripes", "to": "white", "width": 1}, {"from": "white \u0026 navy", "to": "white", "width": 1}, {"from": "white striped", "to": "white", "width": 1}, {"from": "white foam", "to": "white", "width": 1}, {"from": "stripe white", "to": "white", "width": 1}, {"from": "white on blue letter b", "to": "white", "width": 1}, {"from": "white on white", "to": "white", "width": 1}, {"from": "white on blue letter h", "to": "white", "width": 1}, {"from": "white \u0026 red \u0026 blue", "to": "white", "width": 1}, {"from": "white \u0026 neon pink", "to": "white", "width": 1}, {"from": "white with pink", "to": "white", "width": 1}, {"from": "white on blue", "to": "white", "width": 1}, {"from": "black \u0026 creamy white", "to": "white", "width": 1}, {"from": "red white navy", "to": "white", "width": 1}, {"from": "white with navy stripes", "to": "white", "width": 1}, {"from": "blue \u0026 white", "to": "white", "width": 1}, {"from": "creamy white", "to": "white", "width": 1}, {"from": "white on blue letter n", "to": "white", "width": 1}, {"from": "off-white", "to": "white", "width": 1}, {"from": "white on black", "to": "white", "width": 1}, {"from": "white on blue letter u", "to": "white", "width": 1}, {"from": "pink white gold black", "to": "white", "width": 1}, {"from": "white reflex", "to": "white", "width": 1}, {"from": "white background", "to": "white", "width": 1}, {"from": "pink on white", "to": "white", "width": 1}, {"from": "white on blue letter g", "to": "white", "width": 1}, {"from": "white \u0026 black", "to": "white", "width": 1}, {"from": "white on blue letter a", "to": "white", "width": 1}, {"from": "black and white", "to": "white", "width": 1}, {"from": "white gold black", "to": "white", "width": 1}, {"from": "white and red", "to": "white", "width": 1}, {"from": "white pqr", "to": "white", "width": 1}, {"from": "red on white", "to": "white", "width": 1}, {"from": "linen white", "to": "white", "width": 1}, {"from": "navy \u0026 white", "to": "white", "width": 1}, {"from": "matte white", "to": "white", "width": 1}, {"from": "white floral print", "to": "white", "width": 1}, {"from": "pale pink \u0026 white", "to": "white", "width": 1}, {"from": "white on blue letter r", "to": "white", "width": 1}, {"from": "red \u0026 white", "to": "white", "width": 1}, {"from": "white micro", "to": "white", "width": 1}, {"from": "white silver black", "to": "white", "width": 1}, {"from": "white \u0026 grey", "to": "white", "width": 1}, {"from": "red green white", "to": "white", "width": 1}, {"from": "white \u0026 gold", "to": "white", "width": 1}, {"from": "snow white", "to": "white", "width": 1}, {"from": "white on blue letter i", "to": "white", "width": 1}, {"from": "white \u0026 brown", "to": "white", "width": 1}, {"from": "white linen", "to": "white", "width": 1}, {"from": "lacquered white", "to": "white", "width": 1}, {"from": "white floral", "to": "white", "width": 1}, {"from": "black with white polka dots", "to": "white", "width": 1}, {"from": "virgin white", "to": "white", "width": 1}, {"from": "black \u0026 white", "to": "white", "width": 1}, {"from": "white \u0026 beige", "to": "white", "width": 1}, {"from": "white \u0026 light silver", "to": "white", "width": 1}, {"from": "western white", "to": "white", "width": 1}, {"from": "white multi", "to": "white", "width": 1}, {"from": "white \u0026 pink", "to": "white", "width": 1}, {"from": "burgundy \u0026 white", "to": "white", "width": 1}, {"from": "white girl", "to": "white", "width": 1}, {"from": "navy with white polka dots", "to": "white", "width": 1}, {"from": "pink \u0026 white", "to": "white", "width": 1}, {"from": "red black white silver gold", "to": "white", "width": 1}, {"from": "white writing", "to": "white", "width": 1}, {"from": "pale blue \u0026 white", "to": "white", "width": 1}, {"from": "purple \u0026 white", "to": "white", "width": 1}, {"from": "white-chalk", "to": "white", "width": 1}, {"from": "turquoise on white", "to": "white", "width": 1}, {"from": "mint \u0026 white", "to": "white", "width": 1}, {"from": "white on ivory", "to": "white", "width": 1}, {"from": "hydrogen white", "to": "white", "width": 1}, {"from": "chalk white", "to": "white", "width": 1}, {"from": "white on blue letter y", "to": "white", "width": 1}, {"from": "white print", "to": "white", "width": 1}, {"from": "white \u0026 royal", "to": "white", "width": 1}, {"from": "green \u0026 white", "to": "white", "width": 1}, {"from": "royal blue \u0026 white", "to": "white", "width": 1}, {"from": "off white", "to": "white", "width": 1}, {"from": "black silver white", "to": "white", "width": 1}, {"from": "dark denim \u0026 white", "to": "white", "width": 1}, {"from": "mauve \u0026 white", "to": "white", "width": 1}, {"from": "blue on white", "to": "white", "width": 1}, {"from": "white on blue letter p", "to": "white", "width": 1}, {"from": "white on blue letter e", "to": "white", "width": 1}, {"from": "white on blue letter v", "to": "white", "width": 1}, {"from": "orange \u0026 white", "to": "white", "width": 1}, {"from": "white on blue letter x", "to": "white", "width": 1}, {"from": "white gingham", "to": "white", "width": 1}, {"from": "white tortoise", "to": "white", "width": 1}, {"from": "white spot", "to": "white", "width": 1}, {"from": "black denim \u0026 white", "to": "white", "width": 1}, {"from": "brilliant white", "to": "white", "width": 1}, {"from": "bright white", "to": "white", "width": 1}, {"from": "white on blue letter o", "to": "white", "width": 1}, {"from": "white with print", "to": "white", "width": 1}, {"from": "white on blue letter q", "to": "white", "width": 1}, {"from": "beige \u0026 white", "to": "white", "width": 1}, {"from": "gold on white", "to": "white", "width": 1}, {"from": "white-pink fluo", "to": "white", "width": 1}, {"from": "white \u0026 neon orange", "to": "white", "width": 1}, {"from": "black on white", "to": "white", "width": 1}, {"from": "crystal white", "to": "white", "width": 1}, {"from": "white on blue letter w", "to": "white", "width": 1}, {"from": "white structured", "to": "white", "width": 1}, {"from": "matt white", "to": "white", "width": 1}, {"from": "grey \u0026 white", "to": "white", "width": 1}, {"from": "sky \u0026 white", "to": "white", "width": 1}, {"from": "white gold", "to": "white", "width": 1}, {"from": "white on navy", "to": "white", "width": 1}, {"from": "white and black", "to": "white", "width": 1}, {"from": "silver on white", "to": "white", "width": 1}, {"from": "white silver", "to": "white", "width": 1}, {"from": "black and white and beige", "to": "white", "width": 1}, {"from": "white twill", "to": "white", "width": 1}, {"from": "red black white", "to": "white", "width": 1}, {"from": "black gold white", "to": "white", "width": 1}, {"from": "white on blue letter k", "to": "white", "width": 1}, {"from": "white stripes", "to": "white", "width": 1}, {"from": "white chrome", "to": "white", "width": 1}, {"from": "navy blue \u0026 white", "to": "white", "width": 1}, {"from": "fuchsia \u0026 white", "to": "white", "width": 1}, {"from": "white on blue letter j", "to": "white", "width": 1}, {"from": "navy with white stripes", "to": "white", "width": 1}, {"from": "soft white", "to": "white", "width": 1}, {"from": "off-white background", "to": "white", "width": 1}, {"from": "white stripe", "to": "white", "width": 1}, {"from": "antique sail white", "to": "white", "width": 1}, {"from": "white on blue letter z", "to": "white", "width": 1}, {"from": "wood white", "to": "white", "width": 1}, {"from": "white checks", "to": "white", "width": 1}, {"from": "ice blue \u0026 white", "to": "white", "width": 1}, {"from": "striped green white", "to": "white", "width": 1}, {"from": "navy on white", "to": "white", "width": 1}, {"from": "white on blue letter m", "to": "white", "width": 1}, {"from": "top white", "to": "white", "width": 1}, {"from": "paper white", "to": "white", "width": 1}, {"from": "pink white", "to": "white", "width": 1}, {"from": "transparent white", "to": "white", "width": 1}, {"from": "ivory white", "to": "white", "width": 1}, {"from": "white black print", "to": "white", "width": 1}, {"from": "yellow \u0026 white", "to": "white", "width": 1}, {"from": "blanc white", "to": "white", "width": 1}, {"from": "pure white", "to": "white", "width": 1}, {"from": "white on blue letter s", "to": "white", "width": 1}, {"from": "white \u0026 navy blue", "to": "white", "width": 1}, {"from": "ecru white", "to": "white", "width": 1}, {"from": "white check", "to": "white", "width": 1}, {"from": "white tie-dye", "to": "white", "width": 1}, {"from": "warm white", "to": "white", "width": 1}, {"from": "white on blue letter c", "to": "white", "width": 1}, {"from": "white \u0026 turquoise", "to": "white", "width": 1}, {"from": "white \u0026 red", "to": "white", "width": 1}, {"from": "winter white", "to": "white", "width": 1}, {"from": "white marl", "to": "white", "width": 1}, {"from": "white \u0026 berry", "to": "white", "width": 1}, {"from": "white \u0026 silver", "to": "white", "width": 1}, {"from": "white boy", "to": "white", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
